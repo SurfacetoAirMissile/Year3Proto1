@@ -36,7 +36,19 @@ public class SkipperMovement : MonoBehaviour
 
         if (Input.GetKey("w"))
         {
-            thisRB.AddForce(Time.deltaTime * HoverForce * 30f * Vector3.forward);
+            thisRB.AddForce(Time.deltaTime * HoverForce * 30f * transform.forward);
+        }
+        if (Input.GetKey("a"))
+        {
+            thisRB.AddForce(Time.deltaTime * HoverForce * 30f * -transform.right);
+        }
+        if (Input.GetKey("s"))
+        {
+            thisRB.AddForce(Time.deltaTime * HoverForce * 30f * -transform.forward);
+        }
+        if (Input.GetKey("d"))
+        {
+            thisRB.AddForce(Time.deltaTime * HoverForce * 30f * transform.right);
         }
     }
 }
