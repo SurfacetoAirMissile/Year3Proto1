@@ -387,10 +387,10 @@ GameObject:
   - component: {fileID: 8452623345026960035}
   - component: {fileID: 8452623345026959964}
   - component: {fileID: 8452623345026959965}
-  - component: {fileID: 8452623345026959966}
   - component: {fileID: 8452623345026960037}
+  - component: {fileID: 7513502719333068571}
   m_Layer: 2
-  m_Name: Skipper
+  m_Name: Skipper Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -403,8 +403,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8452623345026959967}
-  m_LocalRotation: {x: -0.0000009199892, y: 0.0014909825, z: 0.000000015894855, w: 0.9999989}
-  m_LocalPosition: {x: 0.035367172, y: 0.6534744, z: 805.7595}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 0.5, z: 2}
   m_Children:
   - {fileID: 8452623344970304550}
@@ -474,7 +474,23 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &8452623345026959966
+--- !u!54 &8452623345026960037
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8452623345026959967}
+  serializedVersion: 2
+  m_Mass: 2
+  m_Drag: 0.5
+  m_AngularDrag: 20
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &7513502719333068571
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -492,22 +508,8 @@ MonoBehaviour:
   - {fileID: 8452623345065438047}
   - {fileID: 8452623343494084923}
   HoverForce: 50
---- !u!54 &8452623345026960037
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8452623345026959967}
-  serializedVersion: 2
-  m_Mass: 2
-  m_Drag: 0.5
-  m_AngularDrag: 0.5
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
+  PushForce: 1000
+  RotationForce: 3000
 --- !u!1 &8452623345065438047
 GameObject:
   m_ObjectHideFlags: 0
