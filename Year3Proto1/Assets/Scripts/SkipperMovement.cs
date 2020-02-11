@@ -10,10 +10,12 @@ public class SkipperMovement : MonoBehaviour
     [SerializeField]
     private float HoverForce;
 
+    private Rigidbody thisRB;
+
     // Start is called before the first frame update
     void Start()
     {
-
+        thisRB = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
@@ -22,13 +24,19 @@ public class SkipperMovement : MonoBehaviour
         foreach (GameObject ball in Hoverballs)
         {
             // Get the distance between that ball and the ground
-            if (Physics.Raycast(ball.transform.position, Vector3.down, out RaycastHit groundCast, 2.0f))
+            if (Physics.Raycast(ball.transform.position, Vector3.down, out RaycastHit groundCast, 2f))
             {
-                ball.GetComponent<Rigidbody>().AddForce(Time.deltaTime * HoverForce / Mathf.Pow(groundCast.distance, 2.0f) * Vector3.up);
+                ball.GetComponent<Rigidbody>().AddForce(Time.deltaTime * HoverForce / Mathf.Clamp(Mathf.Pow(groundCast.distance, 2f), 0f, 1f)  * Vector3.up);
 
             }
         }
 
-        //GetComponent<Rigidbody>().AddForce(Time.del)
+        //thisRB.AddForce(Time.deltaTime * 5f *  HoverForce * -thisRB.velocity);
+        //thisRB.AddTorque(Time.deltaTime * )
+
+        if (Input.GetKey("w"))
+        {
+            thisRB.AddForce(Time.deltaTime * HoverForce * 30f * Vector3.forward);
+        }
     }
 }
