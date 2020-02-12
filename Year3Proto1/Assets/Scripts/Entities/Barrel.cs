@@ -6,14 +6,12 @@ using UnityEngine.UI;
 public class Barrel : MonoBehaviour
 {
     //Object Data
-    private bool interacting = true;
-    private readonly float totalFuel;
+    private bool interacting = false;
+    private readonly float totalFuel = 1000.0f;
     private float currentFuel;
 
     //User Interface
-    [SerializeField] private GameObject userInterface;
-    [SerializeField] private Transform userInterfaceParent;
-    private GameObject userInterfaceFinal;
+    [SerializeField] private BarrelUI userInterface;
 
 
     private void Start()
@@ -23,25 +21,32 @@ public class Barrel : MonoBehaviour
 
     public void Update()
     {
-        if(interacting) 
+        if (interacting)
         {
-            if (userInterfaceFinal == null)
-            {
-                userInterfaceFinal = Instantiate(userInterface, userInterfaceParent, true);
-                userInterfaceFinal.GetComponent<BarrelUI>().SetBarrel(transform);
-            }
-            else
-            {
-                userInterfaceFinal.GetComponent<BarrelUI>().text.text = currentFuel + "/" + totalFuel;
-            }
+            if(!userInterface.gameObject.activeSelf) userInterface.gameObject.SetActive(true);
+            userInterface.tmpText.text = "Fuel\n" + currentFuel + "/" + totalFuel;
+        }
+        else
+        {
+            if (userInterface.gameObject.activeSelf) userInterface.gameObject.SetActive(false);
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        if(collision.gameObject.GetType() == typeof(Player))
+        if (other.GetComponent<Camera>() != null)
         {
+            Debug.Log("Trigger Enter works");
+            interacting = true;
+        }
+    }
 
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.GetComponent<Camera>() != null)
+        {
+            Debug.Log("Trigger Exit works");
+            interacting = false;
         }
     }
 

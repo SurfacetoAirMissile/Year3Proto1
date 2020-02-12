@@ -2,30 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class BarrelUI : MonoBehaviour
 {
     public Image image;
-    public Text text;
-
-
-    private Transform parent;
-    private Transform barrel;
+    public TMP_Text tmpText;
 
     private void Start()
     {
-        parent = GetComponentInParent<Transform>();
     }
-
     private void Update()
     {
-        float yOffSet = barrel.transform.position.y + 1.5f;
-        Vector3 screenPoint = Camera.main.WorldToScreenPoint(parent.position);
-
-        Transform textTransform = text.transform;
-        Transform imageTransform = image.transform;
-
-        textTransform.position = new Vector3(screenPoint.x, screenPoint.y + yOffSet, screenPoint.x);
-        imageTransform.position = new Vector3(screenPoint.x, screenPoint.y + yOffSet, screenPoint.x);
+        transform.LookAt(2 * transform.position - Camera.main.transform.position);
     }
 }
