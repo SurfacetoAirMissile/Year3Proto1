@@ -108,7 +108,7 @@ public class SkipperPlayerController : SkipperShared
         {
             if (Input.GetMouseButtonDown(0))
             {
-                autoguns[autogunToFire].GetComponent<Rigidbody>().AddForce(autoguns[autogunToFire].transform.up * 5f);
+                autoguns[autogunToFire].transform.GetChild(1).GetComponent<Rigidbody>().AddForce(autoguns[autogunToFire].transform.up * 50f);
                 GameObject bulletInstance = Instantiate(bullet, autoguns[autogunToFire].transform.GetChild(0).position, Quaternion.identity);
                 bulletInstance.GetComponent<Rigidbody>().AddForce(-autoguns[autogunToFire].transform.up * 5f);
                 autogunToFire = (autogunToFire == 0) ? 1 : 0;
