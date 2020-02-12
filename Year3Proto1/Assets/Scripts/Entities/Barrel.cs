@@ -25,6 +25,7 @@ public class Barrel : MonoBehaviour
         {
             if(!userInterface.gameObject.activeSelf) userInterface.gameObject.SetActive(true);
             userInterface.tmpText.text = "Fuel\n" + currentFuel + "/" + totalFuel;
+            
         }
         else
         {
