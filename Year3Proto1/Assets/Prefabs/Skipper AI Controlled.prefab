@@ -13,12 +13,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   chassis: {fileID: 6469177251697206666}
-  Hoverballs:
+  hoverballs:
   - {fileID: 1627564004292190878}
   - {fileID: 1627564003798917407}
   - {fileID: 1627564005461304379}
   - {fileID: 1627564004768528862}
-  cannon: {fileID: 1627564003693786425}
+  windCannon: {fileID: 1627564003693786425}
+  bullet: {fileID: 0}
+  autoguns: []
   CannonForce: 0
   HoverForce: 50
   PushForce: 1000
@@ -30,6 +32,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2179320168803496029, guid: 3dfa51800f071c04385801ba6d092232,
+        type: 3}
+      propertyPath: m_Name
+      value: WindCannon
+      objectReference: {fileID: 0}
+    - target: {fileID: 2179320168803496035, guid: 3dfa51800f071c04385801ba6d092232,
+        type: 3}
+      propertyPath: m_ConnectedAnchor.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2179320168803496035, guid: 3dfa51800f071c04385801ba6d092232,
+        type: 3}
+      propertyPath: m_ConnectedAnchor.z
+      value: -0.40000153
+      objectReference: {fileID: 0}
     - target: {fileID: 2179320170365795384, guid: 3dfa51800f071c04385801ba6d092232,
         type: 3}
       propertyPath: m_Name

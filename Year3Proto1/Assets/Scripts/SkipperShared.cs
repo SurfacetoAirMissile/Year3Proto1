@@ -8,10 +8,16 @@ public class SkipperShared : MonoBehaviour
     protected GameObject chassis;
 
     [SerializeField]
-    protected GameObject[] Hoverballs;
+    protected GameObject[] hoverballs;
 
     [SerializeField]
-    protected GameObject cannon;
+    protected GameObject windCannon;
+
+    [SerializeField]
+    protected GameObject bullet;
+
+    [SerializeField]
+    protected GameObject[] autoguns;
 
     [SerializeField]
     protected float CannonForce;
@@ -34,7 +40,7 @@ public class SkipperShared : MonoBehaviour
 
     protected void ApplyLevitationForces()
     {
-        foreach (GameObject ball in Hoverballs)
+        foreach (GameObject ball in hoverballs)
         {
             // Get the distance between that ball and the ground
             if (Physics.Raycast(ball.transform.position, Vector3.down, out RaycastHit groundCast, 2f))
