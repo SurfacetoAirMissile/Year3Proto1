@@ -20,27 +20,62 @@ public class SkipperPlayerController : SkipperShared
 
         if (Input.GetKey("w"))
         {
-            thisRB.AddForce(pushAmount * transform.forward);
+            chassisRB.AddForce(pushAmount * chassis.transform.forward);
         }
         if (Input.GetKey("s"))
         {
-            thisRB.AddForce(pushAmount * -transform.forward);
+            chassisRB.AddForce(pushAmount * -chassis.transform.forward);
         }
         if (Input.GetKey("e"))
         {
-            thisRB.AddForce(pushAmount * transform.right);
+            chassisRB.AddForce(pushAmount * chassis.transform.right);
         }
         if (Input.GetKey("q"))
         {
-            thisRB.AddForce(pushAmount * -transform.right);
+            chassisRB.AddForce(pushAmount * -chassis.transform.right);
         }
         if (Input.GetKey("d"))
         {
-            thisRB.AddTorque(new Vector3(0f, rotationAmount, 0f));
+            chassisRB.AddTorque(0f, rotationAmount, 0f);
         }
         if (Input.GetKey("a"))
         {
-            thisRB.AddTorque(new Vector3(0f, -rotationAmount, 0f));
+            chassisRB.AddTorque(0f, -rotationAmount, 0f);
         }
+        Vector3 rotation;
+        if (Input.GetKey("left ctrl"))
+        {
+            rotation = Quaternion.FromToRotation(cannon.transform.up, Camera.main.transform.forward).eulerAngles;
+        }
+        else
+        {
+            rotation = Quaternion.FromToRotation(-cannon.transform.up, Camera.main.transform.forward).eulerAngles;
+        }
+
+        if (rotation.y > 180f) { rotation.y -= 360f; }
+        cannon.GetComponent<Rigidbody>().AddTorque(0f, rotation.y, 0f);
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            cannon.GetComponent<Rigidbody>().AddForce(cannon.transform.up * CannonForce);
+            List<GameObject> targets = cannon.GetComponentInChildren<CannonArea>().overlappingGameObjects;
+            foreach (GameObject target in targets)
+            {
+                target.GetComponent<Rigidbody>().AddForce(-cannon.transform.up * CannonForce * 5f);
+            }
+        }
+
+        if (Input.GetMouseButtonDown(1))
+        {   
+            if (Cursor.lockState == CursorLockMode.Locked)
+            {
+                Cursor.lockState = CursorLockMode.None;
+            }
+            else
+            {
+                Cursor.lockState = CursorLockMode.Locked;
+            }
+        }
+
     }
 }
