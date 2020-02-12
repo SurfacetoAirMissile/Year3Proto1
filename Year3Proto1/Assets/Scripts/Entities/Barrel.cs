@@ -34,7 +34,7 @@ public class Barrel : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.GetComponent<Camera>() != null)
+        if (other.gameObject.tag == "Player")
         {
             Debug.Log("Trigger Enter works");
             interacting = true;
@@ -43,7 +43,7 @@ public class Barrel : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.GetComponent<Camera>() != null)
+        if (other.gameObject.tag == "Player")
         {
             Debug.Log("Trigger Exit works");
             interacting = false;
