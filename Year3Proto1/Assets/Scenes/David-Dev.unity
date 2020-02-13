@@ -16154,6 +16154,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 449346773, guid: 081a3d0ec644f934fa5777d0bdb852af, type: 3}
+      propertyPath: barrel
+      value: 
+      objectReference: {fileID: 1277786658}
     - target: {fileID: 4251673225892344019, guid: 081a3d0ec644f934fa5777d0bdb852af,
         type: 3}
       propertyPath: m_LocalPosition.x
