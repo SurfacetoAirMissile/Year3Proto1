@@ -5,7 +5,14 @@ using UnityEngine;
 public class TradeOutPost : MonoBehaviour
 {
     //Different Inventory
-    public Resource[] resources;
+    public Resource[] resourceLoad;
+
+    private List<Resource> resourceCache;
+
+    private void Start()
+    {
+
+    }
 
     public bool Buy(Resource resource, int amount)
     {
