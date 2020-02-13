@@ -5,7 +5,7 @@ using UnityEngine;
 public class SkipperPlayerController : SkipperShared
 {
     enum Weapons
-    { 
+    {
         WindCannon,
         Autoguns
     }
@@ -115,7 +115,7 @@ public class SkipperPlayerController : SkipperShared
             }
         }
 
-        
+
 
 
     }
