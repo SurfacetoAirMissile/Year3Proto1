@@ -6603,6 +6603,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 449346771, guid: 081a3d0ec644f934fa5777d0bdb852af, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 449346773, guid: 081a3d0ec644f934fa5777d0bdb852af, type: 3}
       propertyPath: barrel
       value: 
@@ -6716,26 +6720,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: UserInterface
-      objectReference: {fileID: 0}
-    - target: {fileID: 5224563273646811051, guid: 081a3d0ec644f934fa5777d0bdb852af,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5669569970865171965, guid: 081a3d0ec644f934fa5777d0bdb852af,
-        type: 3}
-      propertyPath: m_Color.r
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5669569970865171965, guid: 081a3d0ec644f934fa5777d0bdb852af,
-        type: 3}
-      propertyPath: m_Color.g
-      value: 0.9871795
-      objectReference: {fileID: 0}
-    - target: {fileID: 5669569970865171965, guid: 081a3d0ec644f934fa5777d0bdb852af,
-        type: 3}
-      propertyPath: m_Color.b
-      value: 0.9700855
       objectReference: {fileID: 0}
     - target: {fileID: 7256029047410205975, guid: 081a3d0ec644f934fa5777d0bdb852af,
         type: 3}
