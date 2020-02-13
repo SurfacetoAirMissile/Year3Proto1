@@ -4,20 +4,25 @@ using UnityEngine;
 
 public class InteractableEntity : MonoBehaviour
 {
-    public GameObject prefab;
-    public GameObject canvas;
-
-    private InteractableUI interactableUI;
+    public GameObject prefab, canvas;
+    public InteractableUI interactableUI { get; set; }
 
     private void OnTriggerEnter(Collider other)
     {
-        GameObject instantiatedObject = Instantiate(prefab, canvas.transform, false);
-        interactableUI = instantiatedObject.GetComponent<InteractableUI>();
+        if (other.gameObject.tag == "Player")
+        {
+            GameObject instantiatedObject = Instantiate(prefab, canvas.transform, false);
+            interactableUI = instantiatedObject.GetComponent<InteractableUI>();
+            interactableUI.target = transform;
+        }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        Destroy(interactableUI);
+        if (other.gameObject.tag == "Player")
+        {
+            Destroy(interactableUI);
+        }
     }
 
     public InteractableUI UserInterface()

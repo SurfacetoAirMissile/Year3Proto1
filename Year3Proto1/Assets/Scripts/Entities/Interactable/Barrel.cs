@@ -8,13 +8,13 @@ public class Barrel : InteractableEntity
     private float currentfuel;
     private readonly float totalFuel = 1000.0f;
 
-    private void Start()
-    {
-        UserInterface().displayname = "Fuel Ship";
-    }
 
-    private void Update()
+    private void LateUpdate()
     {
-        UserInterface().level = currentfuel / totalFuel;
+        if (interactableUI != null)
+        {
+            interactableUI.SetProgress(currentfuel / totalFuel);
+            interactableUI.SetText("Fuel Ship");
+        }
     }
 }
