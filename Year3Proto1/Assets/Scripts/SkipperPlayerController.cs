@@ -83,28 +83,29 @@ public class SkipperPlayerController : SkipperShared
 
         //if (selectedWeapon == Weapons.WindCannon)
         //{
-            Vector3 rotation;
-            if (Input.GetKey("left ctrl"))
-            {
-                rotation = Quaternion.FromToRotation(-windCannon.transform.forward, Camera.main.transform.forward).eulerAngles;
-            }
-            else
-            {
-                rotation = Quaternion.FromToRotation(windCannon.transform.forward, Camera.main.transform.forward).eulerAngles;
-            }
+        Vector3 rotation;
+        if (Input.GetKey("left ctrl"))
+        {
+            rotation = Quaternion.FromToRotation(-windCannon.transform.forward, Camera.main.transform.forward).eulerAngles;
+        }
+        else
+        {
+            rotation = Quaternion.FromToRotation(windCannon.transform.forward, Camera.main.transform.forward).eulerAngles;
+        }
 
-            if (rotation.y > 180f) { rotation.y -= 360f; }
-            windCannon.GetComponent<Rigidbody>().AddTorque(0f, rotation.y, 0f);
+        if (rotation.y > 180f) { rotation.y -= 360f; }
+        windCannon.GetComponent<Rigidbody>().AddTorque(0f, rotation.y, 0f);
 
-            if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0))
+        {
+            windCannon.GetComponent<Rigidbody>().AddForce(-windCannon.transform.forward * CannonForce);
+            windCannon.transform.GetChild(1).GetComponent<EffectSpawner>().SpawnEffect();
+            List<GameObject> targets = windCannon.GetComponentInChildren<CannonArea>().overlappingGameObjects;
+            foreach (GameObject target in targets)
             {
-                windCannon.GetComponent<Rigidbody>().AddForce(-windCannon.transform.forward * CannonForce);
-                List<GameObject> targets = windCannon.GetComponentInChildren<CannonArea>().overlappingGameObjects;
-                foreach (GameObject target in targets)
-                {
-                    target.GetComponent<Rigidbody>().AddForce(windCannon.transform.forward * CannonForce * 5f);
-                }
+                target.GetComponent<Rigidbody>().AddForce(windCannon.transform.forward * CannonForce * 5f);
             }
+        }
         //}
         /*
         else if (selectedWeapon == Weapons.Autoguns)
