@@ -62,7 +62,7 @@ public class SkipperAIController : SkipperShared
                     }
                 }
                 float pushAmount = Time.deltaTime * PushForce * wanderForce;
-                chassisRB.AddForce(pushAmount * chassis.transform.forward);
+                chassisRB.AddForce(pushAmount * -chassis.transform.forward);
                 if (wanderTurning)
                 {
                     float rotationAmount = Time.deltaTime * RotationForce * wanderTurnForce;
