@@ -8,13 +8,10 @@ public class Barrel : InteractableEntity
     private float currentfuel;
     private readonly float totalFuel = 1000.0f;
 
-
-    private void LateUpdate()
+    public override void Refresh()
     {
-        if (interactableUI != null)
-        {
-            interactableUI.SetProgress(currentfuel / totalFuel);
-            interactableUI.SetText("Fuel Ship");
-        }
+        interactableUI.SetProgress(currentfuel / totalFuel);
+        interactableUI.SetText("Fuel Ship");
+            
     }
 }

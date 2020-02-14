@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InteractableEntity : MonoBehaviour
+public abstract class InteractableEntity : MonoBehaviour
 {
     public GameObject prefab, canvas;
     public InteractableUI interactableUI { get; set; }
@@ -25,8 +25,15 @@ public class InteractableEntity : MonoBehaviour
         }
     }
 
+    private void LateUpdate()
+    {
+        if (interactableUI != null) Refresh();
+    }
+
     public InteractableUI UserInterface()
     {
         return interactableUI;
     }
+
+    public abstract void Refresh();
 }

@@ -18,6 +18,12 @@ public class TradeOutPost : InteractableEntity
         return true;
     }
 
+    public override void Refresh()
+    {
+        interactableUI.SetProgress(1.0f);
+        interactableUI.SetText("Trade");
+    }
+
     public bool Sell(ResourceEntity resourceEntity, int amount)
     {
         long sellPrice = resourceEntity.price * amount;
