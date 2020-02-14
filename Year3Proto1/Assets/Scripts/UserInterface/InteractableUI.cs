@@ -10,11 +10,13 @@ public class InteractableUI : MonoBehaviour
     public GameObject prompt, dot, progress, icon;
     public Transform target;
 
+    private Vector3 offset = new Vector3(0.0f, 20.0f, 0.0f);
+
     private void LateUpdate()
     {
         Vector3 screenPoint = Camera.main.WorldToScreenPoint(target.position);
-        prompt.transform.position = screenPoint;
-        dot.transform.position = screenPoint;
+        prompt.transform.position = screenPoint + offset;
+        dot.transform.position = screenPoint + offset;
 
         float distanceFromObject = Vector3.Distance(Camera.main.transform.position, target.position);
 
