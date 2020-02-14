@@ -1,4 +1,4 @@
-﻿Shader "Custom/Sparks"
+﻿Shader "Custom/Part"
 {
 	Properties
 	{
