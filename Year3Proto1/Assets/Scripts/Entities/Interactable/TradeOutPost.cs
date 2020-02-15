@@ -6,8 +6,13 @@ public class TradeOutPost : InteractableEntity
 {
     //Different Inventory
     public ResourceEntity[] resourceLoad;
-
     private List<ResourceEntity> resourceCache;
+
+    public override void Refresh()
+    {
+        interactableUI.SetProgress(1.0f);
+        interactableUI.SetText("Trade");
+    }
 
     public bool Buy(ResourceEntity resourceEntity, int amount)
     {
@@ -16,12 +21,6 @@ public class TradeOutPost : InteractableEntity
         //Check how much money player has...
 
         return true;
-    }
-
-    public override void Refresh()
-    {
-        interactableUI.SetProgress(1.0f);
-        interactableUI.SetText("Trade");
     }
 
     public bool Sell(ResourceEntity resourceEntity, int amount)
