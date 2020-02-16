@@ -10,7 +10,7 @@ public class SkipperPlayerController : SkipperShared
         Autoguns
     }
 
-    //Weapons selectedWeapon;
+    Weapons selectedWeapon;
 
     // 0 is left, 1 is right
     int autogunToFire;
@@ -23,7 +23,7 @@ public class SkipperPlayerController : SkipperShared
     {
         Startup();
         windCannonAimMode = 0;
-        //selectedWeapon = Weapons.WindCannon;
+        selectedWeapon = Weapons.WindCannon;
     }
 
     // Update is called once per frame
@@ -60,7 +60,6 @@ public class SkipperPlayerController : SkipperShared
         }
         if (Input.GetKeyDown("tab"))
         {
-            /*
             if (selectedWeapon == Weapons.WindCannon)
             {
                 selectedWeapon = Weapons.Autoguns;
@@ -69,7 +68,6 @@ public class SkipperPlayerController : SkipperShared
             {
                 selectedWeapon = Weapons.WindCannon;
             }
-            */
         }
         if (Input.GetMouseButtonDown(1))
         {
@@ -82,45 +80,53 @@ public class SkipperPlayerController : SkipperShared
                 Cursor.lockState = CursorLockMode.Locked;
             }
         }
-        //if (selectedWeapon == Weapons.WindCannon)
-        //{
-        Vector3 rotation;
-        if (Input.GetKeyDown("left ctrl"))
+        if (selectedWeapon == Weapons.WindCannon)
         {
-            windCannonAimMode = windCannonAimMode == 0 ? 1 : 0;
-        }
-
-        if (windCannonAimMode == 0)
-        {
-            rotation = Quaternion.FromToRotation(windCannon.transform.forward, Camera.main.transform.forward).eulerAngles;
-        }
-        else
-        {
-            rotation = Quaternion.FromToRotation(-windCannon.transform.forward, Camera.main.transform.forward).eulerAngles;
-        }
-
-        if (rotation.y > 180f) { rotation.y -= 360f; }
-        if (Mathf.Abs(rotation.y) > 5f)
-        {
-            windCannon.GetComponent<Rigidbody>().AddTorque(0f, Mathf.Sign(rotation.y) * 10f, 0f);
-        }        else        {
-            windCannon.GetComponent<Rigidbody>().AddTorque(0f, rotation.y, 0f);
-        }
-        if (Input.GetMouseButtonDown(0))
-        {
-            float trueForce = windCannonForce * 1000f;
-            windCannon.GetComponent<Rigidbody>().AddForce(-windCannon.transform.forward * trueForce);
-            windCannon.transform.GetChild(1).GetComponent<EffectSpawner>().SpawnEffect();
-            List<GameObject> targets = windCannon.GetComponentInChildren<CannonArea>().overlappingGameObjects;
-            foreach (GameObject target in targets)
+            Vector3 rotation;
+            if (Input.GetKeyDown("left ctrl"))
             {
-                target.GetComponent<Rigidbody>().AddForce(windCannon.transform.forward * trueForce * 5f);
+                windCannonAimMode = windCannonAimMode == 0 ? 1 : 0;
             }
-        }
-        //}
-        /*
+
+            if (windCannonAimMode == 0)
+            {
+                rotation = Quaternion.FromToRotation(windCannon.transform.forward, Camera.main.transform.forward).eulerAngles;
+            }
+            else
+            {
+                rotation = Quaternion.FromToRotation(-windCannon.transform.forward, Camera.main.transform.forward).eulerAngles;
+            }
+
+            if (rotation.y > 180f) { rotation.y -= 360f; }
+            if (Mathf.Abs(rotation.y) > 5f)
+            {
+                windCannon.GetComponent<Rigidbody>().AddTorque(0f, Mathf.Sign(rotation.y) * 10f, 0f);
+            }            else            {
+                windCannon.GetComponent<Rigidbody>().AddTorque(0f, rotation.y, 0f);
+            }
+            if (Input.GetMouseButtonDown(0))
+            {
+                float trueForce = windCannonForce * 1000f;
+                windCannon.GetComponent<Rigidbody>().AddForce(-windCannon.transform.forward * trueForce);
+                windCannon.transform.GetChild(1).GetComponent<EffectSpawner>().SpawnEffect();
+                List<GameObject> targets = windCannon.GetComponentInChildren<CannonArea>().overlappingGameObjects;
+                foreach (GameObject target in targets)
+                {
+                    target.GetComponent<Rigidbody>().AddForce(windCannon.transform.forward * trueForce * 5f);
+                }
+            }        }
         else if (selectedWeapon == Weapons.Autoguns)
         {
+            // point the airCannon forward
+            Vector3 WCrotation = Quaternion.FromToRotation(windCannon.transform.forward, -chassis.transform.forward).eulerAngles;
+            if (WCrotation.y > 180f) { WCrotation.y -= 360f; }
+            if (Mathf.Abs(WCrotation.y) > 5f)
+            {
+                windCannon.GetComponent<Rigidbody>().AddTorque(0f, Mathf.Sign(WCrotation.y) * 10f, 0f);
+            }            else            {
+                windCannon.GetComponent<Rigidbody>().AddTorque(0f, WCrotation.y, 0f);
+            }
+            /*
             if (Input.GetMouseButtonDown(0))
             {
                 autoguns[autogunToFire].transform.GetChild(1).GetComponent<Rigidbody>().AddForce(autoguns[autogunToFire].transform.up * 50f);
@@ -128,7 +134,7 @@ public class SkipperPlayerController : SkipperShared
                 bulletInstance.GetComponent<Rigidbody>().AddForce(-autoguns[autogunToFire].transform.up * 5f);
                 autogunToFire = (autogunToFire == 0) ? 1 : 0;
             }
+            */
         }
-        */
     }
 }

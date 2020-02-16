@@ -51,8 +51,9 @@ public class SkipperShared : MonoBehaviour
     {
         if (!isFlipped)
         {
-            float pushAmount = Time.deltaTime * 1000f * pushForce * (isTouchingGround ? _amount : _amount * .1f);
-            chassisRB.AddForce(pushAmount * _direction.normalized);
+            float pushAmount = Time.deltaTime * 1000f * pushForce * _amount;
+            Vector3 XZdirection = _direction; XZdirection.y = 0;
+            chassisRB.AddForce(pushAmount * (isTouchingGround ? _direction.normalized : XZdirection.normalized));
         }
     }
 
@@ -69,7 +70,10 @@ public class SkipperShared : MonoBehaviour
             // Get the distance between that ball and the ground
             if (Physics.Raycast(ball.transform.position, Vector3.down, out RaycastHit groundCast, 2f))
             {
-                ball.GetComponent<Rigidbody>().AddForce(Time.deltaTime * hoverForce * 1000f / Mathf.Pow(groundCast.distance, 2f) * Vector3.up);
+                ball.GetComponent<Rigidbody>().AddForce(Mathf.Clamp(Time.deltaTime * hoverForce * 1000f / Mathf.Pow(groundCast.distance, 2f), 0f, Time.deltaTime * hoverForce * 10000f) * Vector3.up);
+            }
+            if (Physics.Raycast(ball.transform.position, Vector3.down, 3f))
+            {
                 isTouchingGround = true;
             }
         }

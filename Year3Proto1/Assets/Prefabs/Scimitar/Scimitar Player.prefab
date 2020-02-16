@@ -25,8 +25,8 @@ MonoBehaviour:
   autoguns: []
   windCannonForce: 10
   hoverForce: 3
-  pushForce: 20
-  rotationForce: 100
+  pushForce: 5
+  rotationForce: 50
 --- !u!1001 &1586148428865796386
 PrefabInstance:
   m_ObjectHideFlags: 0
