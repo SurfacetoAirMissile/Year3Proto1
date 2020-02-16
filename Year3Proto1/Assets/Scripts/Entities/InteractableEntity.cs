@@ -4,16 +4,21 @@ using UnityEngine;
 
 public abstract class InteractableEntity : MonoBehaviour
 {
-    public GameObject prefab, canvas;
+    public GameObject prefab, canvas, target;
     public InteractableUI interactableUI { get; set; }
+
+    private bool interacting = false;
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Player")
         {
+            interacting = true;
+           
             GameObject instantiatedObject = Instantiate(prefab, canvas.transform, false);
             interactableUI = instantiatedObject.GetComponent<InteractableUI>();
             interactableUI.target = transform;
+            target = other.gameObject;
         }
     }
 
@@ -21,13 +26,16 @@ public abstract class InteractableEntity : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-            Destroy(interactableUI);
+            interacting = false;
+            Destroy(interactableUI.gameObject);
+            OnExitRange();
         }
     }
 
-    private void LateUpdate()
+    private void Update()
     {
-        if (interactableUI != null) Refresh();
+        if (interactableUI.InRange() && Input.GetKey("f") && interacting) OnInteract();
+        if (interactableUI != null && interacting) OnRefresh();
     }
 
     public InteractableUI UserInterface()
@@ -35,5 +43,9 @@ public abstract class InteractableEntity : MonoBehaviour
         return interactableUI;
     }
 
-    public abstract void Refresh();
+    public abstract void OnRefresh();
+
+    public abstract void OnExitRange();
+
+    public abstract void OnInteract();
 }

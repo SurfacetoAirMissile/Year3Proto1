@@ -86,7 +86,7 @@ GameObject:
   - component: {fileID: 283408080722017404}
   - component: {fileID: 283408080722017407}
   m_Layer: 5
-  m_Name: EButtonPrompt
+  m_Name: ButtonPrompt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -137,7 +137,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: a46816c32295f7b4784ce91c089b4eb8, type: 3}
+  m_Sprite: {fileID: 21300000, guid: da11f3ae5c5b97c41a79f8ed18e9bc68, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -371,11 +371,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f838bb6709834f4798fc37fd9cc5ba0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  displayname: 
-  level: 0
   prompt: {fileID: 283408079921537895}
   dot: {fileID: 6752850257942378801}
   progress: {fileID: 6848508846191807231}
+  icon: {fileID: 0}
   target: {fileID: 0}
 --- !u!1 &6752850257942378801
 GameObject:

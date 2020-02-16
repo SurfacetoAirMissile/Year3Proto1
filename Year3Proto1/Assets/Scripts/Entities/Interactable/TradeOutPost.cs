@@ -5,10 +5,11 @@ using UnityEngine;
 public class TradeOutPost : InteractableEntity
 {
     //Different Inventory
-    public ResourceEntity[] resourceLoad;
-    private List<ResourceEntity> resourceCache;
+    public GameObject panel;
 
-    public override void Refresh()
+    private bool open = false;
+
+    public override void OnRefresh()
     {
         interactableUI.SetProgress(1.0f);
         interactableUI.SetText("Trade");
@@ -30,5 +31,20 @@ public class TradeOutPost : InteractableEntity
         //Check how much player has of the resource...
 
         return true;
+    }
+
+    public override void OnInteract()
+    {
+        if (!open)
+        {
+            open = true;
+            panel.SetActive(open);
+        }
+    }
+
+    public override void OnExitRange()
+    {
+        open = false;
+        panel.SetActive(false);
     }
 }

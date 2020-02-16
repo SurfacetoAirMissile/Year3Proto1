@@ -5,13 +5,28 @@ using UnityEngine.UI;
 
 public class Barrel : InteractableEntity
 {
-    private float currentfuel;
+    private float currentFuel = 1000.0f;
     private readonly float totalFuel = 1000.0f;
 
-    public override void Refresh()
+    private float timeStamp;
+
+    public override void OnRefresh()
     {
-        interactableUI.SetProgress(currentfuel / totalFuel);
-        interactableUI.SetText("Fuel Ship");
-            
+        interactableUI.SetProgress(currentFuel / totalFuel);
+
+        if (currentFuel <= 0.0f) {
+            interactableUI.SetText("Empty");
+        } else {
+            interactableUI.SetText("Fuel Ship");
+        }
+    }
+
+    public override void OnInteract() {
+        if (currentFuel > 0.0f) currentFuel -= Time.deltaTime * 100.0f;
+    }
+
+    public override void OnExitRange()
+    {
+        throw new System.NotImplementedException();
     }
 }

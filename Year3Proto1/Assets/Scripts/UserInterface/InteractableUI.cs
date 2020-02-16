@@ -11,6 +11,7 @@ public class InteractableUI : MonoBehaviour
     public Transform target;
 
     private Vector3 offset = new Vector3(0.0f, 20.0f, 0.0f);
+    private bool range = false;
 
     private void LateUpdate()
     {
@@ -20,8 +21,10 @@ public class InteractableUI : MonoBehaviour
 
         float distanceFromObject = Vector3.Distance(Camera.main.transform.position, target.position);
 
-        prompt.SetActive(screenPoint.z > 0.0f && distanceFromObject < 10.0f);
-        dot.SetActive(screenPoint.z > 0.0f && distanceFromObject > 10.0f);
+        if (distanceFromObject < 12.0f) range = true;
+
+        prompt.SetActive(screenPoint.z > 0.0f && distanceFromObject < 12.0f);
+        dot.SetActive(screenPoint.z > 0.0f && distanceFromObject > 12.0f);
     }
 
     public void SetText(string text)
@@ -37,5 +40,10 @@ public class InteractableUI : MonoBehaviour
     public void SetIcon(Sprite sprite)
     {
         icon.GetComponent<Image>().sprite = sprite;
+    }
+
+    public bool InRange()
+    {
+        return range;
     }
 }
