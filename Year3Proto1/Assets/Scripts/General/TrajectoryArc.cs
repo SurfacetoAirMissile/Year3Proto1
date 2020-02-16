@@ -33,7 +33,7 @@ public class TrajectoryArc : MonoBehaviour
         {
             var shell = Instantiate(projectile, transform).GetComponent<Rigidbody>();
 
-            shell.velocity = new Vector3(0.0f, 0.0f, velocity);
+            shell.velocity += transform.forward * (velocity + 0.067f);
 
             Debug.Log(angle);
         }
@@ -57,7 +57,7 @@ public class TrajectoryArc : MonoBehaviour
 
         for (int i = 0; i <= resolution; i++)
         {
-            float t = (float)i / (float)resolution;
+            float t = (float)i / resolution;
             arc[i] = CalculatePoint(t, maxDistance);
         }
 
@@ -66,11 +66,11 @@ public class TrajectoryArc : MonoBehaviour
 
     private Vector3 CalculatePoint(float t, float maxDistance)
     {
-        float l = t * maxDistance;
+        float d = t * maxDistance;
 
-        float x = Mathf.Sin(Mathf.Deg2Rad * transform.localEulerAngles.y) * l;
-        float y = l * Mathf.Tan(radAngle) - (gravity * l * l / (2 * velocity * velocity * Mathf.Cos(radAngle) * Mathf.Cos(radAngle)));
-        float z = Mathf.Cos(Mathf.Deg2Rad * transform.localEulerAngles.y) * l;
+        float x = Mathf.Sin(Mathf.Deg2Rad * transform.localEulerAngles.y) * d;
+        float y = d * Mathf.Tan(radAngle) - (gravity * d * d / (2 * velocity * velocity * Mathf.Cos(radAngle) * Mathf.Cos(radAngle)));
+        float z = Mathf.Cos(Mathf.Deg2Rad * transform.localEulerAngles.y) * d;
 
         return new Vector3(transform.position.x + x, transform.position.y + y, transform.position.z + z);
     }
