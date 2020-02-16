@@ -27,6 +27,6 @@ public class Barrel : InteractableEntity
 
     public override void OnExitRange()
     {
-        throw new System.NotImplementedException();
+
     }
 }

@@ -28,6 +28,7 @@ public abstract class InteractableEntity : MonoBehaviour
         {
             interacting = false;
             Destroy(interactableUI.gameObject);
+            Destroy(interactableUI.gameObject);
             OnExitRange();
         }
     }
