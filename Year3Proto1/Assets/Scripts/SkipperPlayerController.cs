@@ -69,17 +69,6 @@ public class SkipperPlayerController : SkipperShared
                 selectedWeapon = Weapons.WindCannon;
             }
         }
-        if (Input.GetMouseButtonDown(1))
-        {
-            if (Cursor.lockState == CursorLockMode.Locked)
-            {
-                Cursor.lockState = CursorLockMode.None;
-            }
-            else
-            {
-                Cursor.lockState = CursorLockMode.Locked;
-            }
-        }
         if (selectedWeapon == Weapons.WindCannon)
         {
             Vector3 rotation;
@@ -107,12 +96,12 @@ public class SkipperPlayerController : SkipperShared
             if (Input.GetMouseButtonDown(0))
             {
                 float trueForce = windCannonForce * 1000f;
-                windCannon.GetComponent<Rigidbody>().AddForce(-windCannon.transform.forward * trueForce);
+                chassisRB.AddForce(-windCannon.transform.forward * trueForce);
                 windCannon.transform.GetChild(1).GetComponent<EffectSpawner>().SpawnEffect();
                 List<GameObject> targets = windCannon.GetComponentInChildren<CannonArea>().overlappingGameObjects;
                 foreach (GameObject target in targets)
                 {
-                    target.GetComponent<Rigidbody>().AddForce(windCannon.transform.forward * trueForce * 5f);
+                    target.GetComponent<Rigidbody>().AddForce(windCannon.transform.forward * trueForce * 3f);
                 }
             }        }
         else if (selectedWeapon == Weapons.Autoguns)
@@ -135,6 +124,7 @@ public class SkipperPlayerController : SkipperShared
                 autogunToFire = (autogunToFire == 0) ? 1 : 0;
             }
             */
+            
         }
     }
 }

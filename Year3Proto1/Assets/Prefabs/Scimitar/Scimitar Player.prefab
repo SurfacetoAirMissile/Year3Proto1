@@ -106,18 +106,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2819988517363953839, guid: 695192a1559e82a48823cac7724c29e1,
         type: 3}
+      propertyPath: m_ConnectedAnchor.x
+      value: -0.34411433
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819988517363953839, guid: 695192a1559e82a48823cac7724c29e1,
+        type: 3}
       propertyPath: m_ConnectedAnchor.y
-      value: 0.32479548
+      value: 0.3247954
       objectReference: {fileID: 0}
     - target: {fileID: 2819988517363953839, guid: 695192a1559e82a48823cac7724c29e1,
         type: 3}
       propertyPath: m_ConnectedAnchor.z
-      value: 0.099225394
-      objectReference: {fileID: 0}
-    - target: {fileID: 2819988517363953839, guid: 695192a1559e82a48823cac7724c29e1,
-        type: 3}
-      propertyPath: m_ConnectedAnchor.x
-      value: -0.3441162
+      value: 0.099226885
       objectReference: {fileID: 0}
     - target: {fileID: 5768395259313345734, guid: 695192a1559e82a48823cac7724c29e1,
         type: 3}
