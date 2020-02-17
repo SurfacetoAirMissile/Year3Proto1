@@ -510,7 +510,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2179320170365795391}
   m_Layer: 0
-  m_Name: Skipper Base
+  m_Name: Skipper
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

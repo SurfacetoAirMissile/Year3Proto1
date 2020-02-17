@@ -82,11 +82,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Skipper Player
       objectReference: {fileID: 0}
-    - target: {fileID: 2179320170365795384, guid: 3dfa51800f071c04385801ba6d092232,
-        type: 3}
-      propertyPath: m_TagString
-      value: Player
-      objectReference: {fileID: 0}
     - target: {fileID: 2179320170365795391, guid: 3dfa51800f071c04385801ba6d092232,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -141,6 +136,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4441871436417597757, guid: 3dfa51800f071c04385801ba6d092232,
+        type: 3}
+      propertyPath: m_TagString
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 7875543343515860319, guid: 3dfa51800f071c04385801ba6d092232,
         type: 3}

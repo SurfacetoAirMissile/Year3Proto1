@@ -125,9 +125,21 @@ public class SkipperPlayerController : SkipperShared
                 cameraScript.sitHeight = 0f;
             }
         }
+        if (Input.GetMouseButtonDown(1))
+        {
+            if (Cursor.lockState == CursorLockMode.Locked)
+            {
+                Cursor.lockState = CursorLockMode.None;
+            }
+            else
+            {
+                Cursor.lockState = CursorLockMode.Locked;
+            }
+        }
         if (selectedWeapon == Weapons.WindCannon)
         {
-            Vector3 rotation;
+            Vector3 rotation;
+
             if (Input.GetKeyDown("left ctrl"))
             {
                 windCannonAimMode = windCannonAimMode == 0 ? 1 : 0;
@@ -146,18 +158,21 @@ public class SkipperPlayerController : SkipperShared
             if (Mathf.Abs(rotation.y) > 5f)
             {
                 windCannon.GetComponent<Rigidbody>().AddTorque(0f, Mathf.Sign(rotation.y) * 10f, 0f);
-            }            else            {
+            }
+            else
+            {
                 windCannon.GetComponent<Rigidbody>().AddTorque(0f, rotation.y, 0f);
-            }
+            }
+
             if (Input.GetMouseButtonDown(0))
             {
                 float trueForce = windCannonForce * 1000f;
-                chassisRB.AddForce(-windCannon.transform.forward * trueForce);
+                windCannon.GetComponent<Rigidbody>().AddForce(-windCannon.transform.forward * trueForce);
                 windCannon.transform.GetChild(1).GetComponent<EffectSpawner>().SpawnEffect();
                 List<GameObject> targets = windCannon.GetComponentInChildren<CannonArea>().overlappingGameObjects;
                 foreach (GameObject target in targets)
                 {
-                    target.GetComponent<Rigidbody>().AddForce(windCannon.transform.forward * trueForce * 3f);
+                    target.GetComponent<Rigidbody>().AddForce(windCannon.transform.forward * trueForce * 5f);
                 }
             }        }
         else if (selectedWeapon == Weapons.Minigun)
