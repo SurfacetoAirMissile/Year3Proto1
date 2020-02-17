@@ -2440,6 +2440,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3ecf9edd25004aa41be1833083c62985, type: 3}
+--- !u!4 &826932882 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3668402785718930526, guid: 3c712bc036b627d4e99035f2f89ca184,
+    type: 3}
+  m_PrefabInstance: {fileID: 7705699917483343869}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &850721730
 GameObject:
   m_ObjectHideFlags: 0
@@ -2678,7 +2684,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ringPosition: 180
   xRotation: 5
-  xRotationMin: 5
+  xRotationMin: -20
   xRotationMax: 60
   sitHeight: 0
   orbitRadius: 15
@@ -4373,6 +4379,36 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 7705699917483343869}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1814568872
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1814568873}
+  m_Layer: 0
+  m_Name: BulletSpawnpoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1814568873
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1814568872}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -0.727}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 826932882}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1845563125
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5677,6 +5713,17 @@ PrefabInstance:
         type: 3}
       propertyPath: rotationForce
       value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 2710062886562449610, guid: 3c712bc036b627d4e99035f2f89ca184,
+        type: 3}
+      propertyPath: bullet
+      value: 
+      objectReference: {fileID: 1358410898418589752, guid: e4b924e172f349b40b9d5d17433ed837,
+        type: 3}
+    - target: {fileID: 2710062886562449610, guid: 3c712bc036b627d4e99035f2f89ca184,
+        type: 3}
+      propertyPath: minigunROF
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 3229532338064616401, guid: 3c712bc036b627d4e99035f2f89ca184,
         type: 3}

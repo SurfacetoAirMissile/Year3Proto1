@@ -198,18 +198,22 @@ public class SkipperPlayerController : SkipperShared
 
 
                 //Vector3.RotateTowards(-minigunCannon.transform.forward, )
-                Vector3 rot = Quaternion.FromToRotation(-minigunCannon.transform.forward, Camera.main.transform.forward).eulerAngles;
-                if (rot.x > 180f) { rot.x -= 360f; }
+                if (Mathf.Abs(minigunTurretRot.y) < 90f)
+                {
+                    Vector3 rot = Quaternion.FromToRotation(-minigunCannon.transform.forward, Camera.main.transform.forward).eulerAngles;
+                    if (rot.x > 180f) { rot.x -= 360f; }
 
-                if (Mathf.Abs(rot.x) > 2f)
-                {
-                    minigunElevationRing.GetComponent<Rigidbody>().AddTorque(Mathf.Sign(rot.x) * 100f, 0f, 0f);
+                    if (Mathf.Abs(rot.x) > 2f)
+                    {
+                        minigunElevationRing.GetComponent<Rigidbody>().AddTorque(Mathf.Sign(rot.x) * 100f, 0f, 0f);
+                    }
+                    else
+                    {
+                        minigunElevationRing.GetComponent<Rigidbody>().AddTorque(Mathf.Sign(rot.x) * 10f, 0f, 0f);
+                    }
+
                 }
-                else
-                {
-                    minigunElevationRing.GetComponent<Rigidbody>().AddTorque(Mathf.Sign(rot.x) * 10f, 0f, 0f);
-                }
-                
+
                 if (Input.GetMouseButton(0))
                 {
                     if (minigunCooldown >= minigunFireDelay)
@@ -222,19 +226,40 @@ public class SkipperPlayerController : SkipperShared
                     //float miniSpin = 100f;
                     //minigunCannon.GetComponent<Rigidbody>().AddTorque(0f, 0f, miniSpin);
                 }
-            }
-            // rotate the minigun towards the camera
 
-            /*
-            if (Input.GetMouseButtonDown(0))
+            }
+
+        }
+        else if (selectedWeapon == Weapons.None)
+        {
+            if (minigunTurret)
             {
-                autoguns[autogunToFire].transform.GetChild(1).GetComponent<Rigidbody>().AddForce(autoguns[autogunToFire].transform.up * 50f);
-                GameObject bulletInstance = Instantiate(bullet, autoguns[autogunToFire].transform.GetChild(0).position, Quaternion.identity);
-                bulletInstance.GetComponent<Rigidbody>().AddForce(-autoguns[autogunToFire].transform.up * 5f);
-                autogunToFire = (autogunToFire == 0) ? 1 : 0;
-            }
-            */
+                Vector3 minigunTurretRot = Quaternion.FromToRotation(-minigunTurret.transform.forward, -chassis.transform.forward).eulerAngles;
+                if (minigunTurretRot.y > 180f) { minigunTurretRot.y -= 360f; }
+                if (Mathf.Abs(minigunTurretRot.y) > 5f)
+                {
+                    minigunTurret.GetComponent<Rigidbody>().AddTorque(0f, Mathf.Sign(minigunTurretRot.y) * 1000f, 0f);
+                }
+                else
+                {
+                    minigunTurret.GetComponent<Rigidbody>().AddTorque(0f, minigunTurretRot.y, 0f);
+                }
 
+
+                if (Mathf.Abs(minigunTurretRot.y) < 90f)
+                {
+                    Vector3 rot = Quaternion.FromToRotation(-minigunCannon.transform.forward, -chassis.transform.forward).eulerAngles;
+                    if (rot.x > 180f) { rot.x -= 360f; }
+                    if (Mathf.Abs(rot.x) > 2f)
+                    {
+                        minigunElevationRing.GetComponent<Rigidbody>().AddTorque(Mathf.Sign(rot.x) * 100f, 0f, 0f);
+                    }
+                    else
+                    {
+                        minigunElevationRing.GetComponent<Rigidbody>().AddTorque(Mathf.Sign(rot.x) * 10f, 0f, 0f);
+                    }
+                }
+            }
         }
     }
 }

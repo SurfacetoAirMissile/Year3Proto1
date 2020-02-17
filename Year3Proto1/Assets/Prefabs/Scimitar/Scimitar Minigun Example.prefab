@@ -1451,14 +1451,15 @@ MonoBehaviour:
   - {fileID: 4266464832185254604}
   - {fileID: 4266464832208278192}
   windCannon: {fileID: 0}
-  bullet: {fileID: 0}
+  bullet: {fileID: 1358410898418589752, guid: e4b924e172f349b40b9d5d17433ed837, type: 3}
   windCannonForce: 0
   hoverForce: 3
   pushForce: 5
-  rotationForce: 50
+  rotationForce: 150
   minigunTurret: {fileID: 8863860751557268716}
   minigunElevationRing: {fileID: 7412445407858457904}
   minigunCannon: {fileID: 5638397014562594742}
+  minigunROF: 20
 --- !u!1 &5483817928141920451
 GameObject:
   m_ObjectHideFlags: 0
