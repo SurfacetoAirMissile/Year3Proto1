@@ -21,10 +21,10 @@ public class InteractableUI : MonoBehaviour
 
         float distanceFromObject = Vector3.Distance(Camera.main.transform.position, target.position);
 
-        if (distanceFromObject < 12.0f) range = true;
+        if (distanceFromObject < (36.0f)) range = true;
 
-        prompt.SetActive(screenPoint.z > 0.0f && distanceFromObject < 12.0f);
-        dot.SetActive(screenPoint.z > 0.0f && distanceFromObject > 12.0f);
+        prompt.SetActive(screenPoint.z > 0.0f && distanceFromObject < (36.0f * transform.localScale.x));
+        dot.SetActive(screenPoint.z > 0.0f && distanceFromObject > (36.0f * transform.localScale.x));
     }
 
     public void SetText(string text)

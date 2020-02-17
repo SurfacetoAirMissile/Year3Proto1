@@ -34,6 +34,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3966371347488294650, guid: 30fa38ad4812d0d47b57a26ae683f39e,
+        type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 4355753271805507507, guid: 30fa38ad4812d0d47b57a26ae683f39e,
         type: 3}
       propertyPath: m_ConnectedAnchor.y
@@ -53,11 +58,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5894347803738820608, guid: 30fa38ad4812d0d47b57a26ae683f39e,
-        type: 3}
-      propertyPath: m_TagString
-      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 6738262590315792289, guid: 30fa38ad4812d0d47b57a26ae683f39e,
         type: 3}

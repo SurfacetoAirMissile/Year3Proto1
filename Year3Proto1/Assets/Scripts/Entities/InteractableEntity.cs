@@ -35,8 +35,11 @@ public abstract class InteractableEntity : MonoBehaviour
 
     private void Update()
     {
-        if (interactableUI.InRange() && Input.GetKey("f") && interacting) OnInteract();
-        if (interactableUI != null && interacting) OnRefresh();
+        if(interactableUI != null)
+        {
+            if (interactableUI.InRange() && Input.GetKey("f") && interacting) OnInteract();
+            if (interacting) OnRefresh();
+        }
     }
 
     public InteractableUI UserInterface()
