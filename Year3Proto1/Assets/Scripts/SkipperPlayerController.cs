@@ -60,7 +60,14 @@ public class SkipperPlayerController : SkipperShared
 
         float pushAmount = Time.deltaTime * 1000f * pushForce;
         float rotationAmount = Time.deltaTime * 1000f * rotationForce;
-
+        if (Input.GetKeyDown("w"))
+        {
+            chassis.transform.GetChild(0).GetComponent<ParticleSystem>().Play(true);
+        }
+        if (Input.GetKeyUp("w"))
+        {
+            chassis.transform.GetChild(0).GetComponent<ParticleSystem>().Stop(true, ParticleSystemStopBehavior.StopEmitting);
+        }
         if (Input.GetKey("w"))
         {
             Thrust(-chassis.transform.forward, 1f);
@@ -244,7 +251,6 @@ public class SkipperPlayerController : SkipperShared
                 {
                     minigunTurret.GetComponent<Rigidbody>().AddTorque(0f, minigunTurretRot.y, 0f);
                 }
-
 
                 if (Mathf.Abs(minigunTurretRot.y) < 90f)
                 {
