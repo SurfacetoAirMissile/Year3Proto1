@@ -20,10 +20,10 @@ public class SkipperShared : MonoBehaviour
 
     [SerializeField]
     protected GameObject bullet;
-
+    /*
     [SerializeField]
     protected GameObject[] autoguns;
-
+    */
 
     [SerializeField]
     [Tooltip("The amount of force applied when the Wind Cannon is fired, in thousands of units.")]
