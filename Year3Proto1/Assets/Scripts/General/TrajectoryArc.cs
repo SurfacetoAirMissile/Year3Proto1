@@ -31,9 +31,9 @@ public class TrajectoryArc : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            var shell = Instantiate(projectile, transform).GetComponent<Rigidbody>();
-
-            shell.velocity += transform.forward * (velocity + 0.067f);
+            var shell = Instantiate(projectile, transform);
+            shell.transform.parent = null;
+            shell.GetComponent<Rigidbody>().velocity += transform.forward * (velocity + 0.0625f);
 
             Debug.Log(angle);
         }
