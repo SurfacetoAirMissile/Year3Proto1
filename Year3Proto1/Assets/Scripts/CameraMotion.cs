@@ -5,20 +5,22 @@ using UnityEngine;
 public class CameraMotion : MonoBehaviour
 {
     [SerializeField]
-    private float ringPosition = 180f;
+    public float ringPosition = 180f;
 
     [SerializeField]
-    private float xRotation = 10f;
+    public float xRotation = 10f;
     [SerializeField]
-    private float xRotationMin = 10f;
+    public float xRotationMin = 10f;
     [SerializeField]
-    private float xRotationMax = 50f;
+    public float xRotationMax = 50f;
+    [SerializeField]
+    public float sitHeight = 0f;
 
     [SerializeField]
-    private float orbitRadius = 5f;
+    public float orbitRadius = 5f;
 
     [SerializeField]
-    private GameObject cameraLookTarget;
+    public GameObject cameraLookTarget;
 
     private string mouseXInputName = "Mouse X", mouseYInputName = "Mouse Y";
     [SerializeField] private float mouseSensitivity = 90f;
@@ -67,8 +69,8 @@ public class CameraMotion : MonoBehaviour
         offset = Quaternion.AngleAxis(-xRotation, Vector3.right) * offset;
         offset = Quaternion.AngleAxis(ringPosition, Vector3.up) * offset;
 
-        transform.position = cameraLookTarget.transform.position + offset;
+        transform.position = cameraLookTarget.transform.position + offset + Vector3.up * sitHeight;
 
-        transform.LookAt(cameraLookTarget.transform);
+        transform.LookAt(cameraLookTarget.transform.position + Vector3.up * sitHeight);
     }
 }

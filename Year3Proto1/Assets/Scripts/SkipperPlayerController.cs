@@ -7,13 +7,25 @@ public class SkipperPlayerController : SkipperShared
     enum Weapons
     {
         WindCannon,
-        Minigun
+        Minigun,
+        None
     }
 
     Weapons selectedWeapon;
 
     [SerializeField]
     protected GameObject minigunTurret;
+
+    [SerializeField]
+    protected GameObject minigunElevationRing;
+
+    [SerializeField]
+    protected GameObject minigunCannon;
+
+    [SerializeField]
+    protected float minigunROF;
+    protected float minigunFireDelay;
+    protected float minigunCooldown;
 
     // 0 is front, 1 is back
     int windCannonAimMode;
@@ -30,6 +42,14 @@ public class SkipperPlayerController : SkipperShared
         else
         {
             selectedWeapon = Weapons.Minigun;
+            CameraMotion cameraScript = Camera.main.GetComponent<CameraMotion>();
+            cameraScript.cameraLookTarget = minigunTurret;
+            cameraScript.orbitRadius = 4f;
+            cameraScript.xRotationMin = -30f;
+            cameraScript.xRotationMax = 60f;
+            cameraScript.sitHeight = 2f;
+            minigunFireDelay = 1f / minigunROF;
+            minigunCooldown = 0f;
         }
     }
 
@@ -67,16 +87,35 @@ public class SkipperPlayerController : SkipperShared
         }
         if (Input.GetKeyDown("tab"))
         {
-            if (windCannon)
+            if (selectedWeapon == Weapons.WindCannon)
             {
-                if (selectedWeapon == Weapons.WindCannon)
-                {
-                    selectedWeapon = Weapons.Minigun;
-                }
-                else if (selectedWeapon == Weapons.Minigun)
-                {
-                    selectedWeapon = Weapons.WindCannon;
-                }
+                selectedWeapon = Weapons.Minigun;
+            }
+            else if (selectedWeapon == Weapons.Minigun)
+            {
+                selectedWeapon = Weapons.None;
+            }
+            else
+            {
+                selectedWeapon = windCannon ? Weapons.WindCannon : Weapons.Minigun;
+            }
+            if (selectedWeapon == Weapons.Minigun)
+            {
+                CameraMotion cameraScript = Camera.main.GetComponent<CameraMotion>();
+                cameraScript.cameraLookTarget = minigunTurret;
+                cameraScript.orbitRadius = 4f;
+                cameraScript.xRotationMin = -30f;
+                cameraScript.xRotationMax = 60f;
+                cameraScript.sitHeight = 2f;
+            }
+            else if (selectedWeapon == Weapons.None)
+            {
+                CameraMotion cameraScript = Camera.main.GetComponent<CameraMotion>();
+                cameraScript.cameraLookTarget = chassis;
+                cameraScript.orbitRadius = 15f;
+                cameraScript.xRotationMin = -20f;
+                cameraScript.xRotationMax = 60f;
+                cameraScript.sitHeight = 0f;
             }
         }
         if (selectedWeapon == Weapons.WindCannon)
@@ -116,6 +155,7 @@ public class SkipperPlayerController : SkipperShared
             }        }
         else if (selectedWeapon == Weapons.Minigun)
         {
+            minigunCooldown += Time.deltaTime;
             // point the airCannon forward
             if (windCannon)
             {
@@ -143,32 +183,44 @@ public class SkipperPlayerController : SkipperShared
                     minigunTurret.GetComponent<Rigidbody>().AddTorque(0f, minigunTurretRot.y, 0f);
                 }
 
-                Transform minigunEleRing = minigunTurret.transform.GetChild(0);
-                Transform minigunCannon = minigunEleRing.GetChild(0);
-                
-                float elevation = Vector3.Angle(-minigunEleRing.forward, Camera.main.transform.forward);
-
                 /*
-                if (miniRot.x > 180f) { miniRot.x -= 360f; }
-
-                Vector3 offset = Vector3.forward;
-
-                offset = Quaternion.AngleAxis(, Vector3.right) * offset;
-
-                if (Mathf.Abs(miniRot.x) > 5f)
+                //float elevation = Vector3.Angle(-minigunCannon.transform.forward, Camera.main.transform.forward);
+                float elevation = Vector3.Angle(-minigunElevationRing.transform.forward, Camera.main.transform.forward);
+                if (Camera.main.transform.forward.y > -minigunCannon.transform.forward.y)
                 {
-                    minigunCannon.GetComponent<Rigidbody>().AddTorque(Mathf.Sign(miniRot.x) * 1000f, 0f, 0f);
+                    elevation *= -1f;
+                }
+                Debug.Log(elevation);
+                Debug.DrawRay(minigunCannon.transform.position, -minigunTurret.transform.forward, Color.red);
+                Debug.DrawRay(minigunCannon.transform.position, -minigunCannon.transform.forward, Color.green);
+                Debug.DrawRay(minigunCannon.transform.position, Camera.main.transform.forward, Color.blue);
+                */
+
+
+                //Vector3.RotateTowards(-minigunCannon.transform.forward, )
+                Vector3 rot = Quaternion.FromToRotation(-minigunCannon.transform.forward, Camera.main.transform.forward).eulerAngles;
+                if (rot.x > 180f) { rot.x -= 360f; }
+
+                if (Mathf.Abs(rot.x) > 2f)
+                {
+                    minigunElevationRing.GetComponent<Rigidbody>().AddTorque(Mathf.Sign(rot.x) * 100f, 0f, 0f);
                 }
                 else
                 {
-                    minigunCannon.GetComponent<Rigidbody>().AddTorque(miniRot.x, 0f, 0f);
+                    minigunElevationRing.GetComponent<Rigidbody>().AddTorque(Mathf.Sign(rot.x) * 10f, 0f, 0f);
                 }
-                */
                 
                 if (Input.GetMouseButton(0))
                 {
-                    float miniSpin = 100f;
-                    minigunCannon.GetComponent<Rigidbody>().AddTorque(0f, 0f, miniSpin);
+                    if (minigunCooldown >= minigunFireDelay)
+                    {
+                        minigunCooldown = 0f;
+                        Vector3 spawnPos = minigunCannon.transform.GetChild(0).position;
+                        GameObject bulletInstance = Instantiate(bullet, spawnPos, Quaternion.identity);
+                        bulletInstance.GetComponent<Rigidbody>().AddForce(-minigunCannon.transform.forward * 5f);
+                    }
+                    //float miniSpin = 100f;
+                    //minigunCannon.GetComponent<Rigidbody>().AddTorque(0f, 0f, miniSpin);
                 }
             }
             // rotate the minigun towards the camera
@@ -182,7 +234,7 @@ public class SkipperPlayerController : SkipperShared
                 autogunToFire = (autogunToFire == 0) ? 1 : 0;
             }
             */
-            
+
         }
     }
 }
