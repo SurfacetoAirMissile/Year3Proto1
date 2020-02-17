@@ -347,6 +347,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: InteractionEffect
       objectReference: {fileID: 0}
+    - target: {fileID: 605833928290011869, guid: 6818616c317c5914db8ae268a9a9801d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6818616c317c5914db8ae268a9a9801d, type: 3}
 --- !u!4 &990839966 stripped
