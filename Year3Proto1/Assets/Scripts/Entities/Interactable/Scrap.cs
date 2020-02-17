@@ -41,6 +41,7 @@ public class Scrap : InteractableEntity
 
             if (distance < 1.0f)
             {
+                target.GetComponent<PlayerEntity>().AddScrap(5);
                 Instantiate(effect, transform.parent);
                 Destroy(interactableUI.gameObject);
                 Destroy(gameObject);

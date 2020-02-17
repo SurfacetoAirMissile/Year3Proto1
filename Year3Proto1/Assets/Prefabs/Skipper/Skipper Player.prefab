@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 091ce5db1ee66624d886ff932f4edbd1, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   chassis: {fileID: 7683130844499597714}
   hoverballs:
   - {fileID: 5261827689963306837}
@@ -45,12 +45,12 @@ PrefabInstance:
     - target: {fileID: 1721609336939940436, guid: 3dfa51800f071c04385801ba6d092232,
         type: 3}
       propertyPath: m_ConnectedBody
-      value:
+      value: 
       objectReference: {fileID: 4211086325264852464}
     - target: {fileID: 2179320168328292344, guid: 3dfa51800f071c04385801ba6d092232,
         type: 3}
       propertyPath: m_ConnectedBody
-      value:
+      value: 
       objectReference: {fileID: 4211086325264852464}
     - target: {fileID: 2179320168803496035, guid: 3dfa51800f071c04385801ba6d092232,
         type: 3}
@@ -65,27 +65,22 @@ PrefabInstance:
     - target: {fileID: 2179320168908629114, guid: 3dfa51800f071c04385801ba6d092232,
         type: 3}
       propertyPath: m_ConnectedBody
-      value:
+      value: 
       objectReference: {fileID: 4211086325264852464}
     - target: {fileID: 2179320169497272670, guid: 3dfa51800f071c04385801ba6d092232,
         type: 3}
       propertyPath: m_ConnectedBody
-      value:
+      value: 
       objectReference: {fileID: 4211086325264852464}
     - target: {fileID: 2179320169878371513, guid: 3dfa51800f071c04385801ba6d092232,
         type: 3}
       propertyPath: m_ConnectedBody
-      value:
+      value: 
       objectReference: {fileID: 4211086325264852464}
     - target: {fileID: 2179320170365795384, guid: 3dfa51800f071c04385801ba6d092232,
         type: 3}
       propertyPath: m_Name
       value: Skipper Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 2179320170365795384, guid: 3dfa51800f071c04385801ba6d092232,
-        type: 3}
-      propertyPath: m_TagString
-      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 2179320170365795391, guid: 3dfa51800f071c04385801ba6d092232,
         type: 3}
@@ -141,6 +136,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4441871436417597757, guid: 3dfa51800f071c04385801ba6d092232,
+        type: 3}
+      propertyPath: m_TagString
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 7875543343515860319, guid: 3dfa51800f071c04385801ba6d092232,
         type: 3}
