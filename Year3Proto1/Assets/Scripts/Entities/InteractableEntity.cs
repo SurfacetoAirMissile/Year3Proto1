@@ -2,26 +2,54 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InteractableEntity : MonoBehaviour
+public abstract class InteractableEntity : MonoBehaviour
 {
-    public GameObject prefab;
-    public GameObject canvas;
+    public GameObject prefab, canvas, target;
+    public InteractableUI interactableUI { get; set; }
 
-    private InteractableUI interactableUI;
+    private bool interacting = false;
 
     private void OnTriggerEnter(Collider other)
     {
-        GameObject instantiatedObject = Instantiate(prefab, canvas.transform, false);
-        interactableUI = instantiatedObject.GetComponent<InteractableUI>();
+        if (other.gameObject.tag == "Player")
+        {
+            interacting = true;
+           
+            GameObject instantiatedObject = Instantiate(prefab, canvas.transform, false);
+            interactableUI = instantiatedObject.GetComponent<InteractableUI>();
+            interactableUI.target = transform;
+            target = other.gameObject;
+        }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        Destroy(interactableUI);
+        if (other.gameObject.tag == "Player")
+        {
+            interacting = false;
+            Destroy(interactableUI.gameObject);
+            Destroy(interactableUI.gameObject);
+            OnExitRange();
+        }
+    }
+
+    private void Update()
+    {
+        if(interactableUI != null)
+        {
+            if (interactableUI.InRange() && Input.GetKey("f") && interacting) OnInteract();
+            if (interacting) OnRefresh();
+        }
     }
 
     public InteractableUI UserInterface()
     {
         return interactableUI;
     }
+
+    public abstract void OnRefresh();
+
+    public abstract void OnExitRange();
+
+    public abstract void OnInteract();
 }
