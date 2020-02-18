@@ -8,7 +8,7 @@ public class Scrap : InteractableEntity
     public GameObject effect;
 
     private Rigidbody body;
-    private float finalSpeed = 72.0f;
+    private float finalSpeed = 24.0f;
     private float currentSpeed = 0.0f;
 
     public override void OnInteract()
@@ -19,7 +19,7 @@ public class Scrap : InteractableEntity
             gameObject.GetComponentInChildren<BoxCollider>().isTrigger = true;
 
             Rigidbody body = gameObject.GetComponentInChildren<Rigidbody>();
-            body.AddForce(300 * body.gameObject.transform.up);
+            body.AddForce(220 * body.gameObject.transform.up);
 
             collecting = true;
         }

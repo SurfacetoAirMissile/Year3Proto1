@@ -44,10 +44,10 @@ public class SkipperPlayerController : SkipperShared
             selectedWeapon = Weapons.Minigun;
             CameraMotion cameraScript = Camera.main.GetComponent<CameraMotion>();
             cameraScript.cameraLookTarget = minigunTurret;
-            cameraScript.orbitRadius = 4f;
+            cameraScript.orbitRadius = 1f;
             cameraScript.xRotationMin = -30f;
             cameraScript.xRotationMax = 60f;
-            cameraScript.sitHeight = 2f;
+            cameraScript.sitHeight = 0.5f;
             minigunFireDelay = 1f / minigunROF;
             minigunCooldown = 0f;
         }
@@ -110,30 +110,19 @@ public class SkipperPlayerController : SkipperShared
             {
                 CameraMotion cameraScript = Camera.main.GetComponent<CameraMotion>();
                 cameraScript.cameraLookTarget = minigunTurret;
-                cameraScript.orbitRadius = 4f;
+                cameraScript.orbitRadius = 1f;
                 cameraScript.xRotationMin = -30f;
                 cameraScript.xRotationMax = 60f;
-                cameraScript.sitHeight = 2f;
+                cameraScript.sitHeight = 0.5f;
             }
             else if (selectedWeapon == Weapons.None)
             {
                 CameraMotion cameraScript = Camera.main.GetComponent<CameraMotion>();
                 cameraScript.cameraLookTarget = chassis;
-                cameraScript.orbitRadius = 15f;
+                cameraScript.orbitRadius = 4f;
                 cameraScript.xRotationMin = -20f;
                 cameraScript.xRotationMax = 60f;
                 cameraScript.sitHeight = 0f;
-            }
-        }
-        if (Input.GetMouseButtonDown(1))
-        {
-            if (Cursor.lockState == CursorLockMode.Locked)
-            {
-                Cursor.lockState = CursorLockMode.None;
-            }
-            else
-            {
-                Cursor.lockState = CursorLockMode.Locked;
             }
         }
         if (selectedWeapon == Weapons.WindCannon)

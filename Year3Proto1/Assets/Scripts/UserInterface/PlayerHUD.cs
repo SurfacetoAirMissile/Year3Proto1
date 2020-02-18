@@ -39,10 +39,13 @@ public class PlayerHUD : MonoBehaviour
         label.text = playerEntity.GetScrap().ToString();
 
         //Compass
+
+        /*
         Vector3 cross = Vector3.Cross(Vector3.forward, target.transform.forward);
         float angle = Vector3.Angle(target.transform.forward, Vector3.forward);
         float direction = Vector3.Dot(cross, Vector3.up);
 
         transform.position = startPosition + (new Vector3(angle * Mathf.Sign(direction) * rotationAngle, 0, 0));
+        */
     }
 }
