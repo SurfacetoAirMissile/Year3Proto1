@@ -2,64 +2,31 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SkipperPlayerController : SkipperShared
+public class ScimitarPlayer : ScimitarShared
 {
     enum Weapons
     {
-        WindCannon,
         Minigun,
         None
     }
 
     Weapons selectedWeapon;
 
-    [SerializeField]
-    protected GameObject minigunTurret;
-
-    [SerializeField]
-    protected GameObject minigunElevationRing;
-
-    [SerializeField]
-    protected GameObject minigunCannon;
-
-    [SerializeField]
-    protected float minigunROF;
-    protected float minigunFireDelay;
-    protected float minigunCooldown;
-
-    // 0 is front, 1 is back
-    int windCannonAimMode;
-
     // Start is called before the first frame update
     void Start()
     {
-        Startup();
-        windCannonAimMode = 0;
-        //if (windCannon)
-        //{
-            //selectedWeapon = Weapons.WindCannon;
-        //}
-        //else
-        //{
-            selectedWeapon = Weapons.Minigun;
-            CameraMotion cameraScript = Camera.main.GetComponent<CameraMotion>();
-            cameraScript.cameraLookTarget = minigunTurret;
-            cameraScript.orbitRadius = 1f;
-            cameraScript.xRotationMin = -30f;
-            cameraScript.xRotationMax = 60f;
-            cameraScript.sitHeight = 0.5f;
-            minigunFireDelay = 1f / minigunROF;
-            minigunCooldown = 0f;
-        //}
+        ScimitarStartup();
     }
 
     // Update is called once per frame
     void Update()
     {
+
         ApplyLevitationForces();
 
         float pushAmount = Time.deltaTime * 1000f * pushForce;
-        float rotationAmount = Time.deltaTime * 1000f * rotationForce;
+        float rotationAmount = Time.deltaTime * 1000f * rotationForce;
+
         if (Input.GetKeyDown("w"))
         {
             chassis.transform.GetChild(0).GetComponent<ParticleSystem>().Play(true);
@@ -94,17 +61,13 @@ public class SkipperPlayerController : SkipperShared
         }
         if (Input.GetKeyDown("tab"))
         {
-            if (selectedWeapon == Weapons.WindCannon)
-            {
-                selectedWeapon = Weapons.Minigun;
-            }
-            else if (selectedWeapon == Weapons.Minigun)
+            if (selectedWeapon == Weapons.Minigun)
             {
                 selectedWeapon = Weapons.None;
             }
             else
             {
-                selectedWeapon = windCannon ? Weapons.WindCannon : Weapons.Minigun;
+                selectedWeapon = Weapons.Minigun;
             }
             if (selectedWeapon == Weapons.Minigun)
             {
