@@ -6,6 +6,6 @@ public class SkipperShared : HovercraftShared
 {
     protected void SkipperStartup()
     {
-        Startup();
+        HovercraftStartup();
     }
 }

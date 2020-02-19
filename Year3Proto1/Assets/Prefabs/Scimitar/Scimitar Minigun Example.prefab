@@ -947,24 +947,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 091ce5db1ee66624d886ff932f4edbd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  windCannonForce: 0
   hoverForce: 3
   pushForce: 5
   rotationForce: 150
-  chassis: {fileID: 3753726404136749948}
-  hoverballs:
-  - {fileID: 4266464832683839380}
-  - {fileID: 4266464833921266518}
-  - {fileID: 4266464834012226594}
-  - {fileID: 4266464833262911254}
-  - {fileID: 4266464832185254604}
-  - {fileID: 4266464832208278192}
-  windCannon: {fileID: 0}
-  bullet: {fileID: 1358410898418589752, guid: e4b924e172f349b40b9d5d17433ed837, type: 3}
-  minigunTurret: {fileID: 8863860751557268716}
-  minigunElevationRing: {fileID: 7412445407858457904}
-  minigunCannon: {fileID: 5638397014562594742}
-  minigunROF: 30
 --- !u!1 &5638397014562594742
 GameObject:
   m_ObjectHideFlags: 0
@@ -979,7 +964,7 @@ GameObject:
   - component: {fileID: 3508054528879926319}
   - component: {fileID: 6436170789126117689}
   m_Layer: 0
-  m_Name: Gattling Gun
+  m_Name: Minigun Barrel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1172,7 +1157,7 @@ GameObject:
   - component: {fileID: 6080088195401483999}
   - component: {fileID: 3733670191553160587}
   m_Layer: 0
-  m_Name: Elevation Ring
+  m_Name: Minigun Elevation Ring
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1364,7 +1349,7 @@ GameObject:
   - component: {fileID: 3034253304739495829}
   - component: {fileID: 6446378185966525651}
   m_Layer: 0
-  m_Name: Gattling Turret
+  m_Name: Minigun Turret
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

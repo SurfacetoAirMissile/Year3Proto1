@@ -143,6 +143,16 @@ PrefabInstance:
       propertyPath: hoverForce
       value: 0.25
       objectReference: {fileID: 0}
+    - target: {fileID: 3034253304739495829, guid: 3c712bc036b627d4e99035f2f89ca184,
+        type: 3}
+      propertyPath: m_AngularDrag
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3508054528879926319, guid: 3c712bc036b627d4e99035f2f89ca184,
+        type: 3}
+      propertyPath: m_AngularDrag
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 3733670191553160587, guid: 3c712bc036b627d4e99035f2f89ca184,
         type: 3}
       propertyPath: m_ConnectedAnchor.y
@@ -152,6 +162,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_ConnectedAnchor.z
       value: 0.000015258789
+      objectReference: {fileID: 0}
+    - target: {fileID: 3733670191553160587, guid: 3c712bc036b627d4e99035f2f89ca184,
+        type: 3}
+      propertyPath: m_ConnectedAnchor.x
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3761169718065242782, guid: 3c712bc036b627d4e99035f2f89ca184,
         type: 3}
@@ -228,6 +243,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Scimitar Minigun Example
       objectReference: {fileID: 0}
+    - target: {fileID: 6080088195401483999, guid: 3c712bc036b627d4e99035f2f89ca184,
+        type: 3}
+      propertyPath: m_AngularDrag
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 6436170789126117689, guid: 3c712bc036b627d4e99035f2f89ca184,
         type: 3}
       propertyPath: m_ConnectedAnchor.y
@@ -237,6 +257,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_ConnectedAnchor.z
       value: -0.2096405
+      objectReference: {fileID: 0}
+    - target: {fileID: 6436170789126117689, guid: 3c712bc036b627d4e99035f2f89ca184,
+        type: 3}
+      propertyPath: m_ConnectedAnchor.x
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6446378185966525651, guid: 3c712bc036b627d4e99035f2f89ca184,
         type: 3}
@@ -333,7 +358,8 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2710062886562449610, guid: 3c712bc036b627d4e99035f2f89ca184, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 3c712bc036b627d4e99035f2f89ca184, type: 3}
 --- !u!1001 &24927115
 PrefabInstance:
@@ -3440,6 +3466,29 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 4ca19f9cfe0106749a31af372d73de1e, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3a5ff25c75bb5e74ab314182c2703fe6, type: 3}
+--- !u!1 &594539942 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5193893089884302229, guid: 3c712bc036b627d4e99035f2f89ca184,
+    type: 3}
+  m_PrefabInstance: {fileID: 14343542}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &594539944
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 594539942}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f5e1e7e9a5fa6049b4e5adf501e5bd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverForce: 0.25
+  pushForce: 1
+  rotationForce: 5
+  minigunROF: 20
+  minigunMaximumDepression: -5
 --- !u!1001 &600407159
 PrefabInstance:
   m_ObjectHideFlags: 0

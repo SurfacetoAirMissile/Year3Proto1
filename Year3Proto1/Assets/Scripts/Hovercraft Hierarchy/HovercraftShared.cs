@@ -8,8 +8,6 @@ public class HovercraftShared : MonoBehaviour
     protected List<GameObject> hoverballs;
     protected float totalMass;
 
-    //[Header("To Be Removed (Component Assignment)")]
-
     [SerializeField] [Tooltip("The amount of force pushing up on the chassis from each Hoverball, in thousands of units/second.")]
     protected float hoverForce;
 
@@ -33,9 +31,10 @@ public class HovercraftShared : MonoBehaviour
         }
     }
 
-    protected void Startup()
+    protected void HovercraftStartup()
     {
         totalMass = GetTotalMass();
+        hoverballs = new List<GameObject>();
         foreach (Transform child in transform)
         {
             if (child.name.Contains("Hoverball")) { hoverballs.Add(child.gameObject); }

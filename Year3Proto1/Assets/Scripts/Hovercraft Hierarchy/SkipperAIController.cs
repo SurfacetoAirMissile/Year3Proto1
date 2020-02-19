@@ -53,7 +53,7 @@ public class SkipperAIController : SkipperShared
     // Start is called before the first frame update
     void Start()
     {
-        Startup();
+        HovercraftStartup();
         if (faction == Faction.Neutral)
         {
             state = SkipperAIState.Wander;
