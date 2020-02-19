@@ -187,7 +187,7 @@ Material:
     - _DistortionEnable: 1
     - _DistortionEnabled: 0
     - _DistortionOnly: 0
-    - _DistortionScale: 1.5
+    - _DistortionScale: 2.5
     - _DistortionSrcBlend: 1
     - _DistortionStrength: 1
     - _DistortionStrengthScaled: 0
