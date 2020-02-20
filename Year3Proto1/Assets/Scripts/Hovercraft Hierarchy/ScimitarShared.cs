@@ -20,6 +20,7 @@ public class ScimitarShared : HovercraftShared
 
     public void ScimitarStartup()
     {
+        minigunFireDelay = 1f / minigunROF;
         HovercraftStartup();
         bulletPrefab = Resources.Load("Bullet") as GameObject;
         foreach (Transform child in transform)

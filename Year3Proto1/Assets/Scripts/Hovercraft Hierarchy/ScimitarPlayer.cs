@@ -29,6 +29,12 @@ public class ScimitarPlayer : ScimitarShared
         {
             if (child.name.Contains("Wind Cannon")) { windCannon = child.gameObject; }
         }
+        CameraMotion cameraScript = Camera.main.GetComponent<CameraMotion>();
+        cameraScript.cameraLookTarget = windCannon;
+        cameraScript.orbitRadius = 1f;
+        cameraScript.xRotationMin = -30f;
+        cameraScript.xRotationMax = 60f;
+        cameraScript.sitHeight = 0.5f;
     }
 
     // Update is called once per frame
@@ -115,6 +121,23 @@ public class ScimitarPlayer : ScimitarShared
         }
         if (selectedWeapon == Weapons.WindCannon)
         {
+            Vector3 minigunTurretRot = Quaternion.FromToRotation(-minigunTurret.transform.forward, chassis.transform.forward).eulerAngles;
+            if (minigunTurretRot.y > 180f) { minigunTurretRot.y -= 360f; }
+            StaticFunc.RotateTo(minigunTurret.GetComponent<Rigidbody>(), 'y', minigunTurretRot.y);
+            if (Mathf.Abs(minigunTurretRot.y) < 15f)
+            {
+                Vector3 chassisForward = chassis.transform.forward;
+                Vector3 barrelForward = -minigunElevationRing.transform.forward;
+                float angle = Vector3.Angle(chassisForward, barrelForward);
+                chassisForward.x = 0; chassisForward.z = 0;
+                barrelForward.x = 0; barrelForward.z = 0;
+                if (chassisForward.y < barrelForward.y)
+                {
+                    angle *= -1;
+                }
+                StaticFunc.RotateTo(minigunElevationRing.GetComponent<Rigidbody>(), 'x', angle);
+            }
+
             Vector3 rotation;
 
             if (Input.GetKeyDown("left ctrl"))
@@ -212,22 +235,28 @@ public class ScimitarPlayer : ScimitarShared
         }
         else if (selectedWeapon == Weapons.None)
         {
-            Vector3 minigunTurretRot = Quaternion.FromToRotation(-minigunTurret.transform.forward, -chassis.transform.forward).eulerAngles;
+            Vector3 minigunTurretRot = Quaternion.FromToRotation(-minigunTurret.transform.forward, chassis.transform.forward).eulerAngles;
             if (minigunTurretRot.y > 180f) { minigunTurretRot.y -= 360f; }
             StaticFunc.RotateTo(minigunTurret.GetComponent<Rigidbody>(), 'y', minigunTurretRot.y);
             if (Mathf.Abs(minigunTurretRot.y) < 15f)
             {
-                Vector3 cameraForward = Camera.main.transform.forward;
+                Vector3 chassisForward = chassis.transform.forward;
                 Vector3 barrelForward = -minigunElevationRing.transform.forward;
-                float angle = Vector3.Angle(cameraForward, barrelForward);
-                cameraForward.x = 0; cameraForward.z = 0;
+                float angle = Vector3.Angle(chassisForward, barrelForward);
+                chassisForward.x = 0; chassisForward.z = 0;
                 barrelForward.x = 0; barrelForward.z = 0;
-                if (cameraForward.y < barrelForward.y)
+                if (chassisForward.y < barrelForward.y)
                 {
                     angle *= -1;
                 }
                 StaticFunc.RotateTo(minigunElevationRing.GetComponent<Rigidbody>(), 'x', angle);
             }
+
+            // point the wind cannon forward
+            Vector3 WCrotation = Quaternion.FromToRotation(windCannon.transform.forward, -chassis.transform.forward).eulerAngles;
+            if (WCrotation.y > 180f) { WCrotation.y -= 360f; }
+            StaticFunc.RotateTo(windCannon.GetComponent<Rigidbody>(), 'y', WCrotation.y);
+
         }
     }
 }

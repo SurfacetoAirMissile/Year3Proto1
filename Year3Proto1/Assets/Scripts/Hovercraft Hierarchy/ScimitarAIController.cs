@@ -58,15 +58,8 @@ public class ScimitarAIController : ScimitarShared
     // Start is called before the first frame update
     void Start()
     {
-        HovercraftStartup();
-        if (faction == Faction.Neutral)
-        {
-            state = HovercraftAIState.Wander;
-        }
-        if (faction == Faction.Hostile)
-        {
-            state = HovercraftAIState.Wander;
-        }
+        ScimitarStartup();
+        state = HovercraftAIState.Wander;
         wanderTurning = false;
         wanderTurnForce = 0f;
         wanderForce = .5f;
@@ -77,7 +70,11 @@ public class ScimitarAIController : ScimitarShared
     // Update is called once per frame
     void Update()
     {
+        minigunCooldown += Time.deltaTime;
         ApplyLevitationForces();
+        // Get direction from AI to player
+        Vector3 AIToPlayer = playerChassis.transform.position - chassis.transform.position;
+        Vector3 AIMinigunToPlayer = playerChassis.transform.position - minigunTurret.transform.position;
         switch (state)
         {
             case HovercraftAIState.Wander:
@@ -112,8 +109,6 @@ public class ScimitarAIController : ScimitarShared
                 }
                 break;
             case HovercraftAIState.Chase:
-                // Get direction from AI to player
-                Vector3 AIToPlayer = playerChassis.transform.position - chassis.transform.position;
                 // Rotate them towards the player
                 Vector3 rotation = Quaternion.FromToRotation(chassis.transform.forward, AIToPlayer).eulerAngles;
                 if (rotation.y > 180f) { rotation.y -= 360f; }
@@ -130,27 +125,51 @@ public class ScimitarAIController : ScimitarShared
                 }
 
                 break;
-                /*
+                
             case HovercraftAIState.OrbitEngage:
-                // Get direction from AI to player
-                Vector3 AIToPlayer = playerChassis.transform.position - chassis.transform.position;
-                // Rotate them towards the player
-                Vector3 rotation = Quaternion.FromToRotation(chassis.transform.forward, AIToPlayer).eulerAngles;
-                if (rotation.y > 180f) { rotation.y -= 360f; }
-                StaticFunc.RotateTo(chassisRB, 'y', rotation.y);
-                if (Mathf.Abs(rotation.y) <= 35f)
+                // Aim the cannon at the player
+
+                Vector3 minigunTurretRot = Quaternion.FromToRotation(-minigunTurret.transform.forward, AIMinigunToPlayer.normalized).eulerAngles;
+                if (minigunTurretRot.y > 180f) { minigunTurretRot.y -= 360f; }
+                StaticFunc.RotateTo(minigunTurret.GetComponent<Rigidbody>(), 'y', minigunTurretRot.y);
+                if (Mathf.Abs(minigunTurretRot.y) < 15f)
                 {
-                    Thrust(chassis.transform.forward, 1f);
+                    Vector3 toPlayer = AIMinigunToPlayer.normalized;
+                    Vector3 barrelForward = -minigunElevationRing.transform.forward;
+                    Debug.DrawLine(minigunBarrel.transform.position, minigunBarrel.transform.position + toPlayer, Color.red);
+                    Debug.DrawLine(minigunBarrel.transform.position, minigunBarrel.transform.position + barrelForward, Color.green);
+                    float angle = Vector3.Angle(toPlayer, barrelForward);
+                    toPlayer.x = 0; toPlayer.z = 0;
+                    barrelForward.x = 0; barrelForward.z = 0;
+                    if (toPlayer.y < barrelForward.y)
+                    {
+                        angle *= -1;
+                    }
+                    StaticFunc.RotateTo(minigunElevationRing.GetComponent<Rigidbody>(), 'x', angle * 2f);
                 }
 
-                // If we are far away from the player, chase, if we're within engagement distance, orbit them and fire.
-                if (AIToPlayer.magnitude < orbitDistance * 2f)
+                if (Mathf.Abs(minigunTurretRot.y) < 5f)
                 {
-                    state = HovercraftAIState.OrbitEngage;
+                    if (minigunCooldown >= minigunFireDelay)
+                    {
+                        minigunCooldown = 0f;
+                        Vector3 spawnPos = minigunBarrel.transform.GetChild(0).position;
+                        GameObject bulletInstance = Instantiate(bulletPrefab, spawnPos, Quaternion.identity);
+                        bulletInstance.GetComponent<Rigidbody>().velocity = chassisRB.velocity;
+                        bulletInstance.GetComponent<Rigidbody>().AddForce(-minigunBarrel.transform.forward * 5f);
+                    }
+                }
+                    
+
+
+                // If we are far away from the player, chase, if we're within engagement distance, orbit them and fire.
+                if (AIToPlayer.magnitude > orbitDistance * 2f)
+                {
+                    state = HovercraftAIState.Chase;
                 }
 
                 break;
-                */
+                
         }
     }
 

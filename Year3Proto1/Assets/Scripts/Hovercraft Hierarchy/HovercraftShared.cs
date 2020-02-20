@@ -59,7 +59,7 @@ public class HovercraftShared : MonoBehaviour
                 float distanceSquared = Mathf.Pow(groundCast.distance, 2f);
                 float finalForce = Mathf.Clamp(forceStrength / groundCast.distance, 0f, maxForceApplication);
                 ball.GetComponent<Rigidbody>().AddForce(finalForce * Vector3.up);
-                ball.GetComponent<MeshRenderer>().material.SetColor("_BaseColor", Color.white * (1f - (finalForce / maxForceApplication)));
+                //ball.GetComponent<MeshRenderer>().material.SetColor("_BaseColor", Color.white * (1f - (finalForce / maxForceApplication)));
             }
             if (Physics.Raycast(ball.transform.position, Vector3.down, 2f))
             {
