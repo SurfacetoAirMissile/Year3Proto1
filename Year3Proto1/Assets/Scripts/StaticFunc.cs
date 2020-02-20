@@ -13,13 +13,13 @@ public class StaticFunc
         switch (_axis)
         {
             case 'x':
-                _bodyToRotate.AddTorque(finalForce, 0f, 0f);
+                _bodyToRotate.AddRelativeTorque(finalForce, 0f, 0f);
                 break;
             case 'y':
-                _bodyToRotate.AddTorque(0f, finalForce, 0f);
+                _bodyToRotate.AddRelativeTorque(0f, finalForce, 0f);
                 break;
             case 'z':
-                _bodyToRotate.AddTorque(0f, 0f, finalForce);
+                _bodyToRotate.AddRelativeTorque(0f, 0f, finalForce);
                 break;
         }
     }

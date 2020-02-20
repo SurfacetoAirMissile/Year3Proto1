@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SkipperAIController : SkipperShared
+public class ScimitarAIController : ScimitarShared
 {
-    enum SkipperAIState
-    { 
+    enum HovercraftAIState
+    {
         Wander,
-        Chase
+        Chase,
+        OrbitEngage
     }
 
     public enum Faction
@@ -32,23 +33,27 @@ public class SkipperAIController : SkipperShared
 
     #region Chase Variable Definitions
 
-    private GameObject playerChassis;
-
-    #endregion
-
-
     [SerializeField]
     private float spottingAngle;
 
     [SerializeField]
     private float spottingRange;
 
-    //private float stateTimeElapsed;
+    private GameObject playerChassis;
+
+    #endregion
+
+    #region Orbit Engage Variable Definitions
+
+    [SerializeField]
+    private float orbitDistance;
+
+    #endregion
 
     [SerializeField]
     private Faction faction;
 
-    SkipperAIState state;
+    HovercraftAIState state;
 
     // Start is called before the first frame update
     void Start()
@@ -56,11 +61,11 @@ public class SkipperAIController : SkipperShared
         HovercraftStartup();
         if (faction == Faction.Neutral)
         {
-            state = SkipperAIState.Wander;
+            state = HovercraftAIState.Wander;
         }
         if (faction == Faction.Hostile)
         {
-            state = SkipperAIState.Wander;
+            state = HovercraftAIState.Wander;
         }
         wanderTurning = false;
         wanderTurnForce = 0f;
@@ -75,12 +80,12 @@ public class SkipperAIController : SkipperShared
         ApplyLevitationForces();
         switch (state)
         {
-            case SkipperAIState.Wander:
+            case HovercraftAIState.Wander:
                 if (faction == Faction.Hostile)
                 {
                     if (CanSeePlayer(spottingAngle, spottingRange))
                     {
-                        state = SkipperAIState.Chase;
+                        state = HovercraftAIState.Chase;
                     }
                 }
                 wanderUpdateStopwatch += Time.deltaTime;
@@ -99,43 +104,54 @@ public class SkipperAIController : SkipperShared
                         wanderForce = Mathf.Clamp(wanderForce, .5f, .8f);
                     }
                 }
-                Thrust(-chassis.transform.forward, wanderForce);
+                //Thrust(chassis.transform.forward, wanderForce);
                 if (wanderTurning)
                 {
-                    float rotationAmount = Time.deltaTime * rotationForce * 1000f * wanderTurnForce;
-                    chassisRB.AddTorque(new Vector3(0f, rotationAmount, 0f));
+                    float rotationAmount = rotationForce * wanderTurnForce;
+                    StaticFunc.RotateTo(chassisRB, 'y', wanderTurnForce);
                 }
                 break;
-            case SkipperAIState.Chase:
+            case HovercraftAIState.Chase:
                 // Get direction from AI to player
                 Vector3 AIToPlayer = playerChassis.transform.position - chassis.transform.position;
                 // Rotate them towards the player
-                Vector3 rotation = Quaternion.FromToRotation(-chassis.transform.forward, AIToPlayer).eulerAngles;
+                Vector3 rotation = Quaternion.FromToRotation(chassis.transform.forward, AIToPlayer).eulerAngles;
                 if (rotation.y > 180f) { rotation.y -= 360f; }
-                if (Mathf.Abs(rotation.y) > 5f)
-                {
-                    float yRotation = Time.deltaTime * rotationForce * Mathf.Sign(rotation.y);
-                    chassisRB.AddTorque(0f, yRotation * 1000f, 0f);
-                }
+                StaticFunc.RotateTo(chassisRB, 'y', rotation.y);
                 if (Mathf.Abs(rotation.y) <= 35f)
                 {
-                    Thrust(-chassis.transform.forward, 1f);
+                    Thrust(chassis.transform.forward, 1f);
                 }
-                break;
-        }
-    }
 
-    bool CanSeePlayer(float _spottingAngle, float _spottingRange)
-    {
-        Vector3 AIToPlayer = playerChassis.transform.position - chassis.transform.position;
-        if (AIToPlayer.magnitude > _spottingRange) { return false; }
-        Debug.DrawLine(chassis.transform.position, chassis.transform.position + AIToPlayer.normalized, Color.red);
-        Debug.DrawLine(chassis.transform.position, chassis.transform.position - chassis.transform.forward, Color.green);
-        if (Vector3.Angle(-chassis.transform.forward, AIToPlayer.normalized) > _spottingAngle)
-        {
-            return false;
+                // If we are far away from the player, chase, if we're within engagement distance, orbit them and fire.
+                if (AIToPlayer.magnitude < orbitDistance * 2f)
+                {
+                    state = HovercraftAIState.OrbitEngage;
+                }
+
+                break;
+                /*
+            case HovercraftAIState.OrbitEngage:
+                // Get direction from AI to player
+                Vector3 AIToPlayer = playerChassis.transform.position - chassis.transform.position;
+                // Rotate them towards the player
+                Vector3 rotation = Quaternion.FromToRotation(chassis.transform.forward, AIToPlayer).eulerAngles;
+                if (rotation.y > 180f) { rotation.y -= 360f; }
+                StaticFunc.RotateTo(chassisRB, 'y', rotation.y);
+                if (Mathf.Abs(rotation.y) <= 35f)
+                {
+                    Thrust(chassis.transform.forward, 1f);
+                }
+
+                // If we are far away from the player, chase, if we're within engagement distance, orbit them and fire.
+                if (AIToPlayer.magnitude < orbitDistance * 2f)
+                {
+                    state = HovercraftAIState.OrbitEngage;
+                }
+
+                break;
+                */
         }
-        return true;
     }
 
     bool Chance(float _outOfOne)
@@ -143,4 +159,16 @@ public class SkipperAIController : SkipperShared
         return Random.Range(0f, 1f) <= _outOfOne;
     }
 
+    bool CanSeePlayer(float _spottingAngle, float _spottingRange)
+    {
+        Vector3 AIToPlayer = playerChassis.transform.position - chassis.transform.position;
+        if (AIToPlayer.magnitude > _spottingRange) { return false; }
+        Debug.DrawLine(chassis.transform.position, chassis.transform.position + AIToPlayer.normalized, Color.red);
+        Debug.DrawLine(chassis.transform.position, chassis.transform.position + chassis.transform.forward, Color.green);
+        if (Vector3.Angle(chassis.transform.forward, AIToPlayer.normalized) > _spottingAngle)
+        {
+            return false;
+        }
+        return true;
+    }
 }

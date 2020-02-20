@@ -29,23 +29,23 @@ public class SkipperPlayerController : SkipperShared
         }
         if (Input.GetKey("w"))
         {
-            Thrust(-chassis.transform.forward, 1f);
+            Thrust(chassis.transform.forward, 1f);
         }
         if (Input.GetKey("s"))
         {
-            Thrust(chassis.transform.forward, 1f);
-        }
-        if (Input.GetKey("e"))
-        {
-            Thrust(-chassis.transform.right, 1f);
-        }
-        if (Input.GetKey("q"))
-        {
-            Thrust(chassis.transform.right, 1f);
-        }
-        if (Input.GetKey("d"))
-        {
-            chassisRB.AddTorque(0f, rotationAmount, 0f);
+            Thrust(-chassis.transform.forward, 1f);
+        }                                                                              
+        if (Input.GetKey("e"))                                                         
+        {                                                                              
+            Thrust(-chassis.transform.right, 1f);                                      
+        }                                                                              
+        if (Input.GetKey("q"))                                                         
+        {                                                                              
+            Thrust(chassis.transform.right, 1f);                                       
+        }                                                                              
+        if (Input.GetKey("d"))                                                         
+        {                                                                              
+            chassisRB.AddTorque(0f, rotationAmount, 0f);                               
         }
         if (Input.GetKey("a"))
         {
