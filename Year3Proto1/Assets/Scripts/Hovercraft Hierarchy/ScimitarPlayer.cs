@@ -146,8 +146,6 @@ public class ScimitarPlayer : ScimitarShared
                 }
             }
             */
-            Debug.DrawLine(minigunTurret.transform.position, -minigunTurret.transform.forward, Color.red);
-            Debug.DrawLine(minigunTurret.transform.position, Camera.main.transform.forward, Color.blue);
             Vector3 minigunTurretRot = Quaternion.FromToRotation(-minigunTurret.transform.forward, Camera.main.transform.forward).eulerAngles;
             if (minigunTurretRot.y > 180f) { minigunTurretRot.y -= 360f; }
             StaticFunc.RotateTo(minigunTurret.GetComponent<Rigidbody>(), 'y', minigunTurretRot.y);
@@ -156,18 +154,31 @@ public class ScimitarPlayer : ScimitarShared
             {
                 // if the z rotation is higher, rotate calculation vectors by 90 degrees on the y axis
                 Vector3 rot = Quaternion.FromToRotation(-minigunBarrel.transform.forward, Camera.main.transform.forward).eulerAngles;
-                if (rot.z > rot.x)
-                {
-                    float temp = rot.z; rot.z = rot.x; rot.x = temp;
-                }
                 if (rot.x > 180f) { rot.x -= 360f; }
-                StaticFunc.RotateTo(minigunElevationRing.GetComponent<Rigidbody>(), 'x', rot.x);
+                if (rot.y > 180f) { rot.y -= 360f; }
+                if (rot.z > 180f) { rot.z -= 360f; }
+
+                Vector3 cameraForward = Camera.main.transform.forward;
+                Vector3 barrelForward = -minigunElevationRing.transform.forward;
+                cameraForward.x = 0; cameraForward.z = 0;
+                barrelForward.x = 0; barrelForward.z = 0;
+
+
+
+
+                Debug.DrawLine(minigunBarrel.transform.position, minigunBarrel.transform.position + new Vector3(rot.x / 45f, 0f, 0f), Color.red);
+                Debug.DrawLine(minigunBarrel.transform.position, minigunBarrel.transform.position + new Vector3(0f, rot.y / 45f, 0f), Color.green);
+                Debug.DrawLine(minigunBarrel.transform.position, minigunBarrel.transform.position + new Vector3(0f, 0f, rot.z / 45f), Color.blue);
+                
+                //StaticFunc.RotateTo(minigunElevationRing.GetComponent<Rigidbody>(), 'x', rot.x);
+                /*
                 float minigunEleRingRotX = minigunElevationRing.transform.rotation.eulerAngles.x;
                 if (minigunEleRingRotX > 180f) { minigunEleRingRotX -= 360f; };
                 if (minigunEleRingRotX < minigunMaximumDepression)
                 {
                     StaticFunc.RotateTo(minigunElevationRing.GetComponent<Rigidbody>(), 'x', -2 * rot.x);
                 }
+                */
             }
 
             if (Input.GetMouseButton(0))
