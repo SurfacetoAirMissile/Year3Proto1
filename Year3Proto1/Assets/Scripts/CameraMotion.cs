@@ -73,4 +73,15 @@ public class CameraMotion : MonoBehaviour
 
         transform.LookAt(cameraLookTarget.transform.position + Vector3.up * sitHeight);
     }
+
+    enum CameraPreset
+    {
+        ScimitarChassis,
+        ScimitarMinigun
+    }
+
+    void LoadPreset(CameraPreset _preset)
+    {
+
+    }
 }
