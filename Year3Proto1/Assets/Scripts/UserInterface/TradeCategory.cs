@@ -39,7 +39,8 @@ public class TradeCategory : MonoBehaviour
 
             image.transform.DOLocalMoveY(resourceEntities[index].transform.localPosition.y, 0.2f).SetEase(Ease.OutQuint);
         }
-        else if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
+        
+        if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
         {
             if (index <= 0)
             {

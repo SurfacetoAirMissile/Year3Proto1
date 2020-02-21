@@ -32,4 +32,35 @@ public class Trading : MonoBehaviour
 
         tradeCategories[0].gameObject.SetActive(true);
     }
+
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.A))
+        {
+            tradeCategories[index].gameObject.SetActive(false);
+            if (index >= (tradeCategories.Count - 1))
+            {
+                index = 0;
+            }
+            else
+            {
+                index++;
+            }
+            tradeCategories[index].gameObject.SetActive(true);
+        }
+
+        if (Input.GetKeyDown(KeyCode.D))
+        {
+            tradeCategories[index].gameObject.SetActive(false);
+            if (index <= 0)
+            {
+                index = (tradeCategories.Count - 1);
+            }
+            else
+            {
+                index--;
+            }
+            tradeCategories[index].gameObject.SetActive(true);
+        }
+    }
 }
