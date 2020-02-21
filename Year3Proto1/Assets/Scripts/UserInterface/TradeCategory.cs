@@ -7,7 +7,8 @@ using DG.Tweening;
 public class TradeCategory : MonoBehaviour
 {
     public string categoryName;
-    public Image image;
+    public Image outline, outline2;
+    public Image arrow;
     public Transform parent;
 
     private List<ResourceEntity> resourceEntities;
@@ -37,7 +38,7 @@ public class TradeCategory : MonoBehaviour
                 index++;
             }
 
-            image.transform.DOLocalMoveY(resourceEntities[index].transform.localPosition.y, 0.2f).SetEase(Ease.OutQuint);
+            Switch();
         }
         
         if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
@@ -51,7 +52,7 @@ public class TradeCategory : MonoBehaviour
                 index--;
             }
 
-            image.transform.DOLocalMoveY(resourceEntities[index].transform.localPosition.y, 0.2f).SetEase(Ease.OutQuint);
+            Switch();
 
         }
 
@@ -64,5 +65,36 @@ public class TradeCategory : MonoBehaviour
     public ResourceEntity GetCurrentResource()
     {
         return resourceEntities[index];
+    }
+
+    public void Switch()
+    {
+        float moveTime = 0.3f;
+
+        /* FIRST ANIMATION
+         
+        DOTween.Sequence()
+          .Join(outline2.transform.DOLocalMoveY(resourceEntities[index].transform.localPosition.y, 0.0f))
+          .Append(arrow.transform.DOLocalMoveY(resourceEntities[index].transform.localPosition.y, moveTime).SetEase(Ease.InOutQuint))
+          .Join(outline2.DOFade(1.0f, moveTime))
+          .Join(outline.DOFade(0.0f, moveTime))
+          .Append(outline.transform.DOLocalMoveY(resourceEntities[index].transform.localPosition.y, 0.0f))
+          .Join(outline.DOFade(1.0f, 0.0f))
+          .Join(outline2.DOFade(0.0f, 0.0f)).Play();
+
+        */
+
+        /* SECOND ANIMATION 
+        
+        DOTween.Sequence()
+          .Join(outline2.transform.DOLocalMoveY(resourceEntities[index].transform.localPosition.y, 0.0f))
+          .Append(arrow.transform.DOLocalMoveY(resourceEntities[index].transform.localPosition.y, moveTime).SetEase(Ease.InOutQuint))
+          .Join(outline2.DOFade(1.0f, moveTime))
+          .Join(outline.DOFade(0.0f, moveTime))
+          .Append(outline.transform.DOLocalMoveY(resourceEntities[index].transform.localPosition.y, 0.0f))
+          .Join(outline.DOFade(1.0f, 0.0f))
+          .Join(outline2.DOFade(0.0f, 0.0f)).Play();
+
+        */
     }
 }

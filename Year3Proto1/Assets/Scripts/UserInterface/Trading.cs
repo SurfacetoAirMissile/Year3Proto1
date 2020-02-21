@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class Trading : MonoBehaviour
 {
@@ -62,5 +63,21 @@ public class Trading : MonoBehaviour
             }
             tradeCategories[index].gameObject.SetActive(true);
         }
+    }
+
+    public void Switch(KeyCode keyCode)
+    {
+        float moveTime = 0.3f;
+
+        if(keyCode == KeyCode.A)
+        {
+
+        }
+
+        if (keyCode == KeyCode.D)
+        {
+
+        }
+
     }
 }
