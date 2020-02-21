@@ -53,7 +53,7 @@ public class SkipperAIController : SkipperShared
     // Start is called before the first frame update
     void Start()
     {
-        Startup();
+        HovercraftStartup();
         if (faction == Faction.Neutral)
         {
             state = SkipperAIState.Wander;
@@ -125,22 +125,22 @@ public class SkipperAIController : SkipperShared
         }
     }
 
+    bool CanSeePlayer(float _spottingAngle, float _spottingRange)
+    {
+        Vector3 AIToPlayer = playerChassis.transform.position - chassis.transform.position;
+        if (AIToPlayer.magnitude > _spottingRange) { return false; }
+        Debug.DrawLine(chassis.transform.position, chassis.transform.position + AIToPlayer.normalized, Color.red);
+        Debug.DrawLine(chassis.transform.position, chassis.transform.position - chassis.transform.forward, Color.green);
+        if (Vector3.Angle(-chassis.transform.forward, AIToPlayer.normalized) > _spottingAngle)
+        {
+            return false;
+        }
+        return true;
+    }
+
     bool Chance(float _outOfOne)
     {
         return Random.Range(0f, 1f) <= _outOfOne;
     }
 
-    bool CanSeePlayer(float _spottingAngle, float _spottingRange)
-    {
-        Vector3 AIToPlayer = playerChassis.transform.position - chassis.transform.position;
-        if (AIToPlayer.magnitude > _spottingRange) { return false; }
-        Vector3 rotation = Quaternion.FromToRotation(-chassis.transform.forward, AIToPlayer.normalized).eulerAngles;
-        if (rotation.x > 180f) { rotation.x -= 360f; }
-        if (rotation.y > 180f) { rotation.y -= 360f; }
-        if (rotation.z > 180f) { rotation.z -= 360f; }
-        if (Mathf.Abs(rotation.x) > _spottingAngle) { return false; }
-        if (Mathf.Abs(rotation.y) > _spottingAngle) { return false; }
-        if (Mathf.Abs(rotation.z) > _spottingAngle) { return false; }
-        return true;
-    }
 }
