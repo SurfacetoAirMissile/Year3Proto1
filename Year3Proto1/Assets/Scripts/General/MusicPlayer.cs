@@ -28,8 +28,11 @@ public class MusicPlayer : MonoBehaviour
         speedTrack.volume = 0.0f;
 
         baseTrack.clip = baseMusic;
+        baseTrack.loop = true;
         combatTrack.clip = combatMusic;
+        combatTrack.loop = true;
         speedTrack.clip = speedMusic;
+        speedTrack.loop = true;
 
         baseTrack.Play();
         combatTrack.Play();
@@ -39,7 +42,7 @@ public class MusicPlayer : MonoBehaviour
     private void Start()
     {
         playBase = true;
-        baseTrack.DOFade(0.33f, 1.5f);
+        baseTrack.DOFade(0.25f, 1.5f);
     }
 
 
@@ -52,7 +55,7 @@ public class MusicPlayer : MonoBehaviour
 
             if (playBase)
             {
-                baseTrack.DOFade(0.33f, 1.5f);
+                baseTrack.DOFade(0.25f, 1.5f);
             }
             else
             {
