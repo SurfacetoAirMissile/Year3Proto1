@@ -7,6 +7,7 @@ public class HovercraftShared : MonoBehaviour
     protected GameObject chassis;
     protected List<GameObject> hoverballs;
     protected float totalMass;
+    public float health;
 
     [SerializeField] [Tooltip("The amount of force pushing up on the chassis from each Hoverball, in thousands of units/second.")]
     protected float hoverForce;

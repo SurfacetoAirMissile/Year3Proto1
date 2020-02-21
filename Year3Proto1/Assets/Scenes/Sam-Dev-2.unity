@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 262.30267, g: 325.09595, b: 430.38654, a: 1}
+  m_IndirectSpecularColor: {r: 262.3371, g: 325.05005, b: 430.21954, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -326,7 +326,12 @@ PrefabInstance:
     - target: {fileID: 5193893089884302229, guid: 3c712bc036b627d4e99035f2f89ca184,
         type: 3}
       propertyPath: m_Name
-      value: Scimitar Minigun Example
+      value: Scimitar Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 5193893089884302229, guid: 3c712bc036b627d4e99035f2f89ca184,
+        type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 6446378185966525651, guid: 3c712bc036b627d4e99035f2f89ca184,
         type: 3}
@@ -928,6 +933,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e076ca364f0da214d9434bc492c32925, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: 0
   hoverForce: 0.25
   pushForce: 1
   rotationForce: 5
@@ -3621,12 +3627,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f5e1e7e9a5fa6049b4e5adf501e5bd7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: 0
   hoverForce: 0.25
   pushForce: 1
   rotationForce: 5
   minigunROF: 20
   minigunMaximumDepression: -5
-  windCannonForce: 0.1
+  windCannonForce: 2
 --- !u!1001 &600407159
 PrefabInstance:
   m_ObjectHideFlags: 0

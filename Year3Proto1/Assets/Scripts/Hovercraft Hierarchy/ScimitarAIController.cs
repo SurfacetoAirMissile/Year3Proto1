@@ -148,18 +148,36 @@ public class ScimitarAIController : ScimitarShared
                     StaticFunc.RotateTo(minigunElevationRing.GetComponent<Rigidbody>(), 'x', angle * 2f);
                 }
 
-                if (Mathf.Abs(minigunTurretRot.y) < 5f)
+                if (Mathf.Abs(minigunTurretRot.y) < 15f)
                 {
                     if (minigunCooldown >= minigunFireDelay)
                     {
                         minigunCooldown = 0f;
                         Vector3 spawnPos = minigunBarrel.transform.GetChild(0).position;
                         GameObject bulletInstance = Instantiate(bulletPrefab, spawnPos, Quaternion.identity);
-                        bulletInstance.GetComponent<Rigidbody>().velocity = chassisRB.velocity;
-                        bulletInstance.GetComponent<Rigidbody>().AddForce(-minigunBarrel.transform.forward * 5f);
+                        Rigidbody bulletRB = bulletInstance.GetComponent<Rigidbody>();
+                        bulletRB.velocity = chassisRB.velocity;
+                        bulletRB.AddForce(-minigunBarrel.transform.forward * 5f);
+                        BulletBehaviour bulletB = bulletInstance.GetComponent<BulletBehaviour>();
+                        bulletB.SetDamage(5f);
+                        bulletB.SetOwner(this.gameObject);
+
                     }
                 }
-                    
+
+                // Find a spot orbit distance far away from the player that's between the player and the point infront of the hovercraft.
+                Vector3 ScimitarFront = chassis.transform.position + (chassis.transform.forward * 5f);
+                //Debug.DrawRay()
+                Vector3 orbitPoint = playerChassis.transform.position + (ScimitarFront - playerChassis.transform.position).normalized * orbitDistance;
+                Vector3 direction = orbitPoint - chassis.transform.position;
+                // Rotate them towards the player
+                Vector3 orbitRotation = Quaternion.FromToRotation(chassis.transform.forward, direction.normalized).eulerAngles;
+                if (orbitRotation.y > 180f) { orbitRotation.y -= 360f; }
+                StaticFunc.RotateTo(chassisRB, 'y', orbitRotation.y);
+                if (Mathf.Abs(orbitRotation.y) <= 35f)
+                {
+                    Thrust(chassis.transform.forward, 1f);
+                }
 
 
                 // If we are far away from the player, chase, if we're within engagement distance, orbit them and fire.

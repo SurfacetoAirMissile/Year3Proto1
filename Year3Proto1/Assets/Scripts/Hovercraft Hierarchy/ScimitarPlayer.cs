@@ -35,6 +35,7 @@ public class ScimitarPlayer : ScimitarShared
         cameraScript.xRotationMin = -30f;
         cameraScript.xRotationMax = 60f;
         cameraScript.sitHeight = 0.5f;
+        health = 100f;
     }
 
     // Update is called once per frame
@@ -223,8 +224,14 @@ public class ScimitarPlayer : ScimitarShared
                     minigunCooldown = 0f;
                     Vector3 spawnPos = minigunBarrel.transform.GetChild(0).position;
                     GameObject bulletInstance = Instantiate(bulletPrefab, spawnPos, Quaternion.identity);
-                    bulletInstance.GetComponent<Rigidbody>().velocity = chassisRB.velocity;
-                    bulletInstance.GetComponent<Rigidbody>().AddForce(-minigunBarrel.transform.forward * 5f);
+                    Rigidbody bulletRB = bulletInstance.GetComponent<Rigidbody>();
+                    bulletRB.velocity = chassisRB.velocity;
+                    bulletRB.AddForce(-minigunBarrel.transform.forward * 5f);
+                    BulletBehaviour bulletB = bulletInstance.GetComponent<BulletBehaviour>();
+                    bulletB.SetDamage(5f);
+                    bulletB.SetOwner(this.gameObject);
+
+
                 }
 
                 // TODO MINIGUN CANNON SPINNING
@@ -258,5 +265,15 @@ public class ScimitarPlayer : ScimitarShared
             StaticFunc.RotateTo(windCannon.GetComponent<Rigidbody>(), 'y', WCrotation.y);
 
         }
+    }
+
+    public void DeductHealth(float _amount)
+    {
+        health -= _amount;
+    }
+
+    public float GetHealth()
+    {
+        return health;
     }
 }
