@@ -4,19 +4,25 @@ using UnityEngine;
 
 public class ScimitarShared : HovercraftShared
 {
+    [Header("Scimitar Shared")]
+
+    [SerializeField] [Tooltip("The Minigun's rate of fire, in rounds per second (not rounds per minute/rpm)")]
+    protected float minigunROF;
+
+    [SerializeField] [Tooltip("The Minigun's maximum angle of depression")]
+    protected float minigunMaximumDepression;
+
+    [SerializeField] [Tooltip("The Minigun's damage")]
+    protected float minigunDamage;
+
     protected GameObject minigunTurret;
     protected GameObject minigunElevationRing;
     protected GameObject minigunBarrel;
     protected GameObject bulletPrefab;
-
-    [SerializeField]
-    protected float minigunROF;
-
-    [SerializeField]
-    protected float minigunMaximumDepression;
-
     protected float minigunFireDelay;
     protected float minigunCooldown;
+
+
 
     public void ScimitarStartup()
     {

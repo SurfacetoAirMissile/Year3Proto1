@@ -4,11 +4,7 @@ using UnityEngine;
 
 public class HovercraftShared : MonoBehaviour
 {
-    protected GameObject chassis;
-    protected List<GameObject> hoverballs;
-    protected float totalMass;
-    public float health;
-
+    [Header("Hovercraft Shared")]
     [SerializeField] [Tooltip("The amount of force pushing up on the chassis from each Hoverball, in thousands of units/second.")]
     protected float hoverForce;
 
@@ -18,9 +14,13 @@ public class HovercraftShared : MonoBehaviour
     [SerializeField] [Tooltip("The amount of force pushing on the chassis to rotate it, in thousands of units/second.")]
     protected float rotationForce;
 
+    public HealthComponent healthComponent;
     protected Rigidbody chassisRB;
     protected bool isTouchingGround;
     protected bool isFlipped;
+    protected GameObject chassis;
+    protected List<GameObject> hoverballs;
+    protected float totalMass;
 
     protected void Thrust(Vector3 _direction, float _power)
     {
@@ -34,6 +34,7 @@ public class HovercraftShared : MonoBehaviour
 
     protected void HovercraftStartup()
     {
+        healthComponent = new HealthComponent(5f);
         totalMass = GetTotalMass();
         hoverballs = new List<GameObject>();
         foreach (Transform child in transform)

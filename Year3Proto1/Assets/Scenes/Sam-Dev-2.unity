@@ -933,16 +933,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e076ca364f0da214d9434bc492c32925, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 0
   hoverForce: 0.25
   pushForce: 1
   rotationForce: 5
+  healthComponent:
+    health: 0
   minigunROF: 5
   minigunMaximumDepression: -5
+  minigunDamage: 0
+  faction: 1
   spottingAngle: 45
   spottingRange: 100
   orbitDistance: 5
-  faction: 1
 --- !u!1001 &168407595
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3627,12 +3629,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f5e1e7e9a5fa6049b4e5adf501e5bd7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 0
   hoverForce: 0.25
   pushForce: 1
   rotationForce: 5
+  healthComponent:
+    health: 100
   minigunROF: 20
   minigunMaximumDepression: -5
+  minigunDamage: 0
   windCannonForce: 2
 --- !u!1001 &600407159
 PrefabInstance:
@@ -4163,7 +4167,7 @@ PrefabInstance:
     - target: {fileID: 5193893089884302229, guid: 3c712bc036b627d4e99035f2f89ca184,
         type: 3}
       propertyPath: m_Name
-      value: Scimitar Minigun Example AI
+      value: Scimitar Bot (AI)
       objectReference: {fileID: 0}
     - target: {fileID: 6080088195401483999, guid: 3c712bc036b627d4e99035f2f89ca184,
         type: 3}

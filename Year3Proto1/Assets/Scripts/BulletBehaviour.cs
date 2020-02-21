@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class BulletBehaviour : MonoBehaviour
 {
-    [SerializeField]
+    [SerializeField] [Tooltip("How long the bullet will exist before being deleted.")]
     private float lifetime;
+    [SerializeField] [Tooltip("Bullet damage.")]
+    private float damage;
     private float timeElapsed;
     private GameObject owner;
-    private float damage;
 
     // Update is called once per frame
     void Update()
@@ -28,24 +29,18 @@ public class BulletBehaviour : MonoBehaviour
         Transform masterParent = GetParentRecursive(collision.transform);
         if (masterParent.name.Contains("Player"))
         {
-            if (masterParent.name.Contains("Scimitar"))
+            if (owner.name.Contains("AI"))
             {
-                if (owner.name.Contains("AI"))
-                {
-                    masterParent.GetComponent<ScimitarPlayer>().DeductHealth(damage);
-                    timeElapsed = lifetime * .9f;
-                }
+                masterParent.GetComponent<HovercraftShared>().healthComponent.DeductHealth(damage);
+                timeElapsed = lifetime * .9f;
             }
         }
-        if (masterParent.name.Contains("AI"))
+        else if (masterParent.name.Contains("AI"))
         {
-            if (masterParent.name.Contains("Scimitar"))
+            if (owner.name.Contains("Player"))
             {
-                if (owner.name.Contains("Player"))
-                {
-                    //masterParent.GetComponent<ScimitarAIController>().DeductHealth(damage);
-                    timeElapsed = lifetime * .9f;
-                }
+                masterParent.GetComponent<HovercraftShared>().healthComponent.DeductHealth(damage);
+                timeElapsed = lifetime * .9f;
             }
         }
     }

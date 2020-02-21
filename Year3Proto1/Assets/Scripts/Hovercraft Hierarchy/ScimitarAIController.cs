@@ -4,6 +4,15 @@ using UnityEngine;
 
 public class ScimitarAIController : ScimitarShared
 {
+    public enum Faction
+    {
+        Neutral,
+        Hostile
+    }
+
+    [SerializeField] [Tooltip("The Bot's faction.")]
+    private Faction faction;
+
     enum HovercraftAIState
     {
         Wander,
@@ -11,11 +20,6 @@ public class ScimitarAIController : ScimitarShared
         OrbitEngage
     }
 
-    public enum Faction
-    {
-        Neutral,
-        Hostile
-    }
 
     #region Wander Variable Definitions
 
@@ -50,9 +54,6 @@ public class ScimitarAIController : ScimitarShared
 
     #endregion
 
-    [SerializeField]
-    private Faction faction;
-
     HovercraftAIState state;
 
     // Start is called before the first frame update
@@ -64,7 +65,7 @@ public class ScimitarAIController : ScimitarShared
         wanderTurnForce = 0f;
         wanderForce = .5f;
         wanderUpdateStopwatch = 0f;
-        playerChassis = GameObject.FindWithTag("Player").transform.GetChild(0).gameObject;
+        playerChassis = GameObject.FindGameObjectWithTag("Player");
     }
 
     // Update is called once per frame
@@ -131,7 +132,7 @@ public class ScimitarAIController : ScimitarShared
 
                 Vector3 minigunTurretRot = Quaternion.FromToRotation(-minigunTurret.transform.forward, AIMinigunToPlayer.normalized).eulerAngles;
                 if (minigunTurretRot.y > 180f) { minigunTurretRot.y -= 360f; }
-                StaticFunc.RotateTo(minigunTurret.GetComponent<Rigidbody>(), 'y', minigunTurretRot.y);
+                StaticFunc.RotateTo(minigunTurret.GetComponent<Rigidbody>(), 'y', minigunTurretRot.y * 4f);
                 if (Mathf.Abs(minigunTurretRot.y) < 15f)
                 {
                     Vector3 toPlayer = AIMinigunToPlayer.normalized;
@@ -145,7 +146,7 @@ public class ScimitarAIController : ScimitarShared
                     {
                         angle *= -1;
                     }
-                    StaticFunc.RotateTo(minigunElevationRing.GetComponent<Rigidbody>(), 'x', angle * 2f);
+                    StaticFunc.RotateTo(minigunElevationRing.GetComponent<Rigidbody>(), 'x', angle);
                 }
 
                 if (Mathf.Abs(minigunTurretRot.y) < 15f)
@@ -159,7 +160,7 @@ public class ScimitarAIController : ScimitarShared
                         bulletRB.velocity = chassisRB.velocity;
                         bulletRB.AddForce(-minigunBarrel.transform.forward * 5f);
                         BulletBehaviour bulletB = bulletInstance.GetComponent<BulletBehaviour>();
-                        bulletB.SetDamage(5f);
+                        bulletB.SetDamage(minigunDamage);
                         bulletB.SetOwner(this.gameObject);
 
                     }
