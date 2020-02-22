@@ -33,10 +33,10 @@ public class TortoisePlayer : TortoiseShared
         }
         CameraMotion cameraScript = Camera.main.GetComponent<CameraMotion>();
         cameraScript.cameraLookTarget = windCannon;
-        cameraScript.orbitRadius = 2.5f;
+        cameraScript.orbitRadius = 3f;
         cameraScript.xRotationMin = -30f;
         cameraScript.xRotationMax = 60f;
-        cameraScript.sitHeight = 0.7f;
+        cameraScript.sitHeight = 1f;
         cameraScript.sideSitHeight = 0f;
         mortarBarrel.GetComponent<TrajectoryArc>().enabled = false;
         mortarBarrel.GetComponent<LineRenderer>().enabled = false;
@@ -113,7 +113,7 @@ public class TortoisePlayer : TortoiseShared
             {
                 CameraMotion cameraScript = Camera.main.GetComponent<CameraMotion>();
                 cameraScript.cameraLookTarget = chassis;
-                cameraScript.orbitRadius = 4f;
+                cameraScript.orbitRadius = 7f;
                 cameraScript.xRotationMin = -30f;
                 cameraScript.xRotationMax = 60f;
                 cameraScript.sitHeight = 0.7f;
@@ -125,10 +125,10 @@ public class TortoisePlayer : TortoiseShared
             {
                 CameraMotion cameraScript = Camera.main.GetComponent<CameraMotion>();
                 cameraScript.cameraLookTarget = windCannon;
-                cameraScript.orbitRadius = 1.5f;
+                cameraScript.orbitRadius = 3f;
                 cameraScript.xRotationMin = -30f;
                 cameraScript.xRotationMax = 60f;
-                cameraScript.sitHeight = 0.7f;
+                cameraScript.sitHeight = 1f;
                 cameraScript.sideSitHeight = 0f;
                 mortarBarrel.GetComponent<TrajectoryArc>().enabled = false;
                 mortarBarrel.GetComponent<LineRenderer>().enabled = false;
@@ -139,7 +139,7 @@ public class TortoisePlayer : TortoiseShared
             // Mortar aim forward
             Vector3 mortarTurretRot = Quaternion.FromToRotation(mortarTurret.transform.forward, chassis.transform.forward).eulerAngles;
             if (mortarTurretRot.y > 180f) { mortarTurretRot.y -= 360f; }
-            StaticFunc.RotateTo(mortarTurret.GetComponent<Rigidbody>(), 'y', mortarTurretRot.y);
+            StaticFunc.RotateTo(mortarTurret.GetComponent<Rigidbody>(), 'y', mortarTurretRot.y * 0.5f);
             if (Mathf.Abs(mortarTurretRot.y) < 15f)
             {
                 Vector3 chassisForward = chassis.transform.forward;
@@ -151,7 +151,7 @@ public class TortoisePlayer : TortoiseShared
                 {
                     angle *= -1;
                 }
-                StaticFunc.RotateTo(mortarBarrel.GetComponent<Rigidbody>(), 'x', angle * 0.1f);
+                StaticFunc.RotateTo(mortarBarrel.GetComponent<Rigidbody>(), 'x', angle * 0.025f);
             }
 
             Vector3 rotation;
@@ -190,11 +190,11 @@ public class TortoisePlayer : TortoiseShared
             // point the wind cannon backwards
             Vector3 WCrotation = Quaternion.FromToRotation(windCannon.transform.forward, -chassis.transform.forward).eulerAngles;
             if (WCrotation.y > 180f) { WCrotation.y -= 360f; }
-            StaticFunc.RotateTo(windCannon.GetComponent<Rigidbody>(), 'y', WCrotation.y);
+            StaticFunc.RotateTo(windCannon.GetComponent<Rigidbody>(), 'y', WCrotation.y * 0.5f);
 
             Vector3 minigunTurretRot = Quaternion.FromToRotation(mortarTurret.transform.forward, Camera.main.transform.forward).eulerAngles;
             if (minigunTurretRot.y > 180f) { minigunTurretRot.y -= 360f; }
-            StaticFunc.RotateTo(mortarTurret.GetComponent<Rigidbody>(), 'y', minigunTurretRot.y);
+            StaticFunc.RotateTo(mortarTurret.GetComponent<Rigidbody>(), 'y', minigunTurretRot.y * 0.5f);
 
             if (Mathf.Abs(minigunTurretRot.y) < 15f)
             {
@@ -208,7 +208,7 @@ public class TortoisePlayer : TortoiseShared
                     angle *= -1;
                 }
 
-                StaticFunc.RotateTo(mortarBarrel.GetComponent<Rigidbody>(), 'x', angle * 0.1f);
+                StaticFunc.RotateTo(mortarBarrel.GetComponent<Rigidbody>(), 'x', angle * 0.025f);
             }
 
             if (Input.GetMouseButton(0))
@@ -234,7 +234,7 @@ public class TortoisePlayer : TortoiseShared
         {
             Vector3 minigunTurretRot = Quaternion.FromToRotation(mortarTurret.transform.forward, chassis.transform.forward).eulerAngles;
             if (minigunTurretRot.y > 180f) { minigunTurretRot.y -= 360f; }
-            StaticFunc.RotateTo(mortarTurret.GetComponent<Rigidbody>(), 'y', minigunTurretRot.y);
+            StaticFunc.RotateTo(mortarTurret.GetComponent<Rigidbody>(), 'y', minigunTurretRot.y * 0.5f);
             if (Mathf.Abs(minigunTurretRot.y) < 15f)
             {
                 Vector3 chassisForward = chassis.transform.forward;
@@ -246,13 +246,25 @@ public class TortoisePlayer : TortoiseShared
                 {
                     angle *= -1;
                 }
-                StaticFunc.RotateTo(mortarBarrel.GetComponent<Rigidbody>(), 'x', angle * 0.1f);
+                StaticFunc.RotateTo(mortarBarrel.GetComponent<Rigidbody>(), 'x', angle * 0.025f);
             }
 
             // point the wind cannon forward
             Vector3 WCrotation = Quaternion.FromToRotation(windCannon.transform.forward, -chassis.transform.forward).eulerAngles;
             if (WCrotation.y > 180f) { WCrotation.y -= 360f; }
             StaticFunc.RotateTo(windCannon.GetComponent<Rigidbody>(), 'y', WCrotation.y);
+
+            if (Input.GetMouseButtonDown(0))
+            {
+                float trueForce = windCannonForce * 1000f;
+                windCannon.GetComponent<Rigidbody>().AddForce(-windCannon.transform.forward * trueForce);
+                windCannon.transform.GetChild(1).GetComponent<EffectSpawner>().SpawnEffect();
+                List<GameObject> targets = windCannon.GetComponentInChildren<CannonArea>().overlappingGameObjects;
+                foreach (GameObject target in targets)
+                {
+                    target.GetComponent<Rigidbody>().AddForce(windCannon.transform.forward * trueForce * 5f);
+                }
+            }
 
         }
     }
