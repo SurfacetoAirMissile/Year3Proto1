@@ -6,5 +6,5 @@ using UnityEngine;
 public class UpgradeCategoryEntity
 {
     public string name;
-    public UpgradeEntity[] upgradeEntities;
+    public UpgradeResourceEntity[] upgradeResourceEntities;
 }

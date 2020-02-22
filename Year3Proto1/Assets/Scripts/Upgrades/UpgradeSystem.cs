@@ -25,7 +25,7 @@ public class UpgradeSystem : MonoBehaviour
             UpgradeCategoryEntity upgradeCategoryEntity = upgradeCategoryEntities[i];
 
             upgradeCategories.Add(upgradeCategory.Initialise(
-                upgradeCategoryEntity.upgradeEntities,
+                upgradeCategoryEntity.upgradeResourceEntities,
                 upgradeCategoryEntity.name
             ));
         }
