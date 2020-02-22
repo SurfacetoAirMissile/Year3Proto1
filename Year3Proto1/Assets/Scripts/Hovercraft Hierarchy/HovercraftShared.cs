@@ -92,4 +92,15 @@ public class HovercraftShared : MonoBehaviour
         }
         return massTotal;
     }
+
+    public GameObject GetChassis()
+    {
+        return chassis;
+    }
+
+    public Rigidbody GetRB()
+    {
+        return chassisRB;
+    }
+
 }

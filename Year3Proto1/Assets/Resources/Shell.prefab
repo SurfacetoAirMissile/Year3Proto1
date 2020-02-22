@@ -1,45 +1,50 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-5975588423293507884
+--- !u!114 &-8672569974364391793
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1249615813339247121}
+  m_GameObject: {fileID: 3011057617332190379}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 330fef57784d910408333cb362c8772c, type: 3}
+  m_Script: {fileID: 11500000, guid: 39f22aee69f4cae42beb7460946377c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lifetime: 2
-  damage: 0.02
---- !u!1001 &256016291516224041
+  lifetime: 5
+  damage: 1
+--- !u!1001 &4256859806953102483
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 561441743421905011, guid: e4b924e172f349b40b9d5d17433ed837,
+        type: 3}
+      propertyPath: m_Mass
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1358410898418589752, guid: e4b924e172f349b40b9d5d17433ed837,
         type: 3}
       propertyPath: m_Name
-      value: Bullet
+      value: Shell
       objectReference: {fileID: 0}
     - target: {fileID: 6714560693505561292, guid: e4b924e172f349b40b9d5d17433ed837,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 600.7272
+      value: 507.7415
       objectReference: {fileID: 0}
     - target: {fileID: 6714560693505561292, guid: e4b924e172f349b40b9d5d17433ed837,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.5584606
+      value: 3.99
       objectReference: {fileID: 0}
     - target: {fileID: 6714560693505561292, guid: e4b924e172f349b40b9d5d17433ed837,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 467.08734
+      value: 517.75446
       objectReference: {fileID: 0}
     - target: {fileID: 6714560693505561292, guid: e4b924e172f349b40b9d5d17433ed837,
         type: 3}
@@ -81,11 +86,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6714560693505561292, guid: e4b924e172f349b40b9d5d17433ed837,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6714560693505561292, guid: e4b924e172f349b40b9d5d17433ed837,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6714560693505561292, guid: e4b924e172f349b40b9d5d17433ed837,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e4b924e172f349b40b9d5d17433ed837, type: 3}
---- !u!1 &1249615813339247121 stripped
+--- !u!1 &3011057617332190379 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1358410898418589752, guid: e4b924e172f349b40b9d5d17433ed837,
     type: 3}
-  m_PrefabInstance: {fileID: 256016291516224041}
+  m_PrefabInstance: {fileID: 4256859806953102483}
   m_PrefabAsset: {fileID: 0}

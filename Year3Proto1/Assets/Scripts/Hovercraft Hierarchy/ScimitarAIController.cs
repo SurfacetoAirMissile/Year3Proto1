@@ -49,7 +49,6 @@ public class ScimitarAIController : ScimitarShared
 
     #region Orbit Engage Variable Definitions
 
-    [SerializeField]
     private float orbitDistance;
 
     #endregion
@@ -66,6 +65,15 @@ public class ScimitarAIController : ScimitarShared
         wanderForce = .5f;
         wanderUpdateStopwatch = 0f;
         playerChassis = GameObject.FindGameObjectWithTag("Player");
+        // Determines orbit distance based on player craft
+        if (playerChassis.transform.parent.name.Contains("Tortoise"))
+        {
+            orbitDistance = StaticFunc.FloatLookup("Tortoise Orbit Distance");
+        }
+        else if (playerChassis.transform.parent.name.Contains("Scimitar"))
+        {
+            orbitDistance = StaticFunc.FloatLookup("Scimitar Orbit Distance");
+        }
     }
 
     // Update is called once per frame
