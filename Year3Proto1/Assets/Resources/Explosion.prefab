@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f89a925e7eda9442b1659774d5afbb5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  explosionRadius: 5
+  explosionRadius: 8
   explosionDamage: 1
 --- !u!1001 &7464433669805622708
 PrefabInstance:

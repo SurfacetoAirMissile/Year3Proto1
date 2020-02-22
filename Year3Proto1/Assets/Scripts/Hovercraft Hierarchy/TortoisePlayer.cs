@@ -37,6 +37,10 @@ public class TortoisePlayer : TortoiseShared
         cameraScript.xRotationMin = -30f;
         cameraScript.xRotationMax = 60f;
         cameraScript.sitHeight = 0.7f;
+        cameraScript.sideSitHeight = 0f;
+        mortarBarrel.GetComponent<TrajectoryArc>().enabled = false;
+        mortarBarrel.GetComponent<LineRenderer>().enabled = false;
+        healthComponent.SetHealth(5f);
     }
 
     // Update is called once per frame
@@ -100,7 +104,10 @@ public class TortoisePlayer : TortoiseShared
                 cameraScript.orbitRadius = 2.5f;
                 cameraScript.xRotationMin = -30f;
                 cameraScript.xRotationMax = 60f;
-                cameraScript.sitHeight = 1.8f;
+                cameraScript.sitHeight = 0.7f;
+                cameraScript.sideSitHeight = 0.7f;
+                mortarBarrel.GetComponent<TrajectoryArc>().enabled = true;
+                mortarBarrel.GetComponent<LineRenderer>().enabled = true;
             }
             else if (selectedWeapon == Weapons.None)
             {
@@ -110,6 +117,9 @@ public class TortoisePlayer : TortoiseShared
                 cameraScript.xRotationMin = -30f;
                 cameraScript.xRotationMax = 60f;
                 cameraScript.sitHeight = 0.7f;
+                cameraScript.sideSitHeight = 0f;
+                mortarBarrel.GetComponent<TrajectoryArc>().enabled = false;
+                mortarBarrel.GetComponent<LineRenderer>().enabled = false;
             }
             else if (selectedWeapon == Weapons.WindCannon)
             {
@@ -119,6 +129,9 @@ public class TortoisePlayer : TortoiseShared
                 cameraScript.xRotationMin = -30f;
                 cameraScript.xRotationMax = 60f;
                 cameraScript.sitHeight = 0.7f;
+                cameraScript.sideSitHeight = 0f;
+                mortarBarrel.GetComponent<TrajectoryArc>().enabled = false;
+                mortarBarrel.GetComponent<LineRenderer>().enabled = false;
             }
         }
         if (selectedWeapon == Weapons.WindCannon)
@@ -207,7 +220,7 @@ public class TortoisePlayer : TortoiseShared
                     GameObject shellInstance = Instantiate(shellPrefab, spawnPos, Quaternion.identity);
                     Rigidbody shellRB = shellInstance.GetComponent<Rigidbody>();
                     shellRB.velocity = chassisRB.velocity;
-                    shellRB.AddForce(mortarBarrel.transform.forward * 500f);
+                    shellRB.AddForce(mortarBarrel.transform.forward * 1500f);
                     ShellBehaviour shellB = shellInstance.GetComponent<ShellBehaviour>();
                     shellB.SetDamage(mortarDamage);
                     shellB.SetOwner(this.gameObject);

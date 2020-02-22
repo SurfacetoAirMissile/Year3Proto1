@@ -19,6 +19,11 @@ public class HealthComponent
         health -= _amount;
     }
 
+    public void SetHealth(float _health)
+    {
+        health = _health;
+    }
+
     public float GetHealth()
     {
         return health;

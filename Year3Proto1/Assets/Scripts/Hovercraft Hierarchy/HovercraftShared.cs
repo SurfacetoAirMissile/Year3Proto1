@@ -50,6 +50,7 @@ public class HovercraftShared : MonoBehaviour
 
     protected void ApplyLevitationForces()
     {
+
         isTouchingGround = false;
         foreach (GameObject ball in hoverballs)
         {
@@ -60,7 +61,10 @@ public class HovercraftShared : MonoBehaviour
                 float maxForceApplication = forceStrength * 10f;
                 float distanceSquared = Mathf.Pow(groundCast.distance, 2f);
                 float finalForce = Mathf.Clamp(forceStrength / groundCast.distance, 0f, maxForceApplication);
-                ball.GetComponent<Rigidbody>().AddForce(finalForce * Vector3.up);
+                if (healthComponent.GetHealth() > 0f)
+                {
+                    ball.GetComponent<Rigidbody>().AddForce(finalForce * Vector3.up);
+                }
                 //ball.GetComponent<MeshRenderer>().material.SetColor("_BaseColor", Color.white * (1f - (finalForce / maxForceApplication)));
             }
             if (Physics.Raycast(ball.transform.position, Vector3.down, 2f))

@@ -5,7 +5,7 @@ using UnityEngine;
 public class Explosion : MonoBehaviour
 {
     [SerializeField]
-    private float explosionRadius = 5f;
+    private float explosionRadius = 8f;
     [SerializeField]
     private float explosionDamage = 1f;
     float timeElapsed = 0f;
@@ -16,7 +16,7 @@ public class Explosion : MonoBehaviour
         HovercraftShared[] victimScripts = FindObjectsOfType<HovercraftShared>();
         foreach (HovercraftShared script in victimScripts)
         {
-            Vector3 toSkimmer = script.transform.position - transform.position;
+            Vector3 toSkimmer = script.GetChassis().transform.position - transform.position;
             float distance = toSkimmer.magnitude;
             if (distance <= explosionRadius)
             {
@@ -31,7 +31,7 @@ public class Explosion : MonoBehaviour
                 }
                 
                 script.healthComponent.DeductHealth(explosionDamage * amount);
-                script.GetRB().AddForce(toSkimmer.normalized * explosionDamage * amount);
+                script.GetRB().AddForce(toSkimmer.normalized * explosionDamage * 1000f * amount);
             }
 
         }
