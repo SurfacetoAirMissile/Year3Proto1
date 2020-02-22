@@ -73,7 +73,7 @@ public class UpgradeCategory : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Return))
         {
-            Debug.Log("Selected: " + upgradeResources[index].upgradeType);
+            UpgradeManager.Instance.Execute(upgradeResources[index].upgradeType);
         }
     }
 
