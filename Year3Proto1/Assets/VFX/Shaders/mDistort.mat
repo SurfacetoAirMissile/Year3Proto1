@@ -180,14 +180,14 @@ Material:
     - _DistortionBlurDstBlend: 1
     - _DistortionBlurRemapMax: 1
     - _DistortionBlurRemapMin: 0
-    - _DistortionBlurScale: 0.15
+    - _DistortionBlurScale: 0.1
     - _DistortionBlurSrcBlend: 1
     - _DistortionDepthTest: 1
     - _DistortionDstBlend: 1
     - _DistortionEnable: 1
     - _DistortionEnabled: 0
     - _DistortionOnly: 0
-    - _DistortionScale: 2.5
+    - _DistortionScale: 3
     - _DistortionSrcBlend: 1
     - _DistortionStrength: 1
     - _DistortionStrengthScaled: 0
