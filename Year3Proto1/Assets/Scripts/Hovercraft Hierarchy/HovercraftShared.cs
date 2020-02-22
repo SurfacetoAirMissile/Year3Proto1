@@ -4,10 +4,7 @@ using UnityEngine;
 
 public class HovercraftShared : MonoBehaviour
 {
-    protected GameObject chassis;
-    protected List<GameObject> hoverballs;
-    protected float totalMass;
-
+    [Header("Hovercraft Shared")]
     [SerializeField] [Tooltip("The amount of force pushing up on the chassis from each Hoverball, in thousands of units/second.")]
     protected float hoverForce;
 
@@ -17,9 +14,13 @@ public class HovercraftShared : MonoBehaviour
     [SerializeField] [Tooltip("The amount of force pushing on the chassis to rotate it, in thousands of units/second.")]
     protected float rotationForce;
 
+    public HealthComponent healthComponent;
     protected Rigidbody chassisRB;
     protected bool isTouchingGround;
     protected bool isFlipped;
+    protected GameObject chassis;
+    protected List<GameObject> hoverballs;
+    protected float totalMass;
 
     protected void Thrust(Vector3 _direction, float _power)
     {
@@ -33,6 +34,7 @@ public class HovercraftShared : MonoBehaviour
 
     protected void HovercraftStartup()
     {
+        healthComponent = new HealthComponent(5f);
         totalMass = GetTotalMass();
         hoverballs = new List<GameObject>();
         foreach (Transform child in transform)
@@ -48,6 +50,7 @@ public class HovercraftShared : MonoBehaviour
 
     protected void ApplyLevitationForces()
     {
+
         isTouchingGround = false;
         foreach (GameObject ball in hoverballs)
         {
@@ -58,7 +61,10 @@ public class HovercraftShared : MonoBehaviour
                 float maxForceApplication = forceStrength * 10f;
                 float distanceSquared = Mathf.Pow(groundCast.distance, 2f);
                 float finalForce = Mathf.Clamp(forceStrength / groundCast.distance, 0f, maxForceApplication);
-                ball.GetComponent<Rigidbody>().AddForce(finalForce * Vector3.up);
+                if (healthComponent.GetHealth() > 0f)
+                {
+                    ball.GetComponent<Rigidbody>().AddForce(finalForce * Vector3.up);
+                }
                 //ball.GetComponent<MeshRenderer>().material.SetColor("_BaseColor", Color.white * (1f - (finalForce / maxForceApplication)));
             }
             if (Physics.Raycast(ball.transform.position, Vector3.down, 2f))
@@ -90,4 +96,15 @@ public class HovercraftShared : MonoBehaviour
         }
         return massTotal;
     }
+
+    public GameObject GetChassis()
+    {
+        return chassis;
+    }
+
+    public Rigidbody GetRB()
+    {
+        return chassisRB;
+    }
+
 }

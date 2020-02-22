@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class ScimitarPlayer : ScimitarShared
 {
+    [Header("Scimitar Player")]
+    [SerializeField] [Tooltip("The amount of force the wind cannon applies, in thousands of units.")]
+    protected float windCannonForce;
+
     enum Weapons
     {
         Minigun,
@@ -11,13 +15,10 @@ public class ScimitarPlayer : ScimitarShared
         None
     }
 
+    Weapons selectedWeapon;
+
     protected GameObject windCannon;
     protected int windCannonAimMode;
-
-    [SerializeField]
-    protected float windCannonForce;
-
-    Weapons selectedWeapon;
 
     // Start is called before the first frame update
     void Start()
@@ -223,8 +224,12 @@ public class ScimitarPlayer : ScimitarShared
                     minigunCooldown = 0f;
                     Vector3 spawnPos = minigunBarrel.transform.GetChild(0).position;
                     GameObject bulletInstance = Instantiate(bulletPrefab, spawnPos, Quaternion.identity);
-                    bulletInstance.GetComponent<Rigidbody>().velocity = chassisRB.velocity;
-                    bulletInstance.GetComponent<Rigidbody>().AddForce(-minigunBarrel.transform.forward * 5f);
+                    Rigidbody bulletRB = bulletInstance.GetComponent<Rigidbody>();
+                    bulletRB.velocity = chassisRB.velocity;
+                    bulletRB.AddForce(-minigunBarrel.transform.forward * 5f);
+                    BulletBehaviour bulletB = bulletInstance.GetComponent<BulletBehaviour>();
+                    bulletB.SetDamage(minigunDamage);
+                    bulletB.SetOwner(this.gameObject);
                 }
 
                 // TODO MINIGUN CANNON SPINNING
