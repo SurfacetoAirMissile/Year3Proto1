@@ -14,7 +14,11 @@ public class UpgradeSystem : MonoBehaviour
     public TMP_Text title3;
 
     public Transform dotCanvas;
+    public Transform categoryContainer;
     public Image dot;
+
+    [Header("Information")]
+    public UpgradeInformation upgradeInformation;
 
     [Header("Container")]
     public GameObject categoryPrefab;
@@ -36,7 +40,7 @@ public class UpgradeSystem : MonoBehaviour
             dots[i].color = new Color(255, 255, 255, 0.5f);
 
 
-            GameObject @object = Instantiate(categoryPrefab, transform, false);
+            GameObject @object = Instantiate(categoryPrefab, categoryContainer, false);
             UpgradeCategory upgradeCategory = @object.GetComponent<UpgradeCategory>();
             UpgradeCategoryEntity upgradeCategoryEntity = upgradeCategoryEntities[i];
 
@@ -46,7 +50,6 @@ public class UpgradeSystem : MonoBehaviour
             ));
         }
 
-        upgradeCategoryEntities = new UpgradeCategoryEntity[] { };
         if (upgradeCategories.Count > index)
         {
             upgradeCategories[index].gameObject.SetActive(true);
@@ -56,6 +59,9 @@ public class UpgradeSystem : MonoBehaviour
 
     private void Update()
     {
+        upgradeInformation.Refresh(upgradeCategories[index].GetUpgradeResource().GetEntity());
+
+
         if (Input.GetKeyDown(KeyCode.A) && switchable)
         {
             UpgradeCategory upgradeCategory = upgradeCategories[index];
@@ -89,8 +95,9 @@ public class UpgradeSystem : MonoBehaviour
         }
     }
 
-    public void Switch(UpgradeCategory upgradeCategory, UpgradeCategory nextTradeCategory, KeyCode keyCode)
+    public void Switch(UpgradeCategory upgradeCategory, UpgradeCategory nextUpgradeCategory, KeyCode keyCode)
     {
+
         switchable = false;
         float moveTime = 0.8f;
 
@@ -99,14 +106,14 @@ public class UpgradeSystem : MonoBehaviour
 
         if (keyCode == KeyCode.D)
         {
-            initialMove = -(upgradeCategory.transform.localPosition.x * 2);
-            finalMove = upgradeCategory.GetComponent<RectTransform>().rect.width * 2;
+            initialMove = -(upgradeCategory.transform.position.x * 4.0f);
+            finalMove = upgradeCategory.GetComponent<RectTransform>().rect.width;
         }
 
         if (keyCode == KeyCode.A)
         {
-            initialMove = (upgradeCategory.transform.localPosition.x * 2);
-            finalMove = -upgradeCategory.GetComponent<RectTransform>().rect.width;
+            initialMove = (upgradeCategory.transform.position.x * 2.0f);
+            finalMove = -upgradeCategory.GetComponent<RectTransform>().rect.width * 2.0f;
         }
 
         //TODO: Title Switch Category Header
@@ -115,13 +122,14 @@ public class UpgradeSystem : MonoBehaviour
         //Category Items
 
         DOTween.Sequence()
-                .Join(nextTradeCategory.transform.DOLocalMoveX(initialMove, 0.0f))
+                .Join(upgradeInformation.GetComponent<CanvasGroup>().DOFade(0.0f, moveTime / 2.0f))
+                .Join(nextUpgradeCategory.transform.DOLocalMoveX(initialMove, 0.0f))
                 .Join(upgradeCategory.transform.DOLocalMoveX(finalMove, moveTime))
                 .Join(upgradeCategory.GetComponent<CanvasGroup>().DOFade(0.0f, moveTime))
-                .Join(nextTradeCategory.transform.DOLocalMoveX(upgradeCategory.transform.localPosition.x, moveTime))
-                .Join(nextTradeCategory.GetComponent<CanvasGroup>().DOFade(1.0f, moveTime))
+                .Join(nextUpgradeCategory.transform.DOLocalMoveX(upgradeCategory.transform.localPosition.x, moveTime))
+                .Join(nextUpgradeCategory.GetComponent<CanvasGroup>().DOFade(1.0f, moveTime))
                 .OnPlay(() => {
-                    nextTradeCategory.gameObject.SetActive(true);
+                    nextUpgradeCategory.gameObject.SetActive(true);
                     for (int i = 0; i < dots.Count; i++) dots[i].color = new Color(255, 255, 255, 0.5f);
                     dots[index].color = new Color(255, 255, 255, 1.0f);
                 })
