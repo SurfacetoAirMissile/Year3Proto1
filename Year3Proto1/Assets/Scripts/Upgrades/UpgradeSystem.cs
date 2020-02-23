@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 using TMPro;
+using UnityEngine.Rendering.HighDefinition;
 
 
 public class UpgradeSystem : MonoBehaviour
@@ -99,7 +100,7 @@ public class UpgradeSystem : MonoBehaviour
     {
 
         switchable = false;
-        float moveTime = 0.8f;
+        float moveTime = 0.3f;
 
         float initialMove = 0.0f;
         float finalMove = 0.0f;
@@ -117,16 +118,17 @@ public class UpgradeSystem : MonoBehaviour
         }
 
         //TODO: Title Switch Category Header
-
+        DOTween.Sequence()
+            .Play();
 
         //Category Items
 
         DOTween.Sequence()
                 .Join(upgradeInformation.GetComponent<CanvasGroup>().DOFade(0.0f, moveTime / 2.0f))
-                .Join(nextUpgradeCategory.transform.DOLocalMoveX(initialMove, 0.0f))
-                .Join(upgradeCategory.transform.DOLocalMoveX(finalMove, moveTime))
+                .Join(nextUpgradeCategory.transform.DOLocalMoveX(initialMove, 0.0f).SetEase(Ease.OutQuint))
+                .Join(upgradeCategory.transform.DOLocalMoveX(finalMove, moveTime).SetEase(Ease.OutQuint))
                 .Join(upgradeCategory.GetComponent<CanvasGroup>().DOFade(0.0f, moveTime))
-                .Join(nextUpgradeCategory.transform.DOLocalMoveX(upgradeCategory.transform.localPosition.x, moveTime))
+                .Join(nextUpgradeCategory.transform.DOLocalMoveX(upgradeCategory.transform.localPosition.x, moveTime).SetEase(Ease.OutQuint))
                 .Join(nextUpgradeCategory.GetComponent<CanvasGroup>().DOFade(1.0f, moveTime))
                 .OnPlay(() => {
                     nextUpgradeCategory.gameObject.SetActive(true);

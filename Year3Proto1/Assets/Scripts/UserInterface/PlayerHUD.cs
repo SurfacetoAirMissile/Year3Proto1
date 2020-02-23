@@ -28,16 +28,6 @@ public class PlayerHUD : MonoBehaviour
             {
                 healthBars[i].fillAmount = 0.0f;
             }
-            int[] color = GetColor(totalHealth * 20);
-            healthBars[i].color = new Color(color[0], color[1], color[2]);
         }
-    }
-
-    public int[] GetColor (int index)
-    {
-        int R = (255 * index) / 100;
-        int G = (255 * (100 - index)) / 100;
-        int B = 0;
-        return new int[] { R, G, B };
     }
 }
