@@ -1701,6 +1701,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Scimitar Bot (AI)
       objectReference: {fileID: 0}
+    - target: {fileID: 5403891371637922966, guid: c887f85c1da91854c9cfda93541a68cf,
+        type: 3}
+      propertyPath: minigunDamage
+      value: 0.02
+      objectReference: {fileID: 0}
     - target: {fileID: 5968147174373615725, guid: c887f85c1da91854c9cfda93541a68cf,
         type: 3}
       propertyPath: m_ConnectedAnchor.x
@@ -1769,7 +1774,7 @@ PrefabInstance:
     - target: {fileID: 8496620232036117816, guid: c887f85c1da91854c9cfda93541a68cf,
         type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 8496620232036117816, guid: c887f85c1da91854c9cfda93541a68cf,
         type: 3}
@@ -11230,6 +11235,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Scimitar Bot (AI) (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 5403891371637922966, guid: c887f85c1da91854c9cfda93541a68cf,
+        type: 3}
+      propertyPath: minigunDamage
+      value: 0.02
+      objectReference: {fileID: 0}
     - target: {fileID: 5968147174373615725, guid: c887f85c1da91854c9cfda93541a68cf,
         type: 3}
       propertyPath: m_ConnectedAnchor.x
@@ -11288,7 +11298,7 @@ PrefabInstance:
     - target: {fileID: 8496620232036117816, guid: c887f85c1da91854c9cfda93541a68cf,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8496620232036117816, guid: c887f85c1da91854c9cfda93541a68cf,
         type: 3}
@@ -12375,6 +12385,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Scimitar Bot (AI) (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 5403891371637922966, guid: c887f85c1da91854c9cfda93541a68cf,
+        type: 3}
+      propertyPath: minigunDamage
+      value: 0.02
+      objectReference: {fileID: 0}
     - target: {fileID: 5968147174373615725, guid: c887f85c1da91854c9cfda93541a68cf,
         type: 3}
       propertyPath: m_ConnectedAnchor.x
@@ -12443,7 +12458,7 @@ PrefabInstance:
     - target: {fileID: 8496620232036117816, guid: c887f85c1da91854c9cfda93541a68cf,
         type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 8496620232036117816, guid: c887f85c1da91854c9cfda93541a68cf,
         type: 3}
@@ -12682,7 +12697,7 @@ Transform:
   - {fileID: 1339967313}
   - {fileID: 2111514732}
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &868377473
 GameObject:
@@ -12804,6 +12819,11 @@ PrefabInstance:
       propertyPath: m_ConnectedAnchor.z
       value: 0.0000017029897
       objectReference: {fileID: 0}
+    - target: {fileID: 3186941977821032661, guid: accdf0cfa2424784f997f0d7d4870ff0,
+        type: 3}
+      propertyPath: m_ConnectedAnchor.y
+      value: 0.38131967
+      objectReference: {fileID: 0}
     - target: {fileID: 3315726722041528873, guid: accdf0cfa2424784f997f0d7d4870ff0,
         type: 3}
       propertyPath: speedMultiplier
@@ -12812,7 +12832,12 @@ PrefabInstance:
     - target: {fileID: 3815632829939388289, guid: accdf0cfa2424784f997f0d7d4870ff0,
         type: 3}
       propertyPath: m_ConnectedAnchor.z
-      value: -0.13999937
+      value: 0.027999876
+      objectReference: {fileID: 0}
+    - target: {fileID: 3815632829939388289, guid: accdf0cfa2424784f997f0d7d4870ff0,
+        type: 3}
+      propertyPath: m_ConnectedAnchor.y
+      value: 1.1619996
       objectReference: {fileID: 0}
     - target: {fileID: 3890932251898785465, guid: accdf0cfa2424784f997f0d7d4870ff0,
         type: 3}
@@ -12833,6 +12858,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_ConnectedAnchor.z
       value: 1.5750012
+      objectReference: {fileID: 0}
+    - target: {fileID: 5308475961577852873, guid: accdf0cfa2424784f997f0d7d4870ff0,
+        type: 3}
+      propertyPath: m_ConnectedAnchor.y
+      value: 1.087
       objectReference: {fileID: 0}
     - target: {fileID: 5989747608150688071, guid: accdf0cfa2424784f997f0d7d4870ff0,
         type: 3}
@@ -12877,7 +12907,7 @@ PrefabInstance:
     - target: {fileID: 6878537438753025987, guid: accdf0cfa2424784f997f0d7d4870ff0,
         type: 3}
       propertyPath: m_RootOrder
-      value: 8
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 6878537438753025987, guid: accdf0cfa2424784f997f0d7d4870ff0,
         type: 3}
@@ -12898,6 +12928,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Tortoise Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 7579030972819021264, guid: accdf0cfa2424784f997f0d7d4870ff0,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8330587661340917057, guid: accdf0cfa2424784f997f0d7d4870ff0,
         type: 3}
@@ -15983,6 +16018,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Scimitar Bot (AI) (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 5403891371637922966, guid: c887f85c1da91854c9cfda93541a68cf,
+        type: 3}
+      propertyPath: minigunDamage
+      value: 0.02
+      objectReference: {fileID: 0}
     - target: {fileID: 5968147174373615725, guid: c887f85c1da91854c9cfda93541a68cf,
         type: 3}
       propertyPath: m_ConnectedAnchor.x
@@ -16046,7 +16086,7 @@ PrefabInstance:
     - target: {fileID: 8496620232036117816, guid: c887f85c1da91854c9cfda93541a68cf,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8496620232036117816, guid: c887f85c1da91854c9cfda93541a68cf,
         type: 3}
@@ -16077,6 +16117,135 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 939601806}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1135053666
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3531467805860202858, guid: 37e735e15e043334fa4ee9d40ac60cc8,
+        type: 3}
+      propertyPath: m_ConnectedAnchor.x
+      value: 0.00000026077032
+      objectReference: {fileID: 0}
+    - target: {fileID: 3531467805860202858, guid: 37e735e15e043334fa4ee9d40ac60cc8,
+        type: 3}
+      propertyPath: m_ConnectedAnchor.y
+      value: 0.13487771
+      objectReference: {fileID: 0}
+    - target: {fileID: 3531467805860202858, guid: 37e735e15e043334fa4ee9d40ac60cc8,
+        type: 3}
+      propertyPath: m_ConnectedAnchor.z
+      value: -0.05250007
+      objectReference: {fileID: 0}
+    - target: {fileID: 5388143797690681204, guid: 37e735e15e043334fa4ee9d40ac60cc8,
+        type: 3}
+      propertyPath: m_Name
+      value: Scimitar Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 5388143797690681204, guid: 37e735e15e043334fa4ee9d40ac60cc8,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6594181593691108824, guid: 37e735e15e043334fa4ee9d40ac60cc8,
+        type: 3}
+      propertyPath: m_ConnectedAnchor.x
+      value: 0.00000026077032
+      objectReference: {fileID: 0}
+    - target: {fileID: 6594181593691108824, guid: 37e735e15e043334fa4ee9d40ac60cc8,
+        type: 3}
+      propertyPath: m_ConnectedAnchor.y
+      value: -0.00000052154064
+      objectReference: {fileID: 0}
+    - target: {fileID: 6594181593691108824, guid: 37e735e15e043334fa4ee9d40ac60cc8,
+        type: 3}
+      propertyPath: m_ConnectedAnchor.z
+      value: -0.19999988
+      objectReference: {fileID: 0}
+    - target: {fileID: 6603614944320008242, guid: 37e735e15e043334fa4ee9d40ac60cc8,
+        type: 3}
+      propertyPath: m_ConnectedAnchor.x
+      value: -0.3579998
+      objectReference: {fileID: 0}
+    - target: {fileID: 6603614944320008242, guid: 37e735e15e043334fa4ee9d40ac60cc8,
+        type: 3}
+      propertyPath: m_ConnectedAnchor.y
+      value: 0.54909706
+      objectReference: {fileID: 0}
+    - target: {fileID: 6603614944320008242, guid: 37e735e15e043334fa4ee9d40ac60cc8,
+        type: 3}
+      propertyPath: m_ConnectedAnchor.z
+      value: 0.68099976
+      objectReference: {fileID: 0}
+    - target: {fileID: 7356877133581487174, guid: 37e735e15e043334fa4ee9d40ac60cc8,
+        type: 3}
+      propertyPath: m_ConnectedAnchor.x
+      value: -0.0020008087
+      objectReference: {fileID: 0}
+    - target: {fileID: 7356877133581487174, guid: 37e735e15e043334fa4ee9d40ac60cc8,
+        type: 3}
+      propertyPath: m_ConnectedAnchor.z
+      value: -0.4469986
+      objectReference: {fileID: 0}
+    - target: {fileID: 8979564011033277799, guid: 37e735e15e043334fa4ee9d40ac60cc8,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -24.13276
+      objectReference: {fileID: 0}
+    - target: {fileID: 8979564011033277799, guid: 37e735e15e043334fa4ee9d40ac60cc8,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -10.598264
+      objectReference: {fileID: 0}
+    - target: {fileID: 8979564011033277799, guid: 37e735e15e043334fa4ee9d40ac60cc8,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 50.840446
+      objectReference: {fileID: 0}
+    - target: {fileID: 8979564011033277799, guid: 37e735e15e043334fa4ee9d40ac60cc8,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8979564011033277799, guid: 37e735e15e043334fa4ee9d40ac60cc8,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8979564011033277799, guid: 37e735e15e043334fa4ee9d40ac60cc8,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8979564011033277799, guid: 37e735e15e043334fa4ee9d40ac60cc8,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8979564011033277799, guid: 37e735e15e043334fa4ee9d40ac60cc8,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8979564011033277799, guid: 37e735e15e043334fa4ee9d40ac60cc8,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8979564011033277799, guid: 37e735e15e043334fa4ee9d40ac60cc8,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8979564011033277799, guid: 37e735e15e043334fa4ee9d40ac60cc8,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 37e735e15e043334fa4ee9d40ac60cc8, type: 3}
 --- !u!1001 &1137510189
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19645,6 +19814,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Scimitar Bot (AI) (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 5403891371637922966, guid: c887f85c1da91854c9cfda93541a68cf,
+        type: 3}
+      propertyPath: minigunDamage
+      value: 0.02
+      objectReference: {fileID: 0}
     - target: {fileID: 5968147174373615725, guid: c887f85c1da91854c9cfda93541a68cf,
         type: 3}
       propertyPath: m_ConnectedAnchor.x
@@ -19708,7 +19882,7 @@ PrefabInstance:
     - target: {fileID: 8496620232036117816, guid: c887f85c1da91854c9cfda93541a68cf,
         type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 8496620232036117816, guid: c887f85c1da91854c9cfda93541a68cf,
         type: 3}
@@ -20619,7 +20793,7 @@ Transform:
   - {fileID: 416044719}
   - {fileID: 149645409}
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1505202112
 GameObject:
@@ -24588,6 +24762,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Scimitar Bot (AI) (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 5403891371637922966, guid: c887f85c1da91854c9cfda93541a68cf,
+        type: 3}
+      propertyPath: minigunDamage
+      value: 0.02
+      objectReference: {fileID: 0}
     - target: {fileID: 5968147174373615725, guid: c887f85c1da91854c9cfda93541a68cf,
         type: 3}
       propertyPath: m_ConnectedAnchor.x
@@ -24651,7 +24830,7 @@ PrefabInstance:
     - target: {fileID: 8496620232036117816, guid: c887f85c1da91854c9cfda93541a68cf,
         type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8496620232036117816, guid: c887f85c1da91854c9cfda93541a68cf,
         type: 3}
@@ -24691,6 +24870,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Scimitar Bot (AI) (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5403891371637922966, guid: c887f85c1da91854c9cfda93541a68cf,
+        type: 3}
+      propertyPath: minigunDamage
+      value: 0.02
       objectReference: {fileID: 0}
     - target: {fileID: 5968147174373615725, guid: c887f85c1da91854c9cfda93541a68cf,
         type: 3}
@@ -24750,7 +24934,7 @@ PrefabInstance:
     - target: {fileID: 8496620232036117816, guid: c887f85c1da91854c9cfda93541a68cf,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 8496620232036117816, guid: c887f85c1da91854c9cfda93541a68cf,
         type: 3}
