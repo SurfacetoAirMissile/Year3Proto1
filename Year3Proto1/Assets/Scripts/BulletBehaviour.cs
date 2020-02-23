@@ -2,19 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BulletBehaviour : MonoBehaviour
+public class BulletBehaviour : ProjectileShared
 {
-    [SerializeField]
-    private float lifetime;
-    private float timeElapsed;
-
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        timeElapsed += Time.deltaTime;
-        if (timeElapsed >= lifetime)
-        {
-            Destroy(gameObject);
-        }
+        PSUpdate();
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        PSOnCollisionEnter(collision);
     }
 }
