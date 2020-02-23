@@ -24,14 +24,7 @@ public class UpgradeCategory : MonoBehaviour
         {
             GameObject prefabResource = Instantiate(resource, parent, false);
             UpgradeResource upgradeResource = prefabResource.GetComponent<UpgradeResource>();
-            if (upgradeResource != null)
-            {
-                upgradeResource.itemName.text = upgradeResourceEntity.displayName;
-                upgradeResource.imageIcon.sprite = upgradeResourceEntity.icon;
-                upgradeResource.cost.text = upgradeResourceEntity.cost.ToString();
-                upgradeResource.upgradeType = upgradeResourceEntity.upgradeType;
-                upgradeResources.Add(upgradeResource);
-            }
+            if (upgradeResource != null) upgradeResources.Add(upgradeResource.Initialise(upgradeResourceEntity));
         }
 
         categoryName = name;
@@ -89,6 +82,11 @@ public class UpgradeCategory : MonoBehaviour
           .Append(outline.transform.DOLocalMoveY(upgradeResources[index].transform.localPosition.y, 0.0f))
           .Join(outline.DOFade(1.0f, 0.0f))
           .Join(outline2.DOFade(0.0f, 0.0f)).Play();
+    }
+
+    public UpgradeResource GetUpgradeResource()
+    {
+        return upgradeResources[index];
     }
 
     public string GetName()
