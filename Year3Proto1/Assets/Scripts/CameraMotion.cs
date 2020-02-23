@@ -15,6 +15,8 @@ public class CameraMotion : MonoBehaviour
     public float xRotationMax = 50f;
     [SerializeField]
     public float sitHeight = 0f;
+    [SerializeField]
+    public float sideSitHeight = 0f;
 
     [SerializeField]
     public float orbitRadius = 5f;
@@ -72,5 +74,20 @@ public class CameraMotion : MonoBehaviour
         transform.position = cameraLookTarget.transform.position + offset + Vector3.up * sitHeight;
 
         transform.LookAt(cameraLookTarget.transform.position + Vector3.up * sitHeight);
+
+        transform.position += transform.right * sideSitHeight;
+
+        transform.LookAt(cameraLookTarget.transform.position + Vector3.up * sitHeight + transform.right * sideSitHeight);
+    }
+
+    enum CameraPreset
+    {
+        ScimitarChassis,
+        ScimitarMinigun
+    }
+
+    void LoadPreset(CameraPreset _preset)
+    {
+
     }
 }
