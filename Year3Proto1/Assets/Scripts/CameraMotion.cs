@@ -85,13 +85,25 @@ public class CameraMotion : MonoBehaviour
         switch (_playerFocus)
         {
             case HovercraftShared.PlayerFocus.ScimitarNone:
-
+                orbitRadius = 4f;
+                xRotationMin = -20f;
+                xRotationMax = 60f;
+                sitHeight = 0f;
+                sideSitHeight = 0f;
                 break;
             case HovercraftShared.PlayerFocus.ScimitarMinigun:
-
+                orbitRadius = 1f;
+                xRotationMin = -30f;
+                xRotationMax = 60f;
+                sitHeight = 0.5f;
+                sideSitHeight = 0f;
                 break;
             case HovercraftShared.PlayerFocus.ScimitarWindCannon:
-
+                orbitRadius = 1f;
+                xRotationMin = -30f;
+                xRotationMax = 60f;
+                sitHeight = 0.5f;
+                sideSitHeight = 0f;
                 break;
             case HovercraftShared.PlayerFocus.TortoiseNone:
                 orbitRadius = 7f;

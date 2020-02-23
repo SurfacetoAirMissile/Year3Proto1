@@ -9,14 +9,6 @@ public class TortoisePlayer : TortoiseShared
     [Tooltip("The amount of force the wind cannon applies, in thousands of units.")]
     protected float windCannonForce;
 
-    enum Weapons
-    {
-        Mortar,
-        WindCannon,
-        None
-    }
-
-    Weapons selectedWeapon;
     PlayerFocus playerFocus;
 
     protected GameObject windCannon;
@@ -31,12 +23,8 @@ public class TortoisePlayer : TortoiseShared
             if (child.name.Contains("Wind Cannon")) { windCannon = child.gameObject; }
         }
         windCannonAimMode = 0;
-        CameraMotion cameraScript = Camera.main.GetComponent<CameraMotion>();
         playerFocus = PlayerFocus.TortoiseWindCannon;
-        cameraScript.cameraLookTarget = windCannon;
-        cameraScript.LoadPreset(PlayerFocus.TortoiseWindCannon);
-        mortarBarrel.GetComponent<TrajectoryArc>().enabled = false;
-        mortarBarrel.GetComponent<LineRenderer>().enabled = false;
+        TortoiseChangeFocus(playerFocus);
         healthComponent.SetHealth(5f);
     }
 
@@ -156,6 +144,12 @@ public class TortoisePlayer : TortoiseShared
         playerFocus = _playerFocus;
         switch (_playerFocus)
         {
+            case PlayerFocus.TortoiseNone:
+                cameraScript.cameraLookTarget = chassis;
+                cameraScript.LoadPreset(PlayerFocus.TortoiseNone);
+                mortarBarrel.GetComponent<TrajectoryArc>().enabled = false;
+                mortarBarrel.GetComponent<LineRenderer>().enabled = false;
+                break;
             case PlayerFocus.TortoiseMortar:
                 cameraScript.cameraLookTarget = mortarTurret;
                 cameraScript.LoadPreset(PlayerFocus.TortoiseMortar);
@@ -165,12 +159,6 @@ public class TortoisePlayer : TortoiseShared
             case PlayerFocus.TortoiseWindCannon:
                 cameraScript.cameraLookTarget = windCannon;
                 cameraScript.LoadPreset(PlayerFocus.TortoiseWindCannon);
-                mortarBarrel.GetComponent<TrajectoryArc>().enabled = false;
-                mortarBarrel.GetComponent<LineRenderer>().enabled = false;
-                break;
-            case PlayerFocus.TortoiseNone:
-                cameraScript.cameraLookTarget = chassis;
-                cameraScript.LoadPreset(PlayerFocus.TortoiseNone);
                 mortarBarrel.GetComponent<TrajectoryArc>().enabled = false;
                 mortarBarrel.GetComponent<LineRenderer>().enabled = false;
                 break;
@@ -243,13 +231,7 @@ public class TortoisePlayer : TortoiseShared
     {
         // Mortar Turret Rotation
         YawMortarToTarget(_targetDirection);
-        Vector3 turretRot = Quaternion.FromToRotation(mortarTurret.transform.forward, _targetDirection).eulerAngles;
-        if (turretRot.y > 180f) { turretRot.y -= 360f; }
-        if (Mathf.Abs(turretRot.y) < 15f)
-        {
-            // Mortar Barrel Rotation
-            PitchMortarToTarget(_targetDirection);
-        }
+        PitchMortarToTarget(_targetDirection);
     }
 
 }

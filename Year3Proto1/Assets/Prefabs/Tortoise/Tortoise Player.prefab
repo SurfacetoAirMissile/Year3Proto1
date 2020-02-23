@@ -59,41 +59,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   overlappingGameObjects: []
---- !u!114 &2199029100917794929
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7579030972819021264}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a4c4f03e38122e74b917a0c2328d9d78, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hoverForce: 1
-  pushForce: 5
-  rotationForce: 20
-  healthComponent:
-    health: 0
-  mortarROF: 0.2
-  mortarMaximumDepression: -5
-  mortarMaximumElevation: 70
-  mortarDamage: 1
-  mortarExpRadius: 3
-  windCannonForce: 4
---- !u!114 &5186263677527265760
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8418727862376176174}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cbc419fcd35ef004b86512c67c0915f6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &5750560672687880143
 GameObject:
   m_ObjectHideFlags: 0
@@ -288,6 +253,41 @@ ConfigurableJoint:
   m_EnablePreprocessing: 1
   m_MassScale: 1
   m_ConnectedMassScale: 1
+--- !u!114 &2199029100917794929
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7579030972819021264}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4c4f03e38122e74b917a0c2328d9d78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverForce: 1
+  pushForce: 5
+  rotationForce: 20
+  healthComponent:
+    health: 0
+  mortarROF: 0.2
+  mortarMaximumDepression: -5
+  mortarMaximumElevation: 70
+  mortarDamage: 1
+  mortarExpRadius: 3
+  windCannonForce: 4
+--- !u!114 &5186263677527265760
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8418727862376176174}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbc419fcd35ef004b86512c67c0915f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1356089300966906675
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -496,7 +496,7 @@ PrefabInstance:
     - target: {fileID: 7590135908505307838, guid: 192e4cdb6aaa4e94f81e17ed73c6c11a,
         type: 3}
       propertyPath: playOnAwake
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7590135908505307839, guid: 192e4cdb6aaa4e94f81e17ed73c6c11a,
         type: 3}

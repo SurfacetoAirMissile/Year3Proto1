@@ -45,7 +45,7 @@ public class HovercraftShared : MonoBehaviour
 
     protected void HovercraftStartup()
     {
-        healthComponent = new HealthComponent(5f);
+        healthComponent = new HealthComponent(1f);
         totalMass = GetTotalMass();
         hoverballs = new List<GameObject>();
         foreach (Transform child in transform)
