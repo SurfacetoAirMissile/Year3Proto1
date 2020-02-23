@@ -12819,6 +12819,11 @@ PrefabInstance:
       propertyPath: m_ConnectedAnchor.z
       value: 0.0000017029897
       objectReference: {fileID: 0}
+    - target: {fileID: 3186941977821032661, guid: accdf0cfa2424784f997f0d7d4870ff0,
+        type: 3}
+      propertyPath: m_ConnectedAnchor.y
+      value: 0.38131967
+      objectReference: {fileID: 0}
     - target: {fileID: 3315726722041528873, guid: accdf0cfa2424784f997f0d7d4870ff0,
         type: 3}
       propertyPath: speedMultiplier
@@ -12827,7 +12832,12 @@ PrefabInstance:
     - target: {fileID: 3815632829939388289, guid: accdf0cfa2424784f997f0d7d4870ff0,
         type: 3}
       propertyPath: m_ConnectedAnchor.z
-      value: -0.13999937
+      value: 0.027999876
+      objectReference: {fileID: 0}
+    - target: {fileID: 3815632829939388289, guid: accdf0cfa2424784f997f0d7d4870ff0,
+        type: 3}
+      propertyPath: m_ConnectedAnchor.y
+      value: 1.1619996
       objectReference: {fileID: 0}
     - target: {fileID: 3890932251898785465, guid: accdf0cfa2424784f997f0d7d4870ff0,
         type: 3}
@@ -12848,6 +12858,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_ConnectedAnchor.z
       value: 1.5750012
+      objectReference: {fileID: 0}
+    - target: {fileID: 5308475961577852873, guid: accdf0cfa2424784f997f0d7d4870ff0,
+        type: 3}
+      propertyPath: m_ConnectedAnchor.y
+      value: 1.087
       objectReference: {fileID: 0}
     - target: {fileID: 5989747608150688071, guid: accdf0cfa2424784f997f0d7d4870ff0,
         type: 3}
@@ -12917,7 +12932,7 @@ PrefabInstance:
     - target: {fileID: 7579030972819021264, guid: accdf0cfa2424784f997f0d7d4870ff0,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8330587661340917057, guid: accdf0cfa2424784f997f0d7d4870ff0,
         type: 3}
@@ -16128,6 +16143,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Scimitar Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 5388143797690681204, guid: 37e735e15e043334fa4ee9d40ac60cc8,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6594181593691108824, guid: 37e735e15e043334fa4ee9d40ac60cc8,
         type: 3}
