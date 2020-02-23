@@ -17,6 +17,7 @@ public class TortoisePlayer : TortoiseShared
     }
 
     Weapons selectedWeapon;
+    PlayerFocus playerFocus;
 
     protected GameObject windCannon;
     protected int windCannonAimMode;
@@ -25,19 +26,15 @@ public class TortoisePlayer : TortoiseShared
     void Start()
     {
         TortoiseStartup();
-        selectedWeapon = Weapons.WindCannon;
-        windCannonAimMode = 0;
         foreach (Transform child in transform)
         {
             if (child.name.Contains("Wind Cannon")) { windCannon = child.gameObject; }
         }
+        windCannonAimMode = 0;
         CameraMotion cameraScript = Camera.main.GetComponent<CameraMotion>();
+        playerFocus = PlayerFocus.TortoiseWindCannon;
         cameraScript.cameraLookTarget = windCannon;
-        cameraScript.orbitRadius = 3f;
-        cameraScript.xRotationMin = -30f;
-        cameraScript.xRotationMax = 60f;
-        cameraScript.sitHeight = 1f;
-        cameraScript.sideSitHeight = 0f;
+        cameraScript.LoadPreset(PlayerFocus.TortoiseWindCannon);
         mortarBarrel.GetComponent<TrajectoryArc>().enabled = false;
         mortarBarrel.GetComponent<LineRenderer>().enabled = false;
         healthComponent.SetHealth(5f);
@@ -50,6 +47,11 @@ public class TortoisePlayer : TortoiseShared
         float rotationAmount = Time.deltaTime * 1000f * rotationForce;
         mortarCooldown += Time.deltaTime;
 
+
+        if (Input.GetKeyDown("left ctrl"))
+        {
+            windCannonAimMode = windCannonAimMode == 0 ? 1 : 0;
+        }
         if (Input.GetKeyDown("w"))
         {
             //chassis.transform.GetChild(0).GetComponent<ParticleSystem>().Play(true);
@@ -84,188 +86,170 @@ public class TortoisePlayer : TortoiseShared
         }
         if (Input.GetKeyDown("tab"))
         {
-            if (selectedWeapon == Weapons.Mortar)
+            switch (playerFocus)
             {
-                selectedWeapon = Weapons.None;
-            }
-            else if (selectedWeapon == Weapons.None)
-            {
-                selectedWeapon = Weapons.WindCannon;
-            }
-            else
-            {
-                selectedWeapon = Weapons.Mortar;
-            }
-
-            if (selectedWeapon == Weapons.Mortar)
-            {
-                CameraMotion cameraScript = Camera.main.GetComponent<CameraMotion>();
-                cameraScript.cameraLookTarget = mortarTurret;
-                cameraScript.orbitRadius = 2.5f;
-                cameraScript.xRotationMin = -30f;
-                cameraScript.xRotationMax = 60f;
-                cameraScript.sitHeight = 0.7f;
-                cameraScript.sideSitHeight = 0.7f;
-                mortarBarrel.GetComponent<TrajectoryArc>().enabled = true;
-                mortarBarrel.GetComponent<LineRenderer>().enabled = true;
-            }
-            else if (selectedWeapon == Weapons.None)
-            {
-                CameraMotion cameraScript = Camera.main.GetComponent<CameraMotion>();
-                cameraScript.cameraLookTarget = chassis;
-                cameraScript.orbitRadius = 7f;
-                cameraScript.xRotationMin = -30f;
-                cameraScript.xRotationMax = 60f;
-                cameraScript.sitHeight = 0.7f;
-                cameraScript.sideSitHeight = 0f;
-                mortarBarrel.GetComponent<TrajectoryArc>().enabled = false;
-                mortarBarrel.GetComponent<LineRenderer>().enabled = false;
-            }
-            else if (selectedWeapon == Weapons.WindCannon)
-            {
-                CameraMotion cameraScript = Camera.main.GetComponent<CameraMotion>();
-                cameraScript.cameraLookTarget = windCannon;
-                cameraScript.orbitRadius = 3f;
-                cameraScript.xRotationMin = -30f;
-                cameraScript.xRotationMax = 60f;
-                cameraScript.sitHeight = 1f;
-                cameraScript.sideSitHeight = 0f;
-                mortarBarrel.GetComponent<TrajectoryArc>().enabled = false;
-                mortarBarrel.GetComponent<LineRenderer>().enabled = false;
+                case PlayerFocus.TortoiseMortar:
+                    TortoiseChangeFocus(PlayerFocus.TortoiseNone);
+                    break;
+                case PlayerFocus.TortoiseNone:
+                    TortoiseChangeFocus(PlayerFocus.TortoiseWindCannon);
+                    break;
+                case PlayerFocus.TortoiseWindCannon:
+                    TortoiseChangeFocus(PlayerFocus.TortoiseMortar);
+                    break;
+                default:
+                    Debug.Log("TortoisePlayer playerFocus shouldn't be non-Tortoise");
+                    break;
             }
         }
-        if (selectedWeapon == Weapons.WindCannon)
+        switch (playerFocus)
         {
-            // Mortar aim forward
-            Vector3 mortarTurretRot = Quaternion.FromToRotation(mortarTurret.transform.forward, chassis.transform.forward).eulerAngles;
-            if (mortarTurretRot.y > 180f) { mortarTurretRot.y -= 360f; }
-            StaticFunc.RotateTo(mortarTurret.GetComponent<Rigidbody>(), 'y', mortarTurretRot.y * 0.5f);
-            if (Mathf.Abs(mortarTurretRot.y) < 15f)
-            {
-                Vector3 chassisForward = chassis.transform.forward;
-                Vector3 barrelForward = mortarBarrel.transform.forward;
-                float angle = Vector3.Angle(chassisForward, barrelForward);
-                chassisForward.x = 0; chassisForward.z = 0;
-                barrelForward.x = 0; barrelForward.z = 0;
-                if (chassisForward.y > barrelForward.y)
+            case PlayerFocus.TortoiseNone:
+                // First, rotate the Mortar back to the "default position".
+                AimMortarAtTarget(chassis.transform.forward);
+
+                // point the wind cannon forward
+                YawWindCannonToTarget(chassis.transform.forward);
+
+                // If the Player presses the LMB...
+                if (Input.GetMouseButtonDown(0))
                 {
-                    angle *= -1;
+                    FireWindCannon();
                 }
-                StaticFunc.RotateTo(mortarBarrel.GetComponent<Rigidbody>(), 'x', angle * 0.025f);
-            }
+                break;
+            case PlayerFocus.TortoiseMortar:
+                // First, rotate the Wind Cannon back to the "default position".
+                YawWindCannonToTarget(chassis.transform.forward);
 
-            Vector3 rotation;
+                // Second, aim the Mortar at the Camera.
+                AimMortarAtTarget(Camera.main.transform.forward);
 
-            if (Input.GetKeyDown("left ctrl"))
-            {
-                windCannonAimMode = windCannonAimMode == 0 ? 1 : 0;
-            }
-
-            if (windCannonAimMode == 0)
-            {
-                rotation = Quaternion.FromToRotation(windCannon.transform.forward, Camera.main.transform.forward).eulerAngles;
-            }
-            else
-            {
-                rotation = Quaternion.FromToRotation(windCannon.transform.forward, -Camera.main.transform.forward).eulerAngles;
-            }
-
-            if (rotation.y > 180f) { rotation.y -= 360f; }
-            StaticFunc.RotateTo(windCannon.GetComponent<Rigidbody>(), 'y', rotation.y);
-
-            if (Input.GetMouseButtonDown(0))
-            {
-                float trueForce = windCannonForce * 1000f;
-                windCannon.GetComponent<Rigidbody>().AddForce(-windCannon.transform.forward * trueForce);
-                windCannon.transform.GetChild(1).GetComponent<EffectSpawner>().SpawnEffect();
-                List<GameObject> targets = windCannon.GetComponentInChildren<CannonArea>().overlappingGameObjects;
-                foreach (GameObject target in targets)
+                // If the Player presses the LMB...
+                if (Input.GetMouseButton(0))
                 {
-                    target.GetComponent<Rigidbody>().AddForce(windCannon.transform.forward * trueForce * 5f);
+                    // If the Mortar has cooled down...
+                    if (mortarCooldown >= mortarFireDelay)
+                    {
+                        FireMortar();
+                    }
                 }
-            }
-        }
-        if (selectedWeapon == Weapons.Mortar)
-        {
-            // point the wind cannon backwards
-            Vector3 WCrotation = Quaternion.FromToRotation(windCannon.transform.forward, -chassis.transform.forward).eulerAngles;
-            if (WCrotation.y > 180f) { WCrotation.y -= 360f; }
-            StaticFunc.RotateTo(windCannon.GetComponent<Rigidbody>(), 'y', WCrotation.y * 0.5f);
+                break;
+            case PlayerFocus.TortoiseWindCannon:
+                // First, rotate the Mortar back to the "default position".
+                AimMortarAtTarget(chassis.transform.forward);
 
-            Vector3 minigunTurretRot = Quaternion.FromToRotation(mortarTurret.transform.forward, Camera.main.transform.forward).eulerAngles;
-            if (minigunTurretRot.y > 180f) { minigunTurretRot.y -= 360f; }
-            StaticFunc.RotateTo(mortarTurret.GetComponent<Rigidbody>(), 'y', minigunTurretRot.y * 0.5f);
+                // Second, aim the Wind Cannon at the Camera.
+                YawWindCannonToTarget(Camera.main.transform.forward);
 
-            if (Mathf.Abs(minigunTurretRot.y) < 15f)
-            {
-                Vector3 cameraForward = Camera.main.transform.forward;
-                Vector3 barrelForward = mortarBarrel.transform.forward;
-                float angle = Vector3.Angle(cameraForward, barrelForward);
-                cameraForward.x = 0; cameraForward.z = 0;
-                barrelForward.x = 0; barrelForward.z = 0;
-                if (cameraForward.y > barrelForward.y)
+                // If the Player presses the LMB...
+                if (Input.GetMouseButtonDown(0))
                 {
-                    angle *= -1;
+                    FireWindCannon();
                 }
-
-                StaticFunc.RotateTo(mortarBarrel.GetComponent<Rigidbody>(), 'x', angle * 0.025f);
-            }
-
-            if (Input.GetMouseButton(0))
-            {
-                if (mortarCooldown >= mortarFireDelay)
-                {
-                    mortarCooldown = 0f;
-                    Vector3 spawnPos = mortarBarrel.transform.GetChild(0).position;
-                    GameObject shellInstance = Instantiate(shellPrefab, spawnPos, Quaternion.identity);
-                    Rigidbody shellRB = shellInstance.GetComponent<Rigidbody>();
-                    shellRB.velocity = chassisRB.velocity;
-                    shellRB.AddForce(mortarBarrel.transform.forward * 1500f);
-                    ShellBehaviour shellB = shellInstance.GetComponent<ShellBehaviour>();
-                    shellB.SetDamage(mortarDamage);
-                    shellB.SetOwner(this.gameObject);
-                    shellB.explosionPrefab = explosionPrefab;
-                    shellInstance.layer = 12;
-                }
-            }
-
-        }
-        else if (selectedWeapon == Weapons.None)
-        {
-            Vector3 minigunTurretRot = Quaternion.FromToRotation(mortarTurret.transform.forward, chassis.transform.forward).eulerAngles;
-            if (minigunTurretRot.y > 180f) { minigunTurretRot.y -= 360f; }
-            StaticFunc.RotateTo(mortarTurret.GetComponent<Rigidbody>(), 'y', minigunTurretRot.y * 0.5f);
-            if (Mathf.Abs(minigunTurretRot.y) < 15f)
-            {
-                Vector3 chassisForward = chassis.transform.forward;
-                Vector3 barrelForward = mortarBarrel.transform.forward;
-                float angle = Vector3.Angle(chassisForward, barrelForward);
-                chassisForward.x = 0; chassisForward.z = 0;
-                barrelForward.x = 0; barrelForward.z = 0;
-                if (chassisForward.y > barrelForward.y)
-                {
-                    angle *= -1;
-                }
-                StaticFunc.RotateTo(mortarBarrel.GetComponent<Rigidbody>(), 'x', angle * 0.025f);
-            }
-
-            // point the wind cannon forward
-            Vector3 WCrotation = Quaternion.FromToRotation(windCannon.transform.forward, -chassis.transform.forward).eulerAngles;
-            if (WCrotation.y > 180f) { WCrotation.y -= 360f; }
-            StaticFunc.RotateTo(windCannon.GetComponent<Rigidbody>(), 'y', WCrotation.y);
-
-            if (Input.GetMouseButtonDown(0))
-            {
-                float trueForce = windCannonForce * 1000f;
-                windCannon.GetComponent<Rigidbody>().AddForce(-windCannon.transform.forward * trueForce);
-                windCannon.transform.GetChild(1).GetComponent<EffectSpawner>().SpawnEffect();
-                List<GameObject> targets = windCannon.GetComponentInChildren<CannonArea>().overlappingGameObjects;
-                foreach (GameObject target in targets)
-                {
-                    target.GetComponent<Rigidbody>().AddForce(windCannon.transform.forward * trueForce * 5f);
-                }
-            }
-
+                break;
         }
     }
+
+    protected void TortoiseChangeFocus(PlayerFocus _playerFocus)
+    {
+        CameraMotion cameraScript = Camera.main.GetComponent<CameraMotion>();
+        playerFocus = _playerFocus;
+        switch (_playerFocus)
+        {
+            case PlayerFocus.TortoiseMortar:
+                cameraScript.cameraLookTarget = mortarTurret;
+                cameraScript.LoadPreset(PlayerFocus.TortoiseMortar);
+                mortarBarrel.GetComponent<TrajectoryArc>().enabled = true;
+                mortarBarrel.GetComponent<LineRenderer>().enabled = true;
+                break;
+            case PlayerFocus.TortoiseWindCannon:
+                cameraScript.cameraLookTarget = windCannon;
+                cameraScript.LoadPreset(PlayerFocus.TortoiseWindCannon);
+                mortarBarrel.GetComponent<TrajectoryArc>().enabled = false;
+                mortarBarrel.GetComponent<LineRenderer>().enabled = false;
+                break;
+            case PlayerFocus.TortoiseNone:
+                cameraScript.cameraLookTarget = chassis;
+                cameraScript.LoadPreset(PlayerFocus.TortoiseNone);
+                mortarBarrel.GetComponent<TrajectoryArc>().enabled = false;
+                mortarBarrel.GetComponent<LineRenderer>().enabled = false;
+                break;
+            default:
+                Debug.Log("Tortoise Player can't focus on a non-Tortoise part.");
+                break;
+        }
+    }
+
+    void PitchMortarToTarget(Vector3 _targetDirection)
+    {
+        Vector3 barrelForward = mortarBarrel.transform.forward;
+        _targetDirection.x = 1; _targetDirection.z = 1;
+        barrelForward.x = 1; barrelForward.z = 1;
+        float angle = Vector3.Angle(_targetDirection, barrelForward);
+        if (_targetDirection.y > barrelForward.y) { angle *= -1; }
+        StaticFunc.RotateTo(mortarBarrel.GetComponent<Rigidbody>(), 'x', angle * 0.025f);
+    }
+
+    void YawMortarToTarget(Vector3 _targetDirection)
+    {
+        Vector3 mortarTurretRot = Quaternion.FromToRotation(mortarTurret.transform.forward, _targetDirection).eulerAngles;
+        if (mortarTurretRot.y > 180f) { mortarTurretRot.y -= 360f; }
+        StaticFunc.RotateTo(mortarTurret.GetComponent<Rigidbody>(), 'y', mortarTurretRot.y * 0.5f);
+    }
+
+    void YawWindCannonToTarget(Vector3 _targetDirection)
+    {
+        Vector3 rotation;
+        if (windCannonAimMode == 0)
+        {
+            rotation = Quaternion.FromToRotation(windCannon.transform.forward, _targetDirection).eulerAngles;
+        }
+        else
+        {
+            rotation = Quaternion.FromToRotation(windCannon.transform.forward, -_targetDirection).eulerAngles;
+        }
+        if (rotation.y > 180f) { rotation.y -= 360f; }
+        StaticFunc.RotateTo(windCannon.GetComponent<Rigidbody>(), 'y', rotation.y);
+    }
+
+    void FireWindCannon()
+    {
+        float trueForce = windCannonForce * 1000f;
+        windCannon.GetComponent<Rigidbody>().AddForce(-windCannon.transform.forward * trueForce);
+        windCannon.transform.GetChild(1).GetComponent<EffectSpawner>().SpawnEffect();
+        List<GameObject> targets = windCannon.GetComponentInChildren<CannonArea>().overlappingGameObjects;
+        foreach (GameObject target in targets)
+        {
+            target.GetComponent<Rigidbody>().AddForce(windCannon.transform.forward * trueForce * 5f);
+        }
+    }
+
+    void FireMortar()
+    {
+        mortarCooldown = 0f;
+        Vector3 spawnPos = mortarBarrel.transform.GetChild(0).position;
+        GameObject shellInstance = Instantiate(shellPrefab, spawnPos, Quaternion.identity);
+        Rigidbody shellRB = shellInstance.GetComponent<Rigidbody>();
+        shellRB.velocity = chassisRB.velocity;
+        shellRB.AddForce(mortarBarrel.transform.forward * 1500f);
+        ShellBehaviour shellB = shellInstance.GetComponent<ShellBehaviour>();
+        shellB.SetDamage(mortarDamage);
+        shellB.SetOwner(this.gameObject);
+        shellB.explosionPrefab = explosionPrefab;
+        shellInstance.layer = 12;
+    }
+
+    void AimMortarAtTarget(Vector3 _targetDirection)
+    {
+        // Mortar Turret Rotation
+        YawMortarToTarget(_targetDirection);
+        Vector3 turretRot = Quaternion.FromToRotation(mortarTurret.transform.forward, _targetDirection).eulerAngles;
+        if (turretRot.y > 180f) { turretRot.y -= 360f; }
+        if (Mathf.Abs(turretRot.y) < 15f)
+        {
+            // Mortar Barrel Rotation
+            PitchMortarToTarget(_targetDirection);
+        }
+    }
+
 }

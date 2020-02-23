@@ -80,14 +80,41 @@ public class CameraMotion : MonoBehaviour
         transform.LookAt(cameraLookTarget.transform.position + Vector3.up * sitHeight + transform.right * sideSitHeight);
     }
 
-    enum CameraPreset
+    public void LoadPreset(HovercraftShared.PlayerFocus _playerFocus)
     {
-        ScimitarChassis,
-        ScimitarMinigun
-    }
+        switch (_playerFocus)
+        {
+            case HovercraftShared.PlayerFocus.ScimitarNone:
 
-    void LoadPreset(CameraPreset _preset)
-    {
+                break;
+            case HovercraftShared.PlayerFocus.ScimitarMinigun:
+
+                break;
+            case HovercraftShared.PlayerFocus.ScimitarWindCannon:
+
+                break;
+            case HovercraftShared.PlayerFocus.TortoiseNone:
+                orbitRadius = 7f;
+                xRotationMin = -30f;
+                xRotationMax = 60f;
+                sitHeight = 0.7f;
+                sideSitHeight = 0f;
+                break;
+            case HovercraftShared.PlayerFocus.TortoiseMortar:
+                orbitRadius = 2.5f;
+                xRotationMin = -30f;
+                xRotationMax = 60f;
+                sitHeight = 0.7f;
+                sideSitHeight = 0.7f;
+                break;
+            case HovercraftShared.PlayerFocus.TortoiseWindCannon:
+                orbitRadius = 3f;
+                xRotationMin = -30f;
+                xRotationMax = 60f;
+                sitHeight = 1f;
+                sideSitHeight = 0f;
+                break;
+        }
 
     }
 }

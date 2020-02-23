@@ -22,6 +22,17 @@ public class HovercraftShared : MonoBehaviour
     protected List<GameObject> hoverballs;
     protected float totalMass;
 
+    public enum PlayerFocus
+    {
+        ScimitarNone,
+        ScimitarMinigun,
+        ScimitarWindCannon,
+        TortoiseNone,
+        TortoiseMortar,
+        TortoiseWindCannon
+    }
+
+
     protected void Thrust(Vector3 _direction, float _power)
     {
         if (!isFlipped)
@@ -105,6 +116,11 @@ public class HovercraftShared : MonoBehaviour
     public Rigidbody GetRB()
     {
         return chassisRB;
+    }
+
+    public bool Alive()
+    {
+        return (healthComponent.GetHealth() > 0f);
     }
 
 }

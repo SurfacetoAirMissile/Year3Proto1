@@ -16,6 +16,7 @@ public class ScimitarPlayer : ScimitarShared
     }
 
     Weapons selectedWeapon;
+    PlayerFocus playerFocus;
 
     protected GameObject windCannon;
     protected int windCannonAimMode;
