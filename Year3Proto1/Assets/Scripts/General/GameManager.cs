@@ -1,6 +1,7 @@
 ﻿using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public enum GameState
 {
@@ -22,7 +23,7 @@ public class GameManager : Singleton<GameManager>
     public GameObject[] enemies;
     public Transform enemiesParent;
 
-    private GameState gameState = GameState.INGAME;
+    private GameState gameState = GameState.GRACE_PERIOD;
     private float time = 5.0f;
     private int waves = 1;
     private int enemiesRemaining = 10;
@@ -30,18 +31,22 @@ public class GameManager : Singleton<GameManager>
 
     private void Update()
     {
-        if (time <= 0)
-        {
-            Popup();
-            Check(gameState);
-        }
+        //if (time <= 0)
+       // {
+        //    Popup();
+        //    Check(gameState);
+        //}
 
         time -= Time.deltaTime;
 
         if (gameState == GameState.GRACE_PERIOD)
         {
-
-            if (Input.GetKeyDown(KeyCode.F)) trading.SetActive(trading.activeSelf ? false : true);
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+                trading.SetActive(trading.activeSelf ? false : true);
+                popup.GetComponentInChildren<Image>().transform.DOKill(true);
+                popup.GetComponentInChildren<Image>().transform.DOPunchScale(new Vector3(0.5f, 0.5f, 0.0f), 0.33f, 1, 1.0f);
+            }
         }
     }
 
@@ -50,7 +55,6 @@ public class GameManager : Singleton<GameManager>
         switch (gameState)
         {
             case GameState.GRACE_PERIOD:
-                trading.SetActive(trading.activeSelf ? false : true);
                 this.gameState = GameState.INGAME;
                 time = 5.0f;
                 break;
@@ -84,8 +88,9 @@ public class GameManager : Singleton<GameManager>
             popupActive = true;
         }
 
-        DOTween.Sequence()
-            .Join(popup.transform.DOLocalMoveX(position, 3.0f))
-            .SetEase(Ease.OutQuint);
+        popup.transform.DOKill(true);
+        popup.transform.DOLocalMoveX(position, 1.5f).SetEase(Ease.OutQuint);
+
+        trading.SetActive(false);
     }
 }
