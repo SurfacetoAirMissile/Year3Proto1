@@ -22,8 +22,6 @@ public class ScimitarShared : HovercraftShared
     protected float minigunFireDelay;
     protected float minigunCooldown;
 
-
-
     public void ScimitarStartup()
     {
         HovercraftStartup();

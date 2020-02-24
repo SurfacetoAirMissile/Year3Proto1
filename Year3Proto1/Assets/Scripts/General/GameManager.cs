@@ -11,34 +11,27 @@ public enum GameState
 
 public class GameManager : Singleton<GameManager>
 {
-    public TMP_Text header;
-    public TMP_Text footer;
-
-    private GameState gameState = GameState.INGAME;
-    private float time = 0.0f;
-    private int waves = 1;
-    private int enemiesRemaining;
+    public GameObject trading;
 
     private void Update()
     {
-        if (enemiesRemaining <= 0 && gameState == GameState.INGAME) Check(gameState);
-        if (time <= 0 && gameState == GameState.GRACE_PERIOD) Check(gameState);
-        if (gameState == GameState.GRACE_PERIOD) time -= Time.deltaTime;
+        Check();
     }
 
-    public void Check(GameState gameState)
+    public void Check()
     {
-        switch(gameState)
+
+        if (Input.GetKeyDown("f"))
         {
-            case GameState.GRACE_PERIOD:
-                waves += 1;
-                header.text = "Grace Peroid";
-                time = 120.0f;
-                break;
-            case GameState.INGAME:
-                header.text = "Wave " + waves;
-                time = 120.0f;
-                break;
+            if(trading.activeSelf)
+            {
+                trading.SetActive(false);
+            }
+            else
+            {
+                trading.SetActive(true);
+            }
         }
+  
     }
 }

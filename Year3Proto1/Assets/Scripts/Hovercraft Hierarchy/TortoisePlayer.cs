@@ -110,7 +110,7 @@ public class TortoisePlayer : TortoiseShared
                 YawWindCannonToTarget(chassis.transform.forward);
 
                 // Second, aim the Mortar at the Camera.
-                AimMortarAtTarget(Camera.main.transform.forward);
+                AimMortarAtTarget(Camera.main.GetComponent<CameraMotion>().mortarAimTarget);
 
                 // If the Player presses the LMB...
                 if (Input.GetMouseButton(0))

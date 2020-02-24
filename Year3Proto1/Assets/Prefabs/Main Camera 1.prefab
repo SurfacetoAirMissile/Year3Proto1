@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6065464141388998421}
   - component: {fileID: 6065464141388998426}
   - component: {fileID: 6065464141388998423}
-  - component: {fileID: 6065464141388998422}
+  - component: {fileID: 4292860566767708361}
   m_Layer: 0
   m_Name: Main Camera 1
   m_TagString: MainCamera
@@ -189,7 +189,7 @@ MonoBehaviour:
       data1: 0
       data2: 0
   defaultFrameSettings: 0
---- !u!114 &6065464141388998422
+--- !u!114 &4292860566767708361
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -198,28 +198,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 6065464141388998427}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 72ece51f2901e7445ab60da3685d6b5f, type: 3}
+  m_Script: {fileID: 11500000, guid: e2c029a4d716075409755cb373ea46ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ShowDebugText: 1
-  m_ShowCameraFrustum: 1
-  m_IgnoreTimeScale: 0
-  m_WorldUpOverride: {fileID: 0}
-  m_UpdateMethod: 2
-  m_BlendUpdateMethod: 1
-  m_DefaultBlend:
-    m_Style: 1
-    m_Time: 2
-    m_CustomCurve:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-  m_CustomBlends: {fileID: 0}
-  m_CameraCutEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_CameraActivatedEvent:
-    m_PersistentCalls:
-      m_Calls: []
+  ringPosition: 180
+  xRotation: 10
+  xRotationMin: 10
+  xRotationMax: 50
+  sitHeight: 0
+  sideSitHeight: 0
+  orbitRadius: 5
+  cameraLookTarget: {fileID: 0}
+  mouseSensitivity: 90
