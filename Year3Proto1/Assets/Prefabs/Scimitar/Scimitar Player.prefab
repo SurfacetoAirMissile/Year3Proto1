@@ -59,6 +59,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   overlappingGameObjects: []
+--- !u!114 &2534842728655383090
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3946569742741432221}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbc419fcd35ef004b86512c67c0915f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1045906239059968175
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -75,23 +87,11 @@ MonoBehaviour:
   pushForce: 1
   rotationForce: 5
   healthComponent:
-    health: 100
+    health: 3
   minigunROF: 20
   minigunMaximumDepression: -5
-  minigunDamage: 0
+  minigunDamage: 0.02
   windCannonForce: 2
---- !u!114 &2534842728655383090
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3946569742741432221}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cbc419fcd35ef004b86512c67c0915f6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &8083636086536225691
 GameObject:
   m_ObjectHideFlags: 0
@@ -188,7 +188,7 @@ Rigidbody:
   m_AngularDrag: 20
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 0
 --- !u!153 &7356877133581487174
@@ -338,15 +338,35 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 9
       objectReference: {fileID: 0}
+    - target: {fileID: 3030536773403249526, guid: e6ca1fec60f032c47b23306b7077526e,
+        type: 3}
+      propertyPath: m_Interpolate
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3030536773447554042, guid: e6ca1fec60f032c47b23306b7077526e,
+        type: 3}
+      propertyPath: m_Interpolate
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3030536773447554047, guid: e6ca1fec60f032c47b23306b7077526e,
         type: 3}
       propertyPath: m_Layer
       value: 9
       objectReference: {fileID: 0}
+    - target: {fileID: 3030536774061639862, guid: e6ca1fec60f032c47b23306b7077526e,
+        type: 3}
+      propertyPath: m_Interpolate
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3030536774061639883, guid: e6ca1fec60f032c47b23306b7077526e,
         type: 3}
       propertyPath: m_Layer
       value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 3030536774841940020, guid: e6ca1fec60f032c47b23306b7077526e,
+        type: 3}
+      propertyPath: m_Interpolate
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3030536774841940041, guid: e6ca1fec60f032c47b23306b7077526e,
         type: 3}
@@ -357,6 +377,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 3030536775140275484, guid: e6ca1fec60f032c47b23306b7077526e,
+        type: 3}
+      propertyPath: m_Interpolate
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3030536775184393576, guid: e6ca1fec60f032c47b23306b7077526e,
+        type: 3}
+      propertyPath: m_Interpolate
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3030536775184393581, guid: e6ca1fec60f032c47b23306b7077526e,
         type: 3}
@@ -530,17 +560,17 @@ PrefabInstance:
     - target: {fileID: 7590135908505307839, guid: 192e4cdb6aaa4e94f81e17ed73c6c11a,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 13.107178
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7590135908505307839, guid: 192e4cdb6aaa4e94f81e17ed73c6c11a,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -3.682795
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7590135908505307839, guid: 192e4cdb6aaa4e94f81e17ed73c6c11a,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -21.380127
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7590135908505307839, guid: 192e4cdb6aaa4e94f81e17ed73c6c11a,
         type: 3}

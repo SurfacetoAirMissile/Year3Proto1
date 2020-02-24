@@ -83,7 +83,7 @@ public class ScimitarAIController : ScimitarShared
         minigunCooldown += Time.deltaTime;
         ApplyLevitationForces();
         // Get direction from AI to player
-        if (healthComponent.GetHealth() > 0f)
+        if (Alive())
         {
             Vector3 AIToPlayer = playerChassis.transform.position - chassis.transform.position;
             Vector3 AIMinigunToPlayer = playerChassis.transform.position - minigunTurret.transform.position;

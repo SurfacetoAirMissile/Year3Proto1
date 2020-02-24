@@ -11,4 +11,23 @@ public class UpgradeResource : MonoBehaviour
     public TMP_Text itemName;
     public TMP_Text cost;
     public UpgradeType upgradeType;
+
+    private UpgradeResourceEntity upgradeResourceEntity;
+
+    public UpgradeResource Initialise(UpgradeResourceEntity upgradeResourceEntity)
+    {
+        this.upgradeResourceEntity = upgradeResourceEntity;
+
+        itemName.text = upgradeResourceEntity.displayName;
+        imageIcon.sprite = upgradeResourceEntity.icon;
+        cost.text = upgradeResourceEntity.cost.ToString();
+        upgradeType = upgradeResourceEntity.upgradeType;
+
+        return this;
+    }
+
+    public UpgradeResourceEntity GetEntity()
+    {
+        return upgradeResourceEntity;
+    }
 }

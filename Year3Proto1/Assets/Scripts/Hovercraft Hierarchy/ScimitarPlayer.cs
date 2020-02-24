@@ -5,7 +5,8 @@ using UnityEngine;
 public class ScimitarPlayer : ScimitarShared
 {
     [Header("Scimitar Player")]
-    [SerializeField] [Tooltip("The amount of force the wind cannon applies, in thousands of units.")]
+    [SerializeField]
+    [Tooltip("The amount of force the wind cannon applies, in thousands of units.")]
     protected float windCannonForce;
 
     enum Weapons
@@ -15,7 +16,7 @@ public class ScimitarPlayer : ScimitarShared
         None
     }
 
-    Weapons selectedWeapon;
+    PlayerFocus playerFocus;
 
     protected GameObject windCannon;
     protected int windCannonAimMode;
@@ -24,18 +25,13 @@ public class ScimitarPlayer : ScimitarShared
     void Start()
     {
         ScimitarStartup();
-        selectedWeapon = Weapons.WindCannon;
-        windCannonAimMode = 0;
         foreach (Transform child in transform)
         {
             if (child.name.Contains("Wind Cannon")) { windCannon = child.gameObject; }
         }
-        CameraMotion cameraScript = Camera.main.GetComponent<CameraMotion>();
-        cameraScript.cameraLookTarget = windCannon;
-        cameraScript.orbitRadius = 1f;
-        cameraScript.xRotationMin = -30f;
-        cameraScript.xRotationMax = 60f;
-        cameraScript.sitHeight = 0.5f;
+        windCannonAimMode = 0;
+        ScimitarChangeFocus(PlayerFocus.ScimitarNone);
+        healthComponent.SetHealth(3f);
     }
 
     // Update is called once per frame
@@ -45,6 +41,10 @@ public class ScimitarPlayer : ScimitarShared
         float rotationAmount = Time.deltaTime * 1000f * rotationForce;
         minigunCooldown += Time.deltaTime;
 
+        if (Input.GetKeyDown("left ctrl"))
+        {
+            windCannonAimMode = windCannonAimMode == 0 ? 1 : 0;
+        }
         if (Input.GetKeyDown("w"))
         {
             chassis.transform.GetChild(0).GetComponent<ParticleSystem>().Play(true);
@@ -79,189 +79,158 @@ public class ScimitarPlayer : ScimitarShared
         }
         if (Input.GetKeyDown("tab"))
         {
-            if (selectedWeapon == Weapons.Minigun)
+            switch (playerFocus)
             {
-                selectedWeapon = Weapons.None;
+                case PlayerFocus.ScimitarNone:
+                    ScimitarChangeFocus(PlayerFocus.ScimitarMinigun);
+                    break;
+                case PlayerFocus.ScimitarMinigun:
+                    ScimitarChangeFocus(PlayerFocus.ScimitarWindCannon);
+                    break;
+                case PlayerFocus.ScimitarWindCannon:
+                    ScimitarChangeFocus(PlayerFocus.ScimitarNone);
+                    break;
+                default:
+                    Debug.Log("ScimitarPlayer playerFocus shouldn't be non-Scimitar");
+                    break;
             }
-            else if (selectedWeapon == Weapons.None)
-            {
-                selectedWeapon = Weapons.WindCannon;
-            }
-            else
-            {
-                selectedWeapon = Weapons.Minigun;
-            }
+        }
+        switch (playerFocus)
+        {
+            case PlayerFocus.ScimitarNone:
+                // First, rotate the Minigun back to the "default position".
+                AimMinigunAtTarget(chassis.transform.forward);
 
-            if (selectedWeapon == Weapons.Minigun)
-            {
-                CameraMotion cameraScript = Camera.main.GetComponent<CameraMotion>();
-                cameraScript.cameraLookTarget = minigunTurret;
-                cameraScript.orbitRadius = 1f;
-                cameraScript.xRotationMin = -30f;
-                cameraScript.xRotationMax = 60f;
-                cameraScript.sitHeight = 0.5f;
-            }
-            else if (selectedWeapon == Weapons.None)
-            {
-                CameraMotion cameraScript = Camera.main.GetComponent<CameraMotion>();
+                // point the wind cannon forward
+                YawWindCannonToTarget(chassis.transform.forward);
+
+                // If the Player presses the LMB...
+                if (Input.GetMouseButtonDown(0))
+                {
+                    FireWindCannon();
+                }
+                break;
+            case PlayerFocus.ScimitarMinigun:
+                // First, rotate the Wind Cannon back to the "default position".
+                YawWindCannonToTarget(chassis.transform.forward);
+
+                // Second, aim the Mortar at the Camera.
+                AimMinigunAtTarget(Camera.main.transform.forward);
+
+                // If the Player presses the LMB...
+                if (Input.GetMouseButton(0))
+                {
+                    // If the Mortar has cooled down...
+                    if (minigunCooldown >= minigunFireDelay)
+                    {
+                        FireMinigun();
+                    }
+                }
+                break;
+            case PlayerFocus.ScimitarWindCannon:
+                // First, rotate the Mortar back to the "default position".
+                AimMinigunAtTarget(chassis.transform.forward);
+
+                // Second, aim the Wind Cannon at the Camera.
+                YawWindCannonToTarget(Camera.main.transform.forward);
+
+                // If the Player presses the LMB...
+                if (Input.GetMouseButtonDown(0))
+                {
+                    FireWindCannon();
+                }
+                break;
+        }
+    }
+
+    protected void ScimitarChangeFocus(PlayerFocus _playerFocus)
+    {
+        CameraMotion cameraScript = Camera.main.GetComponent<CameraMotion>();
+        playerFocus = _playerFocus;
+        switch (_playerFocus)
+        {
+            case PlayerFocus.ScimitarNone:
                 cameraScript.cameraLookTarget = chassis;
-                cameraScript.orbitRadius = 4f;
-                cameraScript.xRotationMin = -20f;
-                cameraScript.xRotationMax = 60f;
-                cameraScript.sitHeight = 0f;
-            }
-            else if (selectedWeapon == Weapons.WindCannon)
-            {
-                CameraMotion cameraScript = Camera.main.GetComponent<CameraMotion>();
+                cameraScript.LoadPreset(PlayerFocus.ScimitarNone);
+                break;
+            case PlayerFocus.ScimitarMinigun:
+                cameraScript.cameraLookTarget = minigunTurret;
+                cameraScript.LoadPreset(PlayerFocus.ScimitarMinigun);
+                break;
+            case PlayerFocus.ScimitarWindCannon:
                 cameraScript.cameraLookTarget = windCannon;
-                cameraScript.orbitRadius = 1f;
-                cameraScript.xRotationMin = -30f;
-                cameraScript.xRotationMax = 60f;
-                cameraScript.sitHeight = 0.5f;
-            }
+                cameraScript.LoadPreset(PlayerFocus.ScimitarWindCannon);
+                break;
+            default:
+                Debug.Log("Scimitar Player can't focus on a non-Scimitar part.");
+                break;
         }
-        if (selectedWeapon == Weapons.WindCannon)
+    }
+
+    void PitchMinigunToTarget(Vector3 _targetDirection)
+    {
+        Vector3 barrelForward = -minigunElevationRing.transform.forward;
+        Debug.DrawRay(minigunTurret.transform.position, barrelForward);
+        Debug.DrawRay(minigunTurret.transform.position, _targetDirection);
+        _targetDirection.x = 1; _targetDirection.z = 1;
+        barrelForward.x = 1; barrelForward.z = 1;
+        float angle = Vector3.Angle(_targetDirection, barrelForward);
+        if (_targetDirection.y < barrelForward.y) { angle *= -1; }
+        StaticFunc.RotateTo(minigunElevationRing.GetComponent<Rigidbody>(), 'x', angle);
+    }
+
+    void YawMinigunToTarget(Vector3 _targetDirection)
+    {
+        Vector3 minigunTurretRot = Quaternion.FromToRotation(-minigunTurret.transform.forward, _targetDirection).eulerAngles;
+        if (minigunTurretRot.y > 180f) { minigunTurretRot.y -= 360f; }
+        StaticFunc.RotateTo(minigunTurret.GetComponent<Rigidbody>(), 'y', minigunTurretRot.y);
+    }
+
+    void YawWindCannonToTarget(Vector3 _targetDirection)
+    {
+        Vector3 rotation;
+        if (windCannonAimMode == 0)
         {
-            Vector3 minigunTurretRot = Quaternion.FromToRotation(-minigunTurret.transform.forward, chassis.transform.forward).eulerAngles;
-            if (minigunTurretRot.y > 180f) { minigunTurretRot.y -= 360f; }
-            StaticFunc.RotateTo(minigunTurret.GetComponent<Rigidbody>(), 'y', minigunTurretRot.y);
-            if (Mathf.Abs(minigunTurretRot.y) < 15f)
-            {
-                Vector3 chassisForward = chassis.transform.forward;
-                Vector3 barrelForward = -minigunElevationRing.transform.forward;
-                float angle = Vector3.Angle(chassisForward, barrelForward);
-                chassisForward.x = 0; chassisForward.z = 0;
-                barrelForward.x = 0; barrelForward.z = 0;
-                if (chassisForward.y < barrelForward.y)
-                {
-                    angle *= -1;
-                }
-                StaticFunc.RotateTo(minigunElevationRing.GetComponent<Rigidbody>(), 'x', angle);
-            }
-
-            Vector3 rotation;
-
-            if (Input.GetKeyDown("left ctrl"))
-            {
-                windCannonAimMode = windCannonAimMode == 0 ? 1 : 0;
-            }
-
-            if (windCannonAimMode == 0)
-            {
-                rotation = Quaternion.FromToRotation(windCannon.transform.forward, Camera.main.transform.forward).eulerAngles;
-            }
-            else
-            {
-                rotation = Quaternion.FromToRotation(windCannon.transform.forward, -Camera.main.transform.forward).eulerAngles;
-            }
-
-            if (rotation.y > 180f) { rotation.y -= 360f; }
-            StaticFunc.RotateTo(windCannon.GetComponent<Rigidbody>(), 'y', rotation.y);
-
-            if (Input.GetMouseButtonDown(0))
-            {
-                float trueForce = windCannonForce * 1000f;
-                windCannon.GetComponent<Rigidbody>().AddForce(-windCannon.transform.forward * trueForce);
-                windCannon.transform.GetChild(1).GetComponent<EffectSpawner>().SpawnEffect();
-                List<GameObject> targets = windCannon.GetComponentInChildren<CannonArea>().overlappingGameObjects;
-                foreach (GameObject target in targets)
-                {
-                    target.GetComponent<Rigidbody>().AddForce(windCannon.transform.forward * trueForce * 5f);
-                }
-            }        }
-        if (selectedWeapon == Weapons.Minigun)
-        {
-            // point the wind cannon forward
-            Vector3 WCrotation = Quaternion.FromToRotation(windCannon.transform.forward, -chassis.transform.forward).eulerAngles;
-            if (WCrotation.y > 180f) { WCrotation.y -= 360f; }
-            StaticFunc.RotateTo(windCannon.GetComponent<Rigidbody>(), 'y', WCrotation.y);
-
-            Vector3 minigunTurretRot = Quaternion.FromToRotation(-minigunTurret.transform.forward, Camera.main.transform.forward).eulerAngles;
-            if (minigunTurretRot.y > 180f) { minigunTurretRot.y -= 360f; }
-            StaticFunc.RotateTo(minigunTurret.GetComponent<Rigidbody>(), 'y', minigunTurretRot.y);
-
-            if (Mathf.Abs(minigunTurretRot.y) < 15f)
-            {
-                // if the z rotation is higher, rotate calculation vectors by 90 degrees on the y axis
-                /*
-                Vector3 rot = Quaternion.FromToRotation(-minigunBarrel.transform.forward, Camera.main.transform.forward).eulerAngles;
-                if (rot.x > 180f) { rot.x -= 360f; }
-                if (rot.y > 180f) { rot.y -= 360f; }
-                if (rot.z > 180f) { rot.z -= 360f; }
-                */
-
-                Vector3 cameraForward = Camera.main.transform.forward;
-                Vector3 barrelForward = -minigunElevationRing.transform.forward;
-                float angle = Vector3.Angle(cameraForward, barrelForward);
-                cameraForward.x = 0; cameraForward.z = 0;
-                barrelForward.x = 0; barrelForward.z = 0;
-                if (cameraForward.y < barrelForward.y)
-                {
-                    angle *= -1;
-                }
-
-                StaticFunc.RotateTo(minigunElevationRing.GetComponent<Rigidbody>(), 'x', angle);
-                /*
-                Debug.DrawLine(minigunBarrel.transform.position, minigunBarrel.transform.position + new Vector3(rot.x / 45f, 0f, 0f), Color.red);
-                Debug.DrawLine(minigunBarrel.transform.position, minigunBarrel.transform.position + new Vector3(0f, rot.y / 45f, 0f), Color.green);
-                Debug.DrawLine(minigunBarrel.transform.position, minigunBarrel.transform.position + new Vector3(0f, 0f, rot.z / 45f), Color.blue);
-                */
-                //StaticFunc.RotateTo(minigunElevationRing.GetComponent<Rigidbody>(), 'x', rot.x);
-                /*
-                float minigunEleRingRotX = minigunElevationRing.transform.rotation.eulerAngles.x;
-                if (minigunEleRingRotX > 180f) { minigunEleRingRotX -= 360f; };
-                if (minigunEleRingRotX < minigunMaximumDepression)
-                {
-                    StaticFunc.RotateTo(minigunElevationRing.GetComponent<Rigidbody>(), 'x', -2 * rot.x);
-                }
-                */
-            }
-
-            if (Input.GetMouseButton(0))
-            {
-                if (minigunCooldown >= minigunFireDelay)
-                {
-                    minigunCooldown = 0f;
-                    Vector3 spawnPos = minigunBarrel.transform.GetChild(0).position;
-                    GameObject bulletInstance = Instantiate(bulletPrefab, spawnPos, Quaternion.identity);
-                    Rigidbody bulletRB = bulletInstance.GetComponent<Rigidbody>();
-                    bulletRB.velocity = chassisRB.velocity;
-                    bulletRB.AddForce(-minigunBarrel.transform.forward * 5f);
-                    BulletBehaviour bulletB = bulletInstance.GetComponent<BulletBehaviour>();
-                    bulletB.SetDamage(minigunDamage);
-                    bulletB.SetOwner(this.gameObject);
-                }
-
-                // TODO MINIGUN CANNON SPINNING
-                //float miniSpin = 100f;
-                //minigunCannon.GetComponent<Rigidbody>().AddTorque(0f, 0f, miniSpin);
-            }
-
+            rotation = Quaternion.FromToRotation(windCannon.transform.forward, _targetDirection).eulerAngles;
         }
-        else if (selectedWeapon == Weapons.None)
+        else
         {
-            Vector3 minigunTurretRot = Quaternion.FromToRotation(-minigunTurret.transform.forward, chassis.transform.forward).eulerAngles;
-            if (minigunTurretRot.y > 180f) { minigunTurretRot.y -= 360f; }
-            StaticFunc.RotateTo(minigunTurret.GetComponent<Rigidbody>(), 'y', minigunTurretRot.y);
-            if (Mathf.Abs(minigunTurretRot.y) < 15f)
-            {
-                Vector3 chassisForward = chassis.transform.forward;
-                Vector3 barrelForward = -minigunElevationRing.transform.forward;
-                float angle = Vector3.Angle(chassisForward, barrelForward);
-                chassisForward.x = 0; chassisForward.z = 0;
-                barrelForward.x = 0; barrelForward.z = 0;
-                if (chassisForward.y < barrelForward.y)
-                {
-                    angle *= -1;
-                }
-                StaticFunc.RotateTo(minigunElevationRing.GetComponent<Rigidbody>(), 'x', angle);
-            }
-
-            // point the wind cannon forward
-            Vector3 WCrotation = Quaternion.FromToRotation(windCannon.transform.forward, -chassis.transform.forward).eulerAngles;
-            if (WCrotation.y > 180f) { WCrotation.y -= 360f; }
-            StaticFunc.RotateTo(windCannon.GetComponent<Rigidbody>(), 'y', WCrotation.y);
-
+            rotation = Quaternion.FromToRotation(windCannon.transform.forward, -_targetDirection).eulerAngles;
         }
+        if (rotation.y > 180f) { rotation.y -= 360f; }
+        StaticFunc.RotateTo(windCannon.GetComponent<Rigidbody>(), 'y', rotation.y);
+    }
+
+    void FireWindCannon()
+    {
+        float trueForce = windCannonForce * 1000f;
+        windCannon.GetComponent<Rigidbody>().AddForce(-windCannon.transform.forward * trueForce);
+        windCannon.transform.GetChild(1).GetComponent<EffectSpawner>().SpawnEffect();
+        List<GameObject> targets = windCannon.GetComponentInChildren<CannonArea>().overlappingGameObjects;
+        foreach (GameObject target in targets)
+        {
+            target.GetComponent<Rigidbody>().AddForce(windCannon.transform.forward * trueForce * 5f);
+        }
+    }
+
+    void FireMinigun()
+    {
+        minigunCooldown = 0f;
+        Vector3 spawnPos = minigunBarrel.transform.GetChild(0).position;
+        GameObject bulletInstance = Instantiate(bulletPrefab, spawnPos, Quaternion.identity);
+        Rigidbody bulletRB = bulletInstance.GetComponent<Rigidbody>();
+        bulletRB.velocity = chassisRB.velocity;
+        bulletRB.AddForce(-minigunBarrel.transform.forward * 5f);
+        BulletBehaviour bulletB = bulletInstance.GetComponent<BulletBehaviour>();
+        bulletB.SetDamage(minigunDamage);
+        bulletB.SetOwner(this.gameObject);
+        bulletInstance.layer = 12;
+    }
+
+    void AimMinigunAtTarget(Vector3 _targetDirection)
+    {
+        // Mortar Turret Rotation
+        YawMinigunToTarget(_targetDirection);
+        PitchMinigunToTarget(_targetDirection);
     }
 }
