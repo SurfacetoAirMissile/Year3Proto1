@@ -206,6 +206,7 @@ public class ScimitarPlayer : ScimitarShared
         float trueForce = windCannonForce * 1000f;
         windCannon.GetComponent<Rigidbody>().AddForce(-windCannon.transform.forward * trueForce);
         windCannon.transform.GetChild(1).GetComponent<EffectSpawner>().SpawnEffect();
+        windCannon.GetComponent<AudioSource>().Play();
         List<GameObject> targets = windCannon.GetComponentInChildren<CannonArea>().overlappingGameObjects;
         foreach (GameObject target in targets)
         {
@@ -216,6 +217,7 @@ public class ScimitarPlayer : ScimitarShared
     void FireMinigun()
     {
         minigunCooldown = 0f;
+        minigunBarrel.GetComponent<AudioSource>().Play();
         Vector3 spawnPos = minigunBarrel.transform.GetChild(0).position;
         GameObject bulletInstance = Instantiate(bulletPrefab, spawnPos, Quaternion.identity);
         Rigidbody bulletRB = bulletInstance.GetComponent<Rigidbody>();

@@ -205,6 +205,7 @@ public class TortoisePlayer : TortoiseShared
         float trueForce = windCannonForce * 1000f;
         windCannon.GetComponent<Rigidbody>().AddForce(-windCannon.transform.forward * trueForce);
         windCannon.transform.GetChild(1).GetComponent<EffectSpawner>().SpawnEffect();
+        windCannon.GetComponent<AudioSource>().Play();
         List<GameObject> targets = windCannon.GetComponentInChildren<CannonArea>().overlappingGameObjects;
         foreach (GameObject target in targets)
         {
@@ -215,6 +216,7 @@ public class TortoisePlayer : TortoiseShared
     void FireMortar()
     {
         mortarCooldown = 0f;
+        mortarTurret.GetComponent<AudioSource>().Play();
         Vector3 spawnPos = mortarBarrel.transform.GetChild(0).position;
         GameObject shellInstance = Instantiate(shellPrefab, spawnPos, Quaternion.identity);
         Rigidbody shellRB = shellInstance.GetComponent<Rigidbody>();

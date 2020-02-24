@@ -13,7 +13,8 @@ public class ProjectileShared : MonoBehaviour
     protected float damage;
     protected float timeElapsed;
     protected GameObject owner;
-
+    [SerializeField]
+    private GameObject hitSoundEffectPrefab;
     // Update is called once per frame
     protected void PSUpdate()
     {
@@ -35,7 +36,9 @@ public class ProjectileShared : MonoBehaviour
             if (owner.name.Contains("AI"))
             {
                 masterParent.GetComponent<HovercraftShared>().healthComponent.DeductHealth(damage);
-                timeElapsed = lifetime * .9f;
+                GameObject hitSound = Instantiate(hitSoundEffectPrefab, transform, false);
+                hitSound.transform.SetParent(null);
+                timeElapsed = lifetime * .99f;
             }
         }
         else if (masterParent.name.Contains("AI"))
@@ -43,7 +46,9 @@ public class ProjectileShared : MonoBehaviour
             if (owner.name.Contains("Player"))
             {
                 masterParent.GetComponent<HovercraftShared>().healthComponent.DeductHealth(damage);
-                timeElapsed = lifetime * .9f;
+                GameObject hitSound = Instantiate(hitSoundEffectPrefab, transform, false);
+                hitSound.transform.SetParent(null);
+                timeElapsed = lifetime * .99f;
             }
         }
     }
