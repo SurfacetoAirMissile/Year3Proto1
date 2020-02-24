@@ -175,6 +175,8 @@ MonoBehaviour:
   damage: 0.02
   hitSoundEffectPrefab: {fileID: 105449119419162955, guid: 1889999550e64b04fb1c964e2c6a9696,
     type: 3}
+  bulletImpact: {fileID: 4516995672833740238, guid: 0a36f355037e669449360a1baef313e6,
+    type: 3}
 --- !u!1001 &256016291516224041
 PrefabInstance:
   m_ObjectHideFlags: 0

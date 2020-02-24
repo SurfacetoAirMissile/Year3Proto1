@@ -19,6 +19,7 @@ public class ScimitarShared : HovercraftShared
     protected GameObject minigunElevationRing;
     protected GameObject minigunBarrel;
     protected GameObject bulletPrefab;
+    protected GameObject bulletEffect;
     protected float minigunFireDelay;
     protected float minigunCooldown;
 
@@ -27,6 +28,7 @@ public class ScimitarShared : HovercraftShared
         HovercraftStartup();
         minigunFireDelay = 1f / minigunROF;
         bulletPrefab = Resources.Load("Bullet") as GameObject;
+        //bulletEffect = Resources.Load("BulletImpact") as GameObject;
         foreach (Transform child in transform)
         {
             if (child.name.Contains("Minigun Turret")) { minigunTurret = child.gameObject; }

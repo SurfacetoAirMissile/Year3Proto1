@@ -15,6 +15,8 @@ public class ProjectileShared : MonoBehaviour
     protected GameObject owner;
     [SerializeField]
     private GameObject hitSoundEffectPrefab;
+    [SerializeField]
+    private GameObject bulletImpact;
     // Update is called once per frame
     protected void PSUpdate()
     {
@@ -38,7 +40,9 @@ public class ProjectileShared : MonoBehaviour
                 masterParent.GetComponent<HovercraftShared>().healthComponent.DeductHealth(damage);
                 GameObject hitSound = Instantiate(hitSoundEffectPrefab, transform, false);
                 hitSound.transform.SetParent(null);
-                timeElapsed = lifetime * .99f;
+                GameObject hitImpact = Instantiate(bulletImpact, transform, false);
+                hitImpact.transform.SetParent(null);
+                timeElapsed = lifetime * .97f;
             }
         }
         else if (masterParent.name.Contains("AI"))
@@ -48,7 +52,14 @@ public class ProjectileShared : MonoBehaviour
                 masterParent.GetComponent<HovercraftShared>().healthComponent.DeductHealth(damage);
                 GameObject hitSound = Instantiate(hitSoundEffectPrefab, transform, false);
                 hitSound.transform.SetParent(null);
-                timeElapsed = lifetime * .99f;
+                GameObject hitImpact = Instantiate(bulletImpact, transform, false);
+                hitImpact.transform.SetParent(null);
+                timeElapsed = lifetime * .97f;
+                if (masterParent.name.Contains("Scimitar"))
+                {
+                    // Tells the AI to chase.
+                    masterParent.GetComponent<ScimitarAIController>().state = ScimitarAIController.HovercraftAIState.Chase;
+                }
             }
         }
     }

@@ -12,6 +12,15 @@ public enum GameState
 public class GameManager : Singleton<GameManager>
 {
     public GameObject trading;
+    public bool playerControl;
+    public bool playerInCombat;
+    public bool playerGoingFast;
+    MusicPlayer musicPlayer;
+    private void Start()
+    {
+        playerControl = false;
+        musicPlayer = FindObjectOfType<MusicPlayer>();
+    }
 
     private void Update()
     {
@@ -26,12 +35,30 @@ public class GameManager : Singleton<GameManager>
             if(trading.activeSelf)
             {
                 trading.SetActive(false);
+                playerControl = true;
             }
             else
             {
                 trading.SetActive(true);
+                playerControl = false;
             }
         }
   
+    }
+
+    public void SetPlayerGoingFast(bool _playerGoingFast)
+    {
+        if (playerGoingFast != _playerGoingFast)
+        {
+            musicPlayer.ToggleSpeed();
+        }
+    }
+
+    public void SetPlayerInCombat(bool _playerInCombat)
+    {
+        if (playerInCombat != _playerInCombat)
+        {
+            musicPlayer.ToggleCombat();
+        }
     }
 }

@@ -12295,6 +12295,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   trading: {fileID: 813338427}
+  playerControl: 0
+  playerInCombat: 0
+  playerGoingFast: 0
 --- !u!4 &1309331662
 Transform:
   m_ObjectHideFlags: 0

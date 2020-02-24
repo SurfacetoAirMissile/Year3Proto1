@@ -41,58 +41,61 @@ public class ScimitarPlayer : ScimitarShared
         float rotationAmount = Time.deltaTime * 1000f * rotationForce;
         minigunCooldown += Time.deltaTime;
 
-        if (Input.GetKeyDown("left ctrl"))
+        if (GameManager.Instance.playerControl)
         {
-            windCannonAimMode = windCannonAimMode == 0 ? 1 : 0;
-        }
-        if (Input.GetKeyDown("w"))
-        {
-            chassis.transform.GetChild(0).GetComponent<ParticleSystem>().Play(true);
-        }
-        if (Input.GetKeyUp("w"))
-        {
-            chassis.transform.GetChild(0).GetComponent<ParticleSystem>().Stop(true, ParticleSystemStopBehavior.StopEmitting);
-        }
-        if (Input.GetKey("w"))
-        {
-            Thrust(chassis.transform.forward, 1f);
-        }
-        if (Input.GetKey("s"))
-        {
-            Thrust(-chassis.transform.forward, 1f);
-        }
-        if (Input.GetKey("e"))
-        {
-            Thrust(-chassis.transform.right, 1f);
-        }
-        if (Input.GetKey("q"))
-        {
-            Thrust(chassis.transform.right, 1f);
-        }
-        if (Input.GetKey("d"))
-        {
-            chassisRB.AddTorque(0f, rotationAmount, 0f);
-        }
-        if (Input.GetKey("a"))
-        {
-            chassisRB.AddTorque(0f, -rotationAmount, 0f);
-        }
-        if (Input.GetKeyDown("tab"))
-        {
-            switch (playerFocus)
+            if (Input.GetKeyDown("left ctrl"))
             {
-                case PlayerFocus.ScimitarNone:
-                    ScimitarChangeFocus(PlayerFocus.ScimitarMinigun);
-                    break;
-                case PlayerFocus.ScimitarMinigun:
-                    ScimitarChangeFocus(PlayerFocus.ScimitarWindCannon);
-                    break;
-                case PlayerFocus.ScimitarWindCannon:
-                    ScimitarChangeFocus(PlayerFocus.ScimitarNone);
-                    break;
-                default:
-                    Debug.Log("ScimitarPlayer playerFocus shouldn't be non-Scimitar");
-                    break;
+                windCannonAimMode = windCannonAimMode == 0 ? 1 : 0;
+            }
+            if (Input.GetKeyDown("w"))
+            {
+                chassis.transform.GetChild(0).GetComponent<ParticleSystem>().Play(true);
+            }
+            if (Input.GetKeyUp("w"))
+            {
+                chassis.transform.GetChild(0).GetComponent<ParticleSystem>().Stop(true, ParticleSystemStopBehavior.StopEmitting);
+            }
+            if (Input.GetKey("w"))
+            {
+                Thrust(chassis.transform.forward, 1f);
+            }
+            if (Input.GetKey("s"))
+            {
+                Thrust(-chassis.transform.forward, 1f);
+            }
+            if (Input.GetKey("e"))
+            {
+                Thrust(-chassis.transform.right, 1f);
+            }
+            if (Input.GetKey("q"))
+            {
+                Thrust(chassis.transform.right, 1f);
+            }
+            if (Input.GetKey("d"))
+            {
+                chassisRB.AddTorque(0f, rotationAmount, 0f);
+            }
+            if (Input.GetKey("a"))
+            {
+                chassisRB.AddTorque(0f, -rotationAmount, 0f);
+            }
+            if (Input.GetKeyDown("tab"))
+            {
+                switch (playerFocus)
+                {
+                    case PlayerFocus.ScimitarNone:
+                        ScimitarChangeFocus(PlayerFocus.ScimitarMinigun);
+                        break;
+                    case PlayerFocus.ScimitarMinigun:
+                        ScimitarChangeFocus(PlayerFocus.ScimitarWindCannon);
+                        break;
+                    case PlayerFocus.ScimitarWindCannon:
+                        ScimitarChangeFocus(PlayerFocus.ScimitarNone);
+                        break;
+                    default:
+                        Debug.Log("ScimitarPlayer playerFocus shouldn't be non-Scimitar");
+                        break;
+                }
             }
         }
         switch (playerFocus)
@@ -105,7 +108,7 @@ public class ScimitarPlayer : ScimitarShared
                 YawWindCannonToTarget(chassis.transform.forward);
 
                 // If the Player presses the LMB...
-                if (Input.GetMouseButtonDown(0))
+                if (Input.GetMouseButtonDown(0) && GameManager.Instance.playerControl)
                 {
                     FireWindCannon();
                 }
@@ -118,7 +121,7 @@ public class ScimitarPlayer : ScimitarShared
                 AimMinigunAtTarget(Camera.main.transform.forward);
 
                 // If the Player presses the LMB...
-                if (Input.GetMouseButton(0))
+                if (Input.GetMouseButton(0) && GameManager.Instance.playerControl)
                 {
                     // If the Mortar has cooled down...
                     if (minigunCooldown >= minigunFireDelay)
@@ -135,11 +138,19 @@ public class ScimitarPlayer : ScimitarShared
                 YawWindCannonToTarget(Camera.main.transform.forward);
 
                 // If the Player presses the LMB...
-                if (Input.GetMouseButtonDown(0))
+                if (Input.GetMouseButtonDown(0) && GameManager.Instance.playerControl)
                 {
                     FireWindCannon();
                 }
                 break;
+        }
+        if (chassisRB.velocity.magnitude > 7f)
+        {
+            GameManager.Instance.SetPlayerGoingFast(true);
+        }
+        else
+        {
+            GameManager.Instance.SetPlayerGoingFast(false);
         }
     }
 

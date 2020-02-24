@@ -35,59 +35,61 @@ public class TortoisePlayer : TortoiseShared
         float rotationAmount = Time.deltaTime * 1000f * rotationForce;
         mortarCooldown += Time.deltaTime;
 
-
-        if (Input.GetKeyDown("left ctrl"))
+        if (GameManager.Instance.playerControl)
         {
-            windCannonAimMode = windCannonAimMode == 0 ? 1 : 0;
-        }
-        if (Input.GetKeyDown("w"))
-        {
-            //chassis.transform.GetChild(0).GetComponent<ParticleSystem>().Play(true);
-        }
-        if (Input.GetKeyUp("w"))
-        {
-            //chassis.transform.GetChild(0).GetComponent<ParticleSystem>().Stop(true, ParticleSystemStopBehavior.StopEmitting);
-        }
-        if (Input.GetKey("w"))
-        {
-            Thrust(chassis.transform.forward, 1f);
-        }
-        if (Input.GetKey("s"))
-        {
-            Thrust(-chassis.transform.forward, 1f);
-        }
-        if (Input.GetKey("e"))
-        {
-            Thrust(-chassis.transform.right, 1f);
-        }
-        if (Input.GetKey("q"))
-        {
-            Thrust(chassis.transform.right, 1f);
-        }
-        if (Input.GetKey("d"))
-        {
-            chassisRB.AddTorque(0f, rotationAmount, 0f);
-        }
-        if (Input.GetKey("a"))
-        {
-            chassisRB.AddTorque(0f, -rotationAmount, 0f);
-        }
-        if (Input.GetKeyDown("tab"))
-        {
-            switch (playerFocus)
+            if (Input.GetKeyDown("left ctrl"))
             {
-                case PlayerFocus.TortoiseMortar:
-                    TortoiseChangeFocus(PlayerFocus.TortoiseNone);
-                    break;
-                case PlayerFocus.TortoiseNone:
-                    TortoiseChangeFocus(PlayerFocus.TortoiseWindCannon);
-                    break;
-                case PlayerFocus.TortoiseWindCannon:
-                    TortoiseChangeFocus(PlayerFocus.TortoiseMortar);
-                    break;
-                default:
-                    Debug.Log("TortoisePlayer playerFocus shouldn't be non-Tortoise");
-                    break;
+                windCannonAimMode = windCannonAimMode == 0 ? 1 : 0;
+            }
+            if (Input.GetKeyDown("w"))
+            {
+                //chassis.transform.GetChild(0).GetComponent<ParticleSystem>().Play(true);
+            }
+            if (Input.GetKeyUp("w"))
+            {
+                //chassis.transform.GetChild(0).GetComponent<ParticleSystem>().Stop(true, ParticleSystemStopBehavior.StopEmitting);
+            }
+            if (Input.GetKey("w"))
+            {
+                Thrust(chassis.transform.forward, 1f);
+            }
+            if (Input.GetKey("s"))
+            {
+                Thrust(-chassis.transform.forward, 1f);
+            }
+            if (Input.GetKey("e"))
+            {
+                Thrust(-chassis.transform.right, 1f);
+            }
+            if (Input.GetKey("q"))
+            {
+                Thrust(chassis.transform.right, 1f);
+            }
+            if (Input.GetKey("d"))
+            {
+                chassisRB.AddTorque(0f, rotationAmount, 0f);
+            }
+            if (Input.GetKey("a"))
+            {
+                chassisRB.AddTorque(0f, -rotationAmount, 0f);
+            }
+            if (Input.GetKeyDown("tab"))
+            {
+                switch (playerFocus)
+                {
+                    case PlayerFocus.TortoiseMortar:
+                        TortoiseChangeFocus(PlayerFocus.TortoiseNone);
+                        break;
+                    case PlayerFocus.TortoiseNone:
+                        TortoiseChangeFocus(PlayerFocus.TortoiseWindCannon);
+                        break;
+                    case PlayerFocus.TortoiseWindCannon:
+                        TortoiseChangeFocus(PlayerFocus.TortoiseMortar);
+                        break;
+                    default:
+                        Debug.Log("TortoisePlayer playerFocus shouldn't be non-Tortoise");
+                        break;
+                }
             }
         }
         switch (playerFocus)
@@ -100,7 +102,7 @@ public class TortoisePlayer : TortoiseShared
                 YawWindCannonToTarget(chassis.transform.forward);
 
                 // If the Player presses the LMB...
-                if (Input.GetMouseButtonDown(0))
+                if (Input.GetMouseButtonDown(0) && GameManager.Instance.playerControl)
                 {
                     FireWindCannon();
                 }
@@ -113,7 +115,7 @@ public class TortoisePlayer : TortoiseShared
                 AimMortarAtTarget(Camera.main.GetComponent<CameraMotion>().mortarAimTarget);
 
                 // If the Player presses the LMB...
-                if (Input.GetMouseButton(0))
+                if (Input.GetMouseButton(0) && GameManager.Instance.playerControl)
                 {
                     // If the Mortar has cooled down...
                     if (mortarCooldown >= mortarFireDelay)
@@ -130,11 +132,19 @@ public class TortoisePlayer : TortoiseShared
                 YawWindCannonToTarget(Camera.main.transform.forward);
 
                 // If the Player presses the LMB...
-                if (Input.GetMouseButtonDown(0))
+                if (Input.GetMouseButtonDown(0) && GameManager.Instance.playerControl)
                 {
                     FireWindCannon();
                 }
                 break;
+        }
+        if (chassisRB.velocity.magnitude > 6.5f)
+        {
+            GameManager.Instance.SetPlayerGoingFast(true);
+        }
+        else
+        {
+            GameManager.Instance.SetPlayerGoingFast(false);
         }
     }
 
