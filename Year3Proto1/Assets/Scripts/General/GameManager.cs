@@ -1,7 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using DG.Tweening;
 using TMPro;
+using UnityEngine;
 
 public enum GameState
 {
@@ -11,34 +10,82 @@ public enum GameState
 
 public class GameManager : Singleton<GameManager>
 {
+    [Header("User Interface")]
     public TMP_Text header;
     public TMP_Text footer;
 
+    public GameObject popup;
+    public GameObject hud;
+    public GameObject trading;
+
+    [Header("Enemies")]
+    public GameObject[] enemies;
+    public Transform enemiesParent;
+
     private GameState gameState = GameState.INGAME;
-    private float time = 0.0f;
+    private float time = 5.0f;
     private int waves = 1;
-    private int enemiesRemaining;
+    private int enemiesRemaining = 10;
+    private bool popupActive = true;
 
     private void Update()
     {
-        if (enemiesRemaining <= 0 && gameState == GameState.INGAME) Check(gameState);
-        if (time <= 0 && gameState == GameState.GRACE_PERIOD) Check(gameState);
-        if (gameState == GameState.GRACE_PERIOD) time -= Time.deltaTime;
+        if (time <= 0)
+        {
+            Popup();
+            Check(gameState);
+        }
+
+        time -= Time.deltaTime;
+
+        if (gameState == GameState.GRACE_PERIOD)
+        {
+
+            if (Input.GetKeyDown(KeyCode.F)) trading.SetActive(trading.activeSelf ? false : true);
+        }
     }
 
     public void Check(GameState gameState)
     {
-        switch(gameState)
+        switch (gameState)
         {
             case GameState.GRACE_PERIOD:
-                waves += 1;
-                header.text = "Grace Peroid";
-                time = 120.0f;
+                trading.SetActive(trading.activeSelf ? false : true);
+                this.gameState = GameState.INGAME;
+                time = 5.0f;
                 break;
             case GameState.INGAME:
-                header.text = "Wave " + waves;
-                time = 120.0f;
+                this.gameState = GameState.GRACE_PERIOD;
+                time = 5.0f;
                 break;
         }
+    }
+
+    public void Spawn(int amount)
+    {
+        for (int i = 0; i < amount; i++)
+        {
+            //Instantiate(enemies[Random.Range(0, enemies.Length)], enemiesParent);
+        }
+    }
+
+    public void Popup()
+    {
+        float position = popup.transform.localPosition.x;
+
+        if (popupActive)
+        {
+            position = position - popup.GetComponent<RectTransform>().rect.width;
+            popupActive = false;
+        }
+        else
+        {
+            position = position + popup.GetComponent<RectTransform>().rect.width;
+            popupActive = true;
+        }
+
+        DOTween.Sequence()
+            .Join(popup.transform.DOLocalMoveX(position, 3.0f))
+            .SetEase(Ease.OutQuint);
     }
 }
