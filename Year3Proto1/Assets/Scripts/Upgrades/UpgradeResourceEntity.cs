@@ -15,7 +15,7 @@ public enum UpgradeType
 [System.Serializable]
 public class UpgradeResourceEntity
 {
-    public string displayName;
+    public string displayName, description;
     public int cost;
     public UpgradeType upgradeType;
     public Sprite icon;

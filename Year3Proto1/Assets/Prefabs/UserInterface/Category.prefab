@@ -112,7 +112,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 360, y: 0}
+  m_AnchoredPosition: {x: 32, y: 0}
   m_SizeDelta: {x: 450, y: 440}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &430089554278508215
@@ -127,14 +127,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2f1e68edf8f70c40a4f88d70b8ac719, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  categoryName: Weapons
   resource: {fileID: 8671340981923669077, guid: cd49f7d6571deec4ebc6baa9780e96ff,
     type: 3}
   outline: {fileID: 430089553226413352}
   outline2: {fileID: 529096930209385128}
   arrow: {fileID: 430089554821801199}
   parent: {fileID: 430089554327748473}
-  upgradeEntities: []
 --- !u!222 &6981740625659696858
 CanvasRenderer:
   m_ObjectHideFlags: 0
