@@ -10,7 +10,7 @@
 		{
 			Tags { "RenderType" = "Transparent" "Queue" = "Transparent"}
 			LOD 100
-			Blend One One
+			Blend SrcAlpha OneMinusSrcAlpha
 			//Blend One OneMinusSrcAlpha
 			Zwrite Off
 			Cull off
@@ -58,7 +58,7 @@
 					fixed4 col = tex2D(_MainTex, i.uv);
 					col.rgb *= i.color.a;
 
-					return col * _Value * i.color;
+					return col * i.color;
 					//float uv = length(i.uv - .5);
 					//return smoothstep(.5,0.4,uv)*smoothstep(.3,.4,uv)* _Value * i.color;
 				}
