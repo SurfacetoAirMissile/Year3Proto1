@@ -1027,7 +1027,7 @@ ParticleSystem:
           m_PostInfinity: 2
           m_RotationOrder: 4
       cycleCount: 5
-      repeatInterval: 0.12
+      repeatInterval: 0.11
       probability: 1
   SizeModule:
     enabled: 1
@@ -2104,7 +2104,7 @@ ParticleSystem:
     speedModifier:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 12
+      scalar: 14
       minScalar: 1
       maxCurve:
         serializedVersion: 2
