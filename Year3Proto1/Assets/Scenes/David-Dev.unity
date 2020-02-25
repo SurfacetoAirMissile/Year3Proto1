@@ -10576,11 +10576,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: ExplosionEffect
       objectReference: {fileID: 0}
-    - target: {fileID: 1645385689710705689, guid: 8133fd435178b6e4ea892c7ab5edabac,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 1645385689710705690, guid: 8133fd435178b6e4ea892c7ab5edabac,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -11889,6 +11884,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: MusicPlayer
+      objectReference: {fileID: 0}
+    - target: {fileID: 3171675983035442725, guid: 8739c76e1cdaacf41a10c36383f4cd4b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3171675983035442747, guid: 8739c76e1cdaacf41a10c36383f4cd4b,
         type: 3}
