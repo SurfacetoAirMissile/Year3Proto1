@@ -8,6 +8,11 @@ public class ScimitarPlayer : ScimitarShared
     [SerializeField]
     [Tooltip("The amount of force the wind cannon applies, in thousands of units.")]
     protected float windCannonForce;
+    [SerializeField]
+    [Tooltip("The Wind Cannon's rate of fire, in winds per second (not winds per minute/rpm)")]
+    protected float windCannonROF;
+    protected float windCannonFireDelay;
+    protected float windCannonCooldown;
 
     enum Weapons
     {
@@ -32,6 +37,8 @@ public class ScimitarPlayer : ScimitarShared
         windCannonAimMode = 0;
         ScimitarChangeFocus(PlayerFocus.ScimitarNone);
         healthComponent.SetHealth(3f);
+        windCannonFireDelay = 1f / windCannonROF;
+        windCannonCooldown = 0f;
     }
 
     // Update is called once per frame
@@ -40,6 +47,7 @@ public class ScimitarPlayer : ScimitarShared
         ApplyLevitationForces();
         float rotationAmount = Time.deltaTime * 1000f * rotationForce;
         minigunCooldown += Time.deltaTime;
+        windCannonCooldown += Time.deltaTime;
 
         if (GameManager.Instance.playerControl)
         {
@@ -110,7 +118,11 @@ public class ScimitarPlayer : ScimitarShared
                 // If the Player presses the LMB...
                 if (Input.GetMouseButtonDown(0) && GameManager.Instance.playerControl)
                 {
-                    FireWindCannon();
+                    // If the Wind Cannon has cooled down...
+                    if (windCannonCooldown >= windCannonFireDelay)
+                    {
+                        FireWindCannon();
+                    }
                 }
                 break;
             case PlayerFocus.ScimitarMinigun:
@@ -140,7 +152,11 @@ public class ScimitarPlayer : ScimitarShared
                 // If the Player presses the LMB...
                 if (Input.GetMouseButtonDown(0) && GameManager.Instance.playerControl)
                 {
-                    FireWindCannon();
+                    // If the Wind Cannon has cooled down...
+                    if (windCannonCooldown >= windCannonFireDelay)
+                    {
+                        FireWindCannon();
+                    }
                 }
                 break;
         }
@@ -214,6 +230,7 @@ public class ScimitarPlayer : ScimitarShared
 
     void FireWindCannon()
     {
+        windCannonCooldown = 0f;
         float trueForce = windCannonForce * 1000f;
         windCannon.GetComponent<Rigidbody>().AddForce(-windCannon.transform.forward * trueForce);
         windCannon.transform.GetChild(1).GetComponent<EffectSpawner>().SpawnEffect();

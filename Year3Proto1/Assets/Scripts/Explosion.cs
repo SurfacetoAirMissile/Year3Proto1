@@ -4,10 +4,8 @@ using UnityEngine;
 
 public class Explosion : MonoBehaviour
 {
-    [SerializeField]
-    private float explosionRadius = 8f;
-    [SerializeField]
-    private float explosionDamage = 1f;
+    public float explosionRadius = 8f;
+    public float explosionDamage = 1f;
     float timeElapsed = 0f;
 
     // Start is called before the first frame update

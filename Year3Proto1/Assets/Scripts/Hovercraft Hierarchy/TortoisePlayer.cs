@@ -8,6 +8,11 @@ public class TortoisePlayer : TortoiseShared
     [SerializeField]
     [Tooltip("The amount of force the wind cannon applies, in thousands of units.")]
     protected float windCannonForce;
+    [SerializeField]
+    [Tooltip("The Wind Cannon's rate of fire, in winds per second (not winds per minute/rpm)")]
+    protected float windCannonROF;
+    protected float windCannonFireDelay;
+    protected float windCannonCooldown;
 
     PlayerFocus playerFocus;
 
@@ -26,6 +31,8 @@ public class TortoisePlayer : TortoiseShared
         playerFocus = PlayerFocus.TortoiseWindCannon;
         TortoiseChangeFocus(playerFocus);
         healthComponent.SetHealth(5f);
+        windCannonFireDelay = 1f / windCannonROF;
+        windCannonCooldown = 0f;
     }
 
     // Update is called once per frame
@@ -34,6 +41,7 @@ public class TortoisePlayer : TortoiseShared
         ApplyLevitationForces();
         float rotationAmount = Time.deltaTime * 1000f * rotationForce;
         mortarCooldown += Time.deltaTime;
+        windCannonCooldown += Time.deltaTime;
 
         if (GameManager.Instance.playerControl)
         {
@@ -104,7 +112,11 @@ public class TortoisePlayer : TortoiseShared
                 // If the Player presses the LMB...
                 if (Input.GetMouseButtonDown(0) && GameManager.Instance.playerControl)
                 {
-                    FireWindCannon();
+                    // If the Wind Cannon has cooled down...
+                    if (windCannonCooldown >= windCannonFireDelay)
+                    {
+                        FireWindCannon();
+                    }
                 }
                 break;
             case PlayerFocus.TortoiseMortar:
@@ -134,7 +146,11 @@ public class TortoisePlayer : TortoiseShared
                 // If the Player presses the LMB...
                 if (Input.GetMouseButtonDown(0) && GameManager.Instance.playerControl)
                 {
-                    FireWindCannon();
+                    // If the Wind Cannon has cooled down...
+                    if (windCannonCooldown >= windCannonFireDelay)
+                    {
+                        FireWindCannon();
+                    }
                 }
                 break;
         }
@@ -212,6 +228,7 @@ public class TortoisePlayer : TortoiseShared
 
     void FireWindCannon()
     {
+        windCannonCooldown = 0f;
         float trueForce = windCannonForce * 1000f;
         windCannon.GetComponent<Rigidbody>().AddForce(-windCannon.transform.forward * trueForce);
         windCannon.transform.GetChild(1).GetComponent<EffectSpawner>().SpawnEffect();

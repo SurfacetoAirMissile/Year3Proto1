@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 262.3371, g: 325.05005, b: 430.21954, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1541,11 +1541,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1045906239059968175, guid: 37e735e15e043334fa4ee9d40ac60cc8,
-        type: 3}
-      propertyPath: minigunROF
-      value: 18.3
-      objectReference: {fileID: 0}
     - target: {fileID: 3531467805860202858, guid: 37e735e15e043334fa4ee9d40ac60cc8,
         type: 3}
       propertyPath: m_ConnectedAnchor.x
@@ -1619,7 +1614,7 @@ PrefabInstance:
     - target: {fileID: 8979564011033277799, guid: 37e735e15e043334fa4ee9d40ac60cc8,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -7.7590475
+      value: -7.11
       objectReference: {fileID: 0}
     - target: {fileID: 8979564011033277799, guid: 37e735e15e043334fa4ee9d40ac60cc8,
         type: 3}
@@ -11039,8 +11034,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5403891371637922966, guid: c887f85c1da91854c9cfda93541a68cf,
         type: 3}
-      propertyPath: minigunDamage
-      value: 0.02
+      propertyPath: minigunROF
+      value: 18.3
       objectReference: {fileID: 0}
     - target: {fileID: 5968147174373615725, guid: c887f85c1da91854c9cfda93541a68cf,
         type: 3}

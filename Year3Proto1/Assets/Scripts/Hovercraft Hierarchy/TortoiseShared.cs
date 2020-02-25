@@ -37,6 +37,7 @@ public class TortoiseShared : HovercraftShared
     {
         HovercraftStartup();
         mortarFireDelay = 1f / mortarROF;
+        mortarCooldown = 0f;
         shellPrefab = Resources.Load("Shell") as GameObject;
         explosionPrefab = Resources.Load("Explosion") as GameObject;
         foreach (Transform child in transform)

@@ -23,6 +23,7 @@ MonoBehaviour:
   faction: 1
   spottingAngle: 45
   spottingRange: 100
+  state: 0
 --- !u!1001 &1918000146855084899
 PrefabInstance:
   m_ObjectHideFlags: 0
