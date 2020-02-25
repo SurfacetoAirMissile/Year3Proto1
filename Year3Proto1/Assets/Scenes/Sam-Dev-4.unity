@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 262.3371, g: 325.05005, b: 430.21954, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1541,6 +1541,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1045906239059968175, guid: 37e735e15e043334fa4ee9d40ac60cc8,
+        type: 3}
+      propertyPath: windCannonROF
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 3531467805860202858, guid: 37e735e15e043334fa4ee9d40ac60cc8,
         type: 3}
       propertyPath: m_ConnectedAnchor.x
@@ -1564,7 +1569,7 @@ PrefabInstance:
     - target: {fileID: 5388143797690681204, guid: 37e735e15e043334fa4ee9d40ac60cc8,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6594181593691108824, guid: 37e735e15e043334fa4ee9d40ac60cc8,
         type: 3}
@@ -7646,7 +7651,7 @@ PrefabInstance:
     - target: {fileID: 7579030972819021264, guid: accdf0cfa2424784f997f0d7d4870ff0,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: accdf0cfa2424784f997f0d7d4870ff0, type: 3}

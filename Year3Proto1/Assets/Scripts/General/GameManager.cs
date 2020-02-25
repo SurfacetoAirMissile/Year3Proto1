@@ -41,13 +41,13 @@ public class GameManager : Singleton<GameManager>
                 playerControl = false;
             }
         }
-        if (hovercraftList.Length > 0)
-        {
-            foreach (HovercraftShared hovercraft in hovercraftList)
-            {
+        //if (hovercraftList.Length > 0)
+        //{
+            //foreach (HovercraftShared hovercraft in hovercraftList)
+            //{
 
-            }
-        }
+            //}
+        //}
     }
 
     public void SetPlayerGoingFast(bool _playerGoingFast)
