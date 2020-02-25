@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: mBulletTrail
+  m_Name: mSparks
   m_Shader: {fileID: 4800000, guid: a4f0be9f67ff55f4bad9f12626988ef1, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
@@ -218,7 +218,7 @@ Material:
     - _UVEmissive: 0
     - _UseEmissiveIntensity: 0
     - _UseShadowThreshold: 0
-    - _Value: 4
+    - _Value: 7
     - _ZTestDepthEqualForOpaque: 4
     - _ZTestGBuffer: 4
     - _ZTestModeDistortion: 8
