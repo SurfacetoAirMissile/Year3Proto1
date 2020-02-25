@@ -19,7 +19,7 @@ MonoBehaviour:
     health: 0
   minigunROF: 5
   minigunMaximumDepression: -5
-  minigunDamage: 0
+  minigunDamage: 0.02
   faction: 1
   spottingAngle: 45
   spottingRange: 100

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BulletBehaviour : ProjectileShared
 {
+
     private void Update()
     {
         PSUpdate();
