@@ -20,8 +20,10 @@ public class GameManager : Singleton<GameManager>
     public GameObject trading;
 
     [Header("Enemies")]
-    public GameObject[] enemies;
-    public Transform enemiesParent;
+    public GameSpawner gameSpawner;
+    public int remaining = 10;
+    public int wave = 1;
+
 
     [Header("Player")]
     public bool playerControl;
@@ -31,22 +33,16 @@ public class GameManager : Singleton<GameManager>
 
     private GameState gameState = GameState.GRACE_PERIOD;
     private float time = 5.0f;
-    private int waves = 1;
-    private int enemiesRemaining = 10;
     private bool popupActive = true;
 
     private void Update()
     {
-        //if (time <= 0)
-       // {
-        //    Popup();
-        //    Check(gameState);
-        //}
-
-        time -= Time.deltaTime;
+        if (remaining <= 0 && time <= 0) Switch(gameState);
 
         if (gameState == GameState.GRACE_PERIOD)
         {
+            time -= Time.deltaTime;
+
             if (Input.GetKeyDown(KeyCode.F))
             {
                 trading.SetActive(trading.activeSelf ? false : true);
@@ -58,17 +54,20 @@ public class GameManager : Singleton<GameManager>
 
     public void Switch(GameState gameState)
     {
-      switch (gameState)
-      {
-          case GameState.GRACE_PERIOD:
-              this.gameState = GameState.INGAME;
-              time = 5.0f;
-              break;
-          case GameState.INGAME:
-              this.gameState = GameState.GRACE_PERIOD;
-              time = 5.0f;
-              break;
-      }
+        switch (gameState)
+        {
+            case GameState.GRACE_PERIOD:
+                this.gameState = GameState.INGAME;
+                remaining = wave * 10;
+                gameSpawner.Spawn(remaining);
+                time = 120.0f;
+                break;
+            case GameState.INGAME:
+                this.gameState = GameState.GRACE_PERIOD;
+                wave += 1;
+                time = 1.0f;
+                break;
+        }
     }
 
     private void Start()
@@ -91,14 +90,6 @@ public class GameManager : Singleton<GameManager>
         if (playerInCombat != _playerInCombat)
         {
             musicPlayer.ToggleCombat();
-        }
-    }
-
-    public void Spawn(int amount)
-    {
-        for (int i = 0; i < amount; i++)
-        {
-            //Instantiate(enemies[Random.Range(0, enemies.Length)], enemiesParent);
         }
     }
 
