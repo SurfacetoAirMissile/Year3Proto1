@@ -62,38 +62,38 @@ public class UpgradeSystem : MonoBehaviour
     {
         upgradeInformation.Refresh(upgradeCategories[index].GetUpgradeResource().GetEntity());
 
-
-        if (Input.GetKeyDown(KeyCode.A) && switchable)
-        {
-            UpgradeCategory upgradeCategory = upgradeCategories[index];
-
-            if (index <= 0)
+  
+            if (Input.GetKeyDown(KeyCode.A) && switchable)
             {
-                index = (upgradeCategories.Count - 1);
-            }
-            else
-            {
-                index--;
-            }
+                UpgradeCategory upgradeCategory = upgradeCategories[index];
 
-            Switch(upgradeCategory, upgradeCategories[index], KeyCode.A);
-        }
+                if (index <= 0)
+                {
+                    index = (upgradeCategories.Count - 1);
+                }
+                else
+                {
+                    index--;
+                }
 
-        if (Input.GetKeyDown(KeyCode.D) && switchable)
-        {
-            UpgradeCategory upgradeCategory = upgradeCategories[index];
-
-            if (index >= (upgradeCategories.Count - 1))
-            {
-                index = 0;
-            }
-            else
-            {
-                index++;
+                Switch(upgradeCategory, upgradeCategories[index], KeyCode.A);
             }
 
-            Switch(upgradeCategory, upgradeCategories[index], KeyCode.D);
-        }
+            if (Input.GetKeyDown(KeyCode.D) && switchable)
+            {
+                UpgradeCategory upgradeCategory = upgradeCategories[index];
+
+                if (index >= (upgradeCategories.Count - 1))
+                {
+                    index = 0;
+                }
+                else
+                {
+                    index++;
+                }
+
+                Switch(upgradeCategory, upgradeCategories[index], KeyCode.D);
+            }
     }
 
     public void Switch(UpgradeCategory upgradeCategory, UpgradeCategory nextUpgradeCategory, KeyCode keyCode)
@@ -124,7 +124,6 @@ public class UpgradeSystem : MonoBehaviour
         //Category Items
 
         DOTween.Sequence()
-                .Join(upgradeInformation.GetComponent<CanvasGroup>().DOFade(0.0f, moveTime / 2.0f))
                 .Join(nextUpgradeCategory.transform.DOLocalMoveX(initialMove, 0.0f).SetEase(Ease.OutQuint))
                 .Join(upgradeCategory.transform.DOLocalMoveX(finalMove, moveTime).SetEase(Ease.OutQuint))
                 .Join(upgradeCategory.GetComponent<CanvasGroup>().DOFade(0.0f, moveTime))

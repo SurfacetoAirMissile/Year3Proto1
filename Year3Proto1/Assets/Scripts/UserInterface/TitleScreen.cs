@@ -39,7 +39,7 @@ public class TitleScreen : MonoBehaviour
             {
                 showScreen = false;
                 hideScreen = true;
-
+                GameManager.Instance.playerControl = true;
                 anykeyPrompt.transform.DOPunchScale(new Vector3(0.5f, 0.5f, 0.0f), 0.33f, 1, 1.0f);
             }
 

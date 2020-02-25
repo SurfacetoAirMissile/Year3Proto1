@@ -13,7 +13,7 @@ public class ScimitarAIController : ScimitarShared
     [SerializeField] [Tooltip("The Bot's faction.")]
     private Faction faction;
 
-    enum HovercraftAIState
+    public enum HovercraftAIState
     {
         Wander,
         Chase,
@@ -53,7 +53,7 @@ public class ScimitarAIController : ScimitarShared
 
     #endregion
 
-    HovercraftAIState state;
+    public HovercraftAIState state;
 
     // Start is called before the first frame update
     void Start()
@@ -165,6 +165,7 @@ public class ScimitarAIController : ScimitarShared
                         if (minigunCooldown >= minigunFireDelay)
                         {
                             minigunCooldown = 0f;
+                            minigunBarrel.GetComponent<AudioSource>().Play();
                             Vector3 spawnPos = minigunBarrel.transform.GetChild(0).position;
                             GameObject bulletInstance = Instantiate(bulletPrefab, spawnPos, Quaternion.identity);
                             Rigidbody bulletRB = bulletInstance.GetComponent<Rigidbody>();
