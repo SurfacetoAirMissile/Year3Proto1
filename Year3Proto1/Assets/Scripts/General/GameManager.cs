@@ -23,6 +23,12 @@ public class GameManager : Singleton<GameManager>
     public GameObject[] enemies;
     public Transform enemiesParent;
 
+    [Header("Player")]
+    public bool playerControl;
+    public bool playerInCombat;
+    public bool playerGoingFast;
+    MusicPlayer musicPlayer;
+
     private GameState gameState = GameState.GRACE_PERIOD;
     private float time = 5.0f;
     private int waves = 1;
@@ -50,18 +56,41 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
-    public void Check(GameState gameState)
+    public void Switch(GameState gameState)
     {
-        switch (gameState)
+      switch (gameState)
+      {
+          case GameState.GRACE_PERIOD:
+              this.gameState = GameState.INGAME;
+              time = 5.0f;
+              break;
+          case GameState.INGAME:
+              this.gameState = GameState.GRACE_PERIOD;
+              time = 5.0f;
+              break;
+      }
+    }
+
+    private void Start()
+    {
+        playerControl = false;
+        musicPlayer = FindObjectOfType<MusicPlayer>();
+    }
+
+
+    public void SetPlayerGoingFast(bool _playerGoingFast)
+    {
+        if (playerGoingFast != _playerGoingFast)
         {
-            case GameState.GRACE_PERIOD:
-                this.gameState = GameState.INGAME;
-                time = 5.0f;
-                break;
-            case GameState.INGAME:
-                this.gameState = GameState.GRACE_PERIOD;
-                time = 5.0f;
-                break;
+            musicPlayer.ToggleSpeed();
+        }
+    }
+
+    public void SetPlayerInCombat(bool _playerInCombat)
+    {
+        if (playerInCombat != _playerInCombat)
+        {
+            musicPlayer.ToggleCombat();
         }
     }
 
