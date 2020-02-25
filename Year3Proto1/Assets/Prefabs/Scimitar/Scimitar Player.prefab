@@ -83,15 +83,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f5e1e7e9a5fa6049b4e5adf501e5bd7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hoverForce: 0.5
-  pushForce: 1.3
-  rotationForce: 5
+  hoverForce: 0.45
+  pushForce: 1.4
+  rotationForce: 7
   healthComponent:
     health: 3
-  minigunROF: 50
+  minigunROF: 18.3
   minigunMaximumDepression: -5
   minigunDamage: 0.02
   windCannonForce: 2
+  windCannonROF: 1
 --- !u!1 &8083636086536225691
 GameObject:
   m_ObjectHideFlags: 0

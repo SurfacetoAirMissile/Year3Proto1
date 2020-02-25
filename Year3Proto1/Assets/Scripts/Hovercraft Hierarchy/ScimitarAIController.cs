@@ -20,6 +20,7 @@ public class ScimitarAIController : ScimitarShared
         OrbitEngage
     }
 
+    protected GameObject explosionPrefab;
 
     #region Wander Variable Definitions
 
@@ -75,6 +76,7 @@ public class ScimitarAIController : ScimitarShared
             orbitDistance = StaticFunc.FloatLookup("Scimitar Orbit Distance");
         }
         healthComponent.SetHealth(1f);
+        explosionPrefab = Resources.Load("Explosion") as GameObject;
     }
 
     // Update is called once per frame
@@ -94,7 +96,7 @@ public class ScimitarAIController : ScimitarShared
                     {
                         if (CanSeePlayer(spottingAngle, spottingRange))
                         {
-                            state = HovercraftAIState.Chase;
+                            ChangeState(HovercraftAIState.Chase);
                         }
                     }
                     wanderUpdateStopwatch += Time.deltaTime;
@@ -133,7 +135,7 @@ public class ScimitarAIController : ScimitarShared
                     // If we are far away from the player, chase, if we're within engagement distance, orbit them and fire.
                     if (AIToPlayer.magnitude < orbitDistance * 2f)
                     {
-                        state = HovercraftAIState.OrbitEngage;
+                        ChangeState(HovercraftAIState.OrbitEngage);
                     }
 
                     break;
@@ -203,6 +205,16 @@ public class ScimitarAIController : ScimitarShared
 
             }
         }
+        else
+        {
+            if (!deathFunctionCalled)
+            {
+                // call death function
+                DeathFunction();
+            }
+            // destroy self
+            Destroy(gameObject);
+        }
     }
 
     bool Chance(float _outOfOne)
@@ -221,5 +233,48 @@ public class ScimitarAIController : ScimitarShared
             return false;
         }
         return true;
+    }
+
+    bool deathFunctionCalled = false;
+    void DeathFunction()
+    {
+        GameObject explosion = Instantiate(explosionPrefab, chassis.transform, false);
+        explosion.transform.SetParent(null);
+        Vector3 scale = explosion.transform.localScale;
+        scale.x = 5f;
+        scale.y = 5f;
+        scale.z = 5f;
+        explosion.transform.localScale = scale;
+        Explosion explosionScript = explosion.GetComponent<Explosion>();
+        explosionScript.explosionDamage = 0f;
+        explosionScript.explosionRadius = 0f;
+        deathFunctionCalled = true;
+    }
+
+    void MessageChasing()
+    {
+        GameManager.Instance.AddAIChasing(gameObject);
+    }
+
+    void MessageNotChasing()
+    {
+        GameManager.Instance.RemoveAIChasing(gameObject);
+    }
+
+    void ChangeState(HovercraftAIState _newState)
+    {
+        state = _newState;
+        switch (state)
+        {
+            case HovercraftAIState.Chase:
+                MessageChasing();
+                break;
+            case HovercraftAIState.OrbitEngage:
+                MessageChasing();
+                break;
+            case HovercraftAIState.Wander:
+                MessageNotChasing();
+                break;
+        }
     }
 }

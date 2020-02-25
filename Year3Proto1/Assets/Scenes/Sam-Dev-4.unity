@@ -1543,8 +1543,8 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1045906239059968175, guid: 37e735e15e043334fa4ee9d40ac60cc8,
         type: 3}
-      propertyPath: minigunROF
-      value: 18.3
+      propertyPath: windCannonROF
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 3531467805860202858, guid: 37e735e15e043334fa4ee9d40ac60cc8,
         type: 3}
@@ -1569,7 +1569,7 @@ PrefabInstance:
     - target: {fileID: 5388143797690681204, guid: 37e735e15e043334fa4ee9d40ac60cc8,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6594181593691108824, guid: 37e735e15e043334fa4ee9d40ac60cc8,
         type: 3}
@@ -1619,7 +1619,7 @@ PrefabInstance:
     - target: {fileID: 8979564011033277799, guid: 37e735e15e043334fa4ee9d40ac60cc8,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -7.7590475
+      value: -7.11
       objectReference: {fileID: 0}
     - target: {fileID: 8979564011033277799, guid: 37e735e15e043334fa4ee9d40ac60cc8,
         type: 3}
@@ -7651,7 +7651,7 @@ PrefabInstance:
     - target: {fileID: 7579030972819021264, guid: accdf0cfa2424784f997f0d7d4870ff0,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: accdf0cfa2424784f997f0d7d4870ff0, type: 3}
@@ -11039,8 +11039,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5403891371637922966, guid: c887f85c1da91854c9cfda93541a68cf,
         type: 3}
-      propertyPath: minigunDamage
-      value: 0.02
+      propertyPath: minigunROF
+      value: 18.3
       objectReference: {fileID: 0}
     - target: {fileID: 5968147174373615725, guid: c887f85c1da91854c9cfda93541a68cf,
         type: 3}
