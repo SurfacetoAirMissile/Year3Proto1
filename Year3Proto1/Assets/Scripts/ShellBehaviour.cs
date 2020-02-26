@@ -14,6 +14,7 @@ public class ShellBehaviour : ProjectileShared
     private void OnCollisionEnter(Collision collision)
     {
         GameObject explosionInstance = Instantiate(explosionPrefab, transform);
+        explosionInstance.GetComponent<Explosion>().owner = owner;
         explosionInstance.transform.SetParent(null);
         Destroy(this.gameObject);
     }
