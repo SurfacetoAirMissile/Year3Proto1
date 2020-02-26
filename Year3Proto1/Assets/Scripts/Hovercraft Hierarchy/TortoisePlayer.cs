@@ -36,7 +36,7 @@ public class TortoisePlayer : TortoiseShared
             if (child.name.Contains("Wind Cannon")) { windCannon = child.gameObject; }
         }
         windCannonAimMode = 0;
-        playerFocus = PlayerFocus.TortoiseWindCannon;
+        playerFocus = PlayerFocus.TortoiseNone;
         TortoiseChangeFocus(playerFocus);
         selectedWeapon = Weapons.Mortar;
         healthComponent.SetHealth(5f);
@@ -75,17 +75,14 @@ public class TortoisePlayer : TortoiseShared
             {
                 windCannonAimMode = windCannonAimMode == 0 ? 1 : 0;
             }
-            if (Input.GetKeyDown("w"))
-            {
-                //chassis.transform.GetChild(0).GetComponent<ParticleSystem>().Play(true);
-            }
-            if (Input.GetKeyUp("w"))
-            {
-                //chassis.transform.GetChild(0).GetComponent<ParticleSystem>().Stop(true, ParticleSystemStopBehavior.StopEmitting);
-            }
             if (Input.GetKey("w"))
             {
                 Thrust(chassis.transform.forward, 1f);
+                ThrustParticleEffect(true);
+            }
+            else
+            {
+                ThrustParticleEffect(false);
             }
             if (Input.GetKey("s"))
             {
@@ -113,10 +110,34 @@ public class TortoisePlayer : TortoiseShared
                 {
                     case Weapons.WindCannon:
                         selectedWeapon = Weapons.Mortar;
+                        if (Input.GetMouseButton(1))
+                        {
+                            TortoiseChangeFocus(PlayerFocus.TortoiseMortar);
+                        }
                         break;
                     case Weapons.Mortar:
                         selectedWeapon = Weapons.WindCannon;
+                        if (Input.GetMouseButton(1))
+                        {
+                            TortoiseChangeFocus(PlayerFocus.TortoiseWindCannon);
+                        }
                         break;
+                }
+            }
+            if (Input.GetKeyDown("1"))
+            {
+                selectedWeapon = Weapons.Mortar;
+                if (Input.GetMouseButton(1))
+                {
+                    TortoiseChangeFocus(PlayerFocus.TortoiseMortar);
+                }
+            }
+            if (Input.GetKeyDown("2"))
+            {
+                selectedWeapon = Weapons.WindCannon;
+                if (Input.GetMouseButton(1))
+                {
+                    TortoiseChangeFocus(PlayerFocus.TortoiseWindCannon);
                 }
             }
         }
@@ -130,7 +151,7 @@ public class TortoisePlayer : TortoiseShared
                 YawWindCannonToTarget(chassis.transform.forward);
 
                 // If the Player presses the LMB...
-                if (Input.GetMouseButtonDown(0) && GameManager.Instance.playerControl)
+                if (Input.GetMouseButton(0) && GameManager.Instance.playerControl)
                 {
                     // If the Wind Cannon has cooled down...
                     if (windCannonCooldown >= windCannonFireDelay)
@@ -167,7 +188,7 @@ public class TortoisePlayer : TortoiseShared
                 YawWindCannonToTarget(Camera.main.transform.forward);
 
                 // If the Player presses the LMB...
-                if (Input.GetMouseButtonDown(0) && GameManager.Instance.playerControl)
+                if (Input.GetMouseButton(0) && GameManager.Instance.playerControl)
                 {
                     // If the Wind Cannon has cooled down...
                     if (windCannonCooldown >= windCannonFireDelay)

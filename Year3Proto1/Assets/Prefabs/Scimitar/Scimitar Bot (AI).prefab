@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e076ca364f0da214d9434bc492c32925, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hoverForce: 0.25
-  pushForce: 1
-  rotationForce: 5
+  hoverForce: 0.45
+  pushForce: 1.4
+  rotationForce: 7
   healthComponent:
     health: 0
+  installedUpgrades: 
   controller: 1
   minigunROF: 18.3
   minigunMaximumDepression: -5
@@ -24,7 +25,10 @@ MonoBehaviour:
   faction: 2
   spottingAngle: 45
   spottingRange: 15
-  state: 0
+  stateO:
+    stateName: 0
+    target: {fileID: 0}
+  scrapOnKill: 100
 --- !u!1001 &1918000146855084899
 PrefabInstance:
   m_ObjectHideFlags: 0

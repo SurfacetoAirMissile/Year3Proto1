@@ -9,7 +9,7 @@ public class StaticFunc
         // clamp between -90 and 90
         float clampedForce = Mathf.Clamp(_rotationForce, -90f, 90f);
         float forceValue = clampedForce / 90f;
-        float finalForce = forceValue * _bodyToRotate.mass * 100000f * Time.deltaTime;
+        float finalForce = forceValue * 100000f * Time.deltaTime;
         switch (_axis)
         {
             case 'x':

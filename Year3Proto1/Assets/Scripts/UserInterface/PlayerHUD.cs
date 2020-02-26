@@ -26,6 +26,7 @@ public class PlayerHUD : MonoBehaviour
     {
         totalHealth = playerChassis.GetComponentInParent<HovercraftShared>().healthComponent.GetHealth();
         UpdateHealthUI(totalHealth);
+        UpdateScrapCounter();
     }
 
     private void UpdateHealthUI(float _health)
@@ -47,5 +48,10 @@ public class PlayerHUD : MonoBehaviour
                 healthBars[i].rectTransform.localScale = scale;
             }
         }
+    }
+
+    private void UpdateScrapCounter()
+    {
+        scrap.text = GameManager.Instance.playerScrap.ToString();
     }
 }
