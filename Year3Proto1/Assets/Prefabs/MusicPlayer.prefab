@@ -44,8 +44,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playBase: 0
-  baseMusic: {fileID: 8300000, guid: 3fce96eb0ea5f604e97242f29e8ce989, type: 3}
+  baseMusic: {fileID: 8300000, guid: ba041643c999a9e479a9df29bc31f897, type: 3}
   playCombat: 0
-  combatMusic: {fileID: 8300000, guid: c5c7410db26a56743a6999afead6aa8d, type: 3}
+  combatMusic: {fileID: 8300000, guid: ea61e4cc6e1ed7e43b2248ae6143cbcf, type: 3}
   playSpeed: 0
-  speedMusic: {fileID: 8300000, guid: 51b093d0f72b85c488f8c250368801bd, type: 3}
+  speedMusic: {fileID: 8300000, guid: 016661abe1af50e4092275a9c63f6d1d, type: 3}
