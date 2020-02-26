@@ -174,9 +174,16 @@ public class ScimitarAIController : ScimitarShared
                         }
                     }
                     Thrust(chassis.transform.forward, wanderForce);
+                    ThrustParticleEffect(true);
+                    if (!thrustParticlePlay)
+                    {
+                        chassis.transform.GetChild(0).GetComponent<ParticleSystem>().Play(true);
+                        thrustParticlePlay = true;
+                    }
+
                     if (wanderTurning)
                     {
-                        StaticFunc.RotateTo(chassisRB, 'y', wanderTurnForce);
+                        StaticFunc.RotateTo(chassisRB, 'y', wanderTurnForce * rotationForce);
                     }
                     break;
                 case HovercraftAIState.Chase:
@@ -187,6 +194,11 @@ public class ScimitarAIController : ScimitarShared
                     if (Mathf.Abs(rotation.y) <= 35f)
                     {
                         Thrust(chassis.transform.forward, 1f);
+                        ThrustParticleEffect(true);
+                    }
+                    else
+                    {
+                        ThrustParticleEffect(false);
                     }
 
                     // If we are far away from the target, chase, if we're within engagement distance, orbit them and fire.
@@ -256,6 +268,11 @@ public class ScimitarAIController : ScimitarShared
                     if (Mathf.Abs(orbitRotation.y) <= 35f)
                     {
                         Thrust(chassis.transform.forward, 1f);
+                        ThrustParticleEffect(true);
+                    }
+                    else
+                    {
+                        ThrustParticleEffect(false);
                     }
 
 

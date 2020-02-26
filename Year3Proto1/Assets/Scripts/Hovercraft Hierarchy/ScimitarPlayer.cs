@@ -74,17 +74,14 @@ public class ScimitarPlayer : ScimitarShared
             {
                 windCannonAimMode = windCannonAimMode == 0 ? 1 : 0;
             }
-            if (Input.GetKeyDown("w"))
-            {
-                chassis.transform.GetChild(0).GetComponent<ParticleSystem>().Play(true);
-            }
-            if (Input.GetKeyUp("w"))
-            {
-                chassis.transform.GetChild(0).GetComponent<ParticleSystem>().Stop(true, ParticleSystemStopBehavior.StopEmitting);
-            }
             if (Input.GetKey("w"))
             {
                 Thrust(chassis.transform.forward, 1f);
+                ThrustParticleEffect(true);
+            }
+            else
+            {
+                ThrustParticleEffect(false);
             }
             if (Input.GetKey("s"))
             {
@@ -112,10 +109,34 @@ public class ScimitarPlayer : ScimitarShared
                 {
                     case Weapons.WindCannon:
                         selectedWeapon = Weapons.Minigun;
+                        if (Input.GetMouseButton(1))
+                        {
+                            ScimitarChangeFocus(PlayerFocus.ScimitarMinigun);
+                        }
                         break;
                     case Weapons.Minigun:
                         selectedWeapon = Weapons.WindCannon;
+                        if (Input.GetMouseButton(1))
+                        {
+                            ScimitarChangeFocus(PlayerFocus.ScimitarWindCannon);
+                        }
                         break;
+                }
+            }
+            if (Input.GetKeyDown("1"))
+            {
+                selectedWeapon = Weapons.Minigun;
+                if (Input.GetMouseButton(1))
+                {
+                    ScimitarChangeFocus(PlayerFocus.ScimitarMinigun);
+                }
+            }
+            if (Input.GetKeyDown("2"))
+            {
+                selectedWeapon = Weapons.WindCannon;
+                if (Input.GetMouseButton(1))
+                {
+                    ScimitarChangeFocus(PlayerFocus.ScimitarWindCannon);
                 }
             }
         }
@@ -130,7 +151,7 @@ public class ScimitarPlayer : ScimitarShared
                 YawWindCannonToTarget(chassis.transform.forward);
 
                 // If the Player presses the LMB...
-                if (Input.GetMouseButtonDown(0) && GameManager.Instance.playerControl)
+                if (Input.GetMouseButton(0) && GameManager.Instance.playerControl)
                 {
                     // If the Wind Cannon has cooled down...
                     if (windCannonCooldown >= windCannonFireDelay)
@@ -164,7 +185,7 @@ public class ScimitarPlayer : ScimitarShared
                 YawWindCannonToTarget(Camera.main.transform.forward);
 
                 // If the Player presses the LMB...
-                if (Input.GetMouseButtonDown(0) && GameManager.Instance.playerControl)
+                if (Input.GetMouseButton(0) && GameManager.Instance.playerControl)
                 {
                     // If the Wind Cannon has cooled down...
                     if (windCannonCooldown >= windCannonFireDelay)
