@@ -253,12 +253,12 @@ public class ScimitarAIController : ScimitarShared
 
     void MessageChasing()
     {
-        GameManager.Instance.AddAIChasing(gameObject);
+        //GameManager.Instance.AddAIChasing(gameObject);
     }
 
     void MessageNotChasing()
     {
-        GameManager.Instance.RemoveAIChasing(gameObject);
+        //GameManager.Instance.RemoveAIChasing(gameObject);
     }
 
     void ChangeState(HovercraftAIState _newState)

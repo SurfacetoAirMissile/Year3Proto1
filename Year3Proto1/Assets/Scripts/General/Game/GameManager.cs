@@ -31,7 +31,7 @@ public class GameManager : Singleton<GameManager>
     public bool playerGoingFast;
     MusicPlayer musicPlayer;
 
-    private GameState gameState = GameState.GRACE_PERIOD;
+    private GameState gameState = GameState.INGAME;
     private float time = 5.0f;
     private bool popupActive = true;
 
@@ -99,12 +99,12 @@ public class GameManager : Singleton<GameManager>
 
         if (popupActive)
         {
-            position = position - popup.GetComponent<RectTransform>().rect.width;
+            position -= popup.GetComponent<RectTransform>().rect.width;
             popupActive = false;
         }
         else
         {
-            position = position + popup.GetComponent<RectTransform>().rect.width;
+            position += popup.GetComponent<RectTransform>().rect.width;
             popupActive = true;
         }
 
