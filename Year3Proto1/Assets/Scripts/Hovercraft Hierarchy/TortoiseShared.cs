@@ -56,14 +56,14 @@ public class TortoiseShared : HovercraftShared
         barrelForward.x = 1; barrelForward.z = 1;
         float angle = Vector3.Angle(_targetDirection, barrelForward);
         if (_targetDirection.y > barrelForward.y) { angle *= -1; }
-        StaticFunc.RotateTo(mortarBarrel.GetComponent<Rigidbody>(), 'x', angle * 0.025f);
+        StaticFunc.RotateTo(mortarBarrel.GetComponent<Rigidbody>(), 'x', angle);
     }
 
     protected void YawMortarToTarget(Vector3 _targetDirection)
     {
         Vector3 mortarTurretRot = Quaternion.FromToRotation(mortarTurret.transform.forward, _targetDirection).eulerAngles;
         if (mortarTurretRot.y > 180f) { mortarTurretRot.y -= 360f; }
-        StaticFunc.RotateTo(mortarTurret.GetComponent<Rigidbody>(), 'y', mortarTurretRot.y * 0.5f);
+        StaticFunc.RotateTo(mortarTurret.GetComponent<Rigidbody>(), 'y', mortarTurretRot.y);
     }
 
     protected void FireMortar()

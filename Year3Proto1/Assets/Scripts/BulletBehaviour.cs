@@ -22,7 +22,7 @@ public class BulletBehaviour : ProjectileShared
             {
                 // this is a different craft
                 // deal damage to it
-                masterParent.GetComponent<HovercraftShared>().healthComponent.DeductHealth(damage);
+                masterParent.GetComponent<HovercraftShared>().healthComponent.DealDamage(damage, owner.name);
                 GameObject hitSound = Instantiate(hitSoundEffectPrefab, transform, false);
                 hitSound.transform.SetParent(null);
                 GameObject hitImpact = Instantiate(bulletImpact, transform, false);

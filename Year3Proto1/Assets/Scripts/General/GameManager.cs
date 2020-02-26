@@ -12,6 +12,7 @@ public enum GameState
 public class GameManager : Singleton<GameManager>
 {
     public GameObject trading;
+    public int playerScrap;
     public bool playerControl;
     public bool playerInCombat;
     public bool playerGoingFast;

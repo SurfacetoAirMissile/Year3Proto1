@@ -64,7 +64,7 @@ public class ScimitarShared : HovercraftShared
         Vector3 spawnPos = minigunBarrel.transform.GetChild(0).position;
         GameObject bulletInstance = Instantiate(bulletPrefab, spawnPos, Quaternion.identity);
         Rigidbody bulletRB = bulletInstance.GetComponent<Rigidbody>();
-        //bulletRB.velocity = chassisRB.velocity;
+        bulletRB.velocity = chassisRB.velocity;
         bulletRB.AddForce(-minigunBarrel.transform.forward * 5f);
         BulletBehaviour bulletB = bulletInstance.GetComponent<BulletBehaviour>();
         bulletB.SetDamage(minigunDamage);
