@@ -96,6 +96,8 @@ public class ScimitarAIController : ScimitarShared
 
     public StateObject stateO;
 
+    public int scrapOnKill = 100;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -174,6 +176,13 @@ public class ScimitarAIController : ScimitarShared
                         }
                     }
                     Thrust(chassis.transform.forward, wanderForce);
+                    ThrustParticleEffect(true);
+                    if (!thrustParticlePlay)
+                    {
+                        chassis.transform.GetChild(0).GetComponent<ParticleSystem>().Play(true);
+                        thrustParticlePlay = true;
+                    }
+
                     if (wanderTurning)
                     {
                         StaticFunc.RotateTo(chassisRB, 'y', wanderTurnForce);
@@ -187,6 +196,11 @@ public class ScimitarAIController : ScimitarShared
                     if (Mathf.Abs(rotation.y) <= 35f)
                     {
                         Thrust(chassis.transform.forward, 1f);
+                        ThrustParticleEffect(true);
+                    }
+                    else
+                    {
+                        ThrustParticleEffect(false);
                     }
 
                     // If we are far away from the target, chase, if we're within engagement distance, orbit them and fire.
@@ -256,6 +270,11 @@ public class ScimitarAIController : ScimitarShared
                     if (Mathf.Abs(orbitRotation.y) <= 35f)
                     {
                         Thrust(chassis.transform.forward, 1f);
+                        ThrustParticleEffect(true);
+                    }
+                    else
+                    {
+                        ThrustParticleEffect(false);
                     }
 
 
@@ -333,6 +352,10 @@ public class ScimitarAIController : ScimitarShared
         //explosionScript.explosionRadius = 0f;
         deathFunctionCalled = true;
         GameManager.Instance.RemoveAlive(this);
+        if (healthComponent.GetKiller().Contains("Player"))
+        {
+            GameManager.Instance.playerScrap += scrapOnKill;
+        }
     }
 
     void MessageChasing()

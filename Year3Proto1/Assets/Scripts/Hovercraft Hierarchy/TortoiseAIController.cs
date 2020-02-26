@@ -97,6 +97,8 @@ public class TortoiseAIController : TortoiseShared
 
     public StateObject stateO;
 
+    public int scrapOnKill = 200;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -165,6 +167,7 @@ public class TortoiseAIController : TortoiseShared
                         }
                     }
                     Thrust(chassis.transform.forward, wanderForce);
+                    ThrustParticleEffect(true);
                     if (wanderTurning)
                     {
                         StaticFunc.RotateTo(chassisRB, 'y', wanderTurnForce);
@@ -178,6 +181,11 @@ public class TortoiseAIController : TortoiseShared
                     if (Mathf.Abs(rotation.y) <= 35f)
                     {
                         Thrust(chassis.transform.forward, 1f);
+                        ThrustParticleEffect(true);
+                    }
+                    else
+                    {
+                        ThrustParticleEffect(false);
                     }
 
                     // If we are close enough to engage...
@@ -187,9 +195,11 @@ public class TortoiseAIController : TortoiseShared
                         ChangeState(HovercraftAIState.ParkEngage, stateO.target);
                     }
 
+
                     break;
 
                 case HovercraftAIState.ParkEngage:
+                    ThrustParticleEffect(false);
                     // Aim the cannon at the target
                     AimMortarAtAITarget();
 
@@ -278,6 +288,10 @@ public class TortoiseAIController : TortoiseShared
         //explosionScript.explosionRadius = 0f;
         deathFunctionCalled = true;
         GameManager.Instance.RemoveAlive(this);
+        if (healthComponent.GetKiller().Contains("Player"))
+        {
+            GameManager.Instance.playerScrap += scrapOnKill;
+        }
     }
 
     void MessageChasing()

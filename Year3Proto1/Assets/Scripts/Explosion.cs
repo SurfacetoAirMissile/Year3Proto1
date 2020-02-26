@@ -30,7 +30,7 @@ public class Explosion : MonoBehaviour
                     amount = 1f - ((distance - explosionRadius * .5f) / explosionRadius * .5f);
                 }
                 
-                script.healthComponent.DeductHealth(explosionDamage * amount);
+                script.healthComponent.DealDamage(explosionDamage * amount, owner.name);
 
                 if (script.gameObject != owner.gameObject)
                 {
