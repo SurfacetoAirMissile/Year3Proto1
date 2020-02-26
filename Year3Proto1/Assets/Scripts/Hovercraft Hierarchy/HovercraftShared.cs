@@ -22,6 +22,15 @@ public class HovercraftShared : MonoBehaviour
     protected List<GameObject> hoverballs;
     protected float totalMass;
 
+    public enum ControllerType
+    {
+        PlayerController,
+        AIController
+    }
+
+
+    public ControllerType controller;
+
     public enum PlayerFocus
     {
         ScimitarNone,

@@ -14,9 +14,9 @@ public class ProjectileShared : MonoBehaviour
     protected float timeElapsed;
     protected GameObject owner;
     [SerializeField]
-    private GameObject hitSoundEffectPrefab;
+    protected GameObject hitSoundEffectPrefab;
     [SerializeField]
-    private GameObject bulletImpact;
+    protected GameObject bulletImpact;
     // Update is called once per frame
     protected void PSUpdate()
     {
@@ -31,37 +31,7 @@ public class ProjectileShared : MonoBehaviour
 
     protected void PSOnCollisionEnter(Collision collision)
     {
-        // if the object we hit belongs to the player
-        Transform masterParent = StaticFunc.GetParentRecursive(collision.transform);
-        if (masterParent.name.Contains("Player"))
-        {
-            if (owner.name.Contains("AI"))
-            {
-                masterParent.GetComponent<HovercraftShared>().healthComponent.DeductHealth(damage);
-                GameObject hitSound = Instantiate(hitSoundEffectPrefab, transform, false);
-                hitSound.transform.SetParent(null);
-                GameObject hitImpact = Instantiate(bulletImpact, transform, false);
-                hitImpact.transform.SetParent(null);
-                timeElapsed = lifetime * .97f;
-            }
-        }
-        else if (masterParent.name.Contains("AI"))
-        {
-            if (owner.name.Contains("Player"))
-            {
-                masterParent.GetComponent<HovercraftShared>().healthComponent.DeductHealth(damage);
-                GameObject hitSound = Instantiate(hitSoundEffectPrefab, transform, false);
-                hitSound.transform.SetParent(null);
-                GameObject hitImpact = Instantiate(bulletImpact, transform, false);
-                hitImpact.transform.SetParent(null);
-                timeElapsed = lifetime * .97f;
-                if (masterParent.name.Contains("Scimitar"))
-                {
-                    // Tells the AI to chase.
-                    masterParent.GetComponent<ScimitarAIController>().state = ScimitarAIController.HovercraftAIState.Chase;
-                }
-            }
-        }
+        
     }
 
     public GameObject GetOwner()

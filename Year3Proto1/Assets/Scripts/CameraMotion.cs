@@ -37,13 +37,13 @@ public class CameraMotion : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetKeyDown("escape"))
         {
             if (Cursor.lockState == CursorLockMode.Locked)
             {
@@ -54,7 +54,6 @@ public class CameraMotion : MonoBehaviour
                 Cursor.lockState = CursorLockMode.Locked;
             }
         }
-
         float mouseX = 0;
         float mouseY = 0;
         float mouseScroll = 0;
