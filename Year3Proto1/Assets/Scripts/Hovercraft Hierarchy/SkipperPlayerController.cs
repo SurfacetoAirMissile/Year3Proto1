@@ -36,7 +36,7 @@ public class SkipperPlayerController : SkipperShared
             Thrust(-chassis.transform.forward, 1f);
         }                                                                              
         if (Input.GetKey("e"))                                                         
-        {                                                                              
+        {
             Thrust(-chassis.transform.right, 1f);                                      
         }                                                                              
         if (Input.GetKey("q"))                                                         

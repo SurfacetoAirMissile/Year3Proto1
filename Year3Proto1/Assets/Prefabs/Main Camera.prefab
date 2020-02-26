@@ -48,12 +48,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ringPosition: 180
   xRotation: 5
+  scrollOffset: 0
+  scrollMax: 30
+  scrollMin: -30
   xRotationMin: -20
   xRotationMax: 60
   sitHeight: 0
+  sideSitHeight: 0
   orbitRadius: 15
   cameraLookTarget: {fileID: 0}
   mouseSensitivity: 90
+  mortarAimTarget: {x: 0, y: 0, z: 0}
 --- !u!20 &1705992191948327420
 Camera:
   m_ObjectHideFlags: 0

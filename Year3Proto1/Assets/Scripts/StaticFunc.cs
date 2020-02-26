@@ -23,4 +23,31 @@ public class StaticFunc
                 break;
         }
     }
+
+    private static Dictionary<string, float> floatData = new Dictionary<string, float>
+    { 
+        { "Tortoise Orbit Distance", 20f },
+        { "Skipper Orbit Distance", 15f },
+        { "Scimitar Orbit Distance", 10f },
+        { "Tortoise Park Distance", 100f },
+        { "Skipper Park Distance", 150f },
+        { "Scimitar Park Distance", 200f }
+    };
+
+public static float FloatLookup(string _key)
+    {
+        return floatData[_key];
+    }
+
+    static public Transform GetParentRecursive(Transform _transform)
+    {
+        // If the transform has a parent
+        if (_transform.parent)
+        {
+            // Call the function on the parent and return the result to the caller
+            return GetParentRecursive(_transform.parent);
+        }
+        // If the transform does not have a parent, return it (that is the omega)
+        else return _transform;
+    }
 }

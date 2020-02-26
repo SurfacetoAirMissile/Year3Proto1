@@ -7,8 +7,9 @@ public class TrajectoryArc : MonoBehaviour
     private LineRenderer line;
 
     public GameObject projectile;
-    public float velocity = 10.0f;
-    public int resolution = 15;
+    public float velocity = 5.0f;
+    public int resolution = 50;
+    public float maxDistance = 100f;
 
     private float gravity;
     private float angle;
@@ -53,7 +54,7 @@ public class TrajectoryArc : MonoBehaviour
     {
         Vector3[] arc = new Vector3[resolution + 1];
 
-        float maxDistance = (velocity * velocity * Mathf.Sin(2 * radAngle)) / gravity;
+        //float maxDistance = (velocity * velocity * Mathf.Sin(2 * radAngle)) / gravity;
 
         for (int i = 0; i <= resolution; i++)
         {

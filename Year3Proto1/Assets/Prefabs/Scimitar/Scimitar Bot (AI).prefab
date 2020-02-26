@@ -1,0 +1,107 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &5403891371637922966
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4877775311741001515}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e076ca364f0da214d9434bc492c32925, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverForce: 0.25
+  pushForce: 1
+  rotationForce: 5
+  healthComponent:
+    health: 0
+  controller: 1
+  minigunROF: 18.3
+  minigunMaximumDepression: -5
+  minigunDamage: 0.02
+  faction: 2
+  spottingAngle: 45
+  spottingRange: 15
+  state: 0
+--- !u!1001 &1918000146855084899
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2516262369539822166, guid: e6ca1fec60f032c47b23306b7077526e,
+        type: 3}
+      propertyPath: m_ConnectedAnchor.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2516262369539822166, guid: e6ca1fec60f032c47b23306b7077526e,
+        type: 3}
+      propertyPath: m_ConnectedAnchor.y
+      value: 0.13487823
+      objectReference: {fileID: 0}
+    - target: {fileID: 2516262369539822166, guid: e6ca1fec60f032c47b23306b7077526e,
+        type: 3}
+      propertyPath: m_ConnectedAnchor.z
+      value: -0.052499995
+      objectReference: {fileID: 0}
+    - target: {fileID: 5209825587014380302, guid: e6ca1fec60f032c47b23306b7077526e,
+        type: 3}
+      propertyPath: m_ConnectedAnchor.x
+      value: -0.358
+      objectReference: {fileID: 0}
+    - target: {fileID: 5209825587014380302, guid: e6ca1fec60f032c47b23306b7077526e,
+        type: 3}
+      propertyPath: m_ConnectedAnchor.z
+      value: 0.681
+      objectReference: {fileID: 0}
+    - target: {fileID: 5218257109367172836, guid: e6ca1fec60f032c47b23306b7077526e,
+        type: 3}
+      propertyPath: m_ConnectedAnchor.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5218257109367172836, guid: e6ca1fec60f032c47b23306b7077526e,
+        type: 3}
+      propertyPath: m_ConnectedAnchor.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5218257109367172836, guid: e6ca1fec60f032c47b23306b7077526e,
+        type: 3}
+      propertyPath: m_ConnectedAnchor.z
+      value: -0.19999999
+      objectReference: {fileID: 0}
+    - target: {fileID: 6426438987389328456, guid: e6ca1fec60f032c47b23306b7077526e,
+        type: 3}
+      propertyPath: m_Name
+      value: Scimitar Bot (AI)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8031068144126209627, guid: e6ca1fec60f032c47b23306b7077526e,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8031068144126209627, guid: e6ca1fec60f032c47b23306b7077526e,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8031068144126209627, guid: e6ca1fec60f032c47b23306b7077526e,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8031068144126209627, guid: e6ca1fec60f032c47b23306b7077526e,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: e6ca1fec60f032c47b23306b7077526e, type: 3}
+--- !u!1 &4877775311741001515 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6426438987389328456, guid: e6ca1fec60f032c47b23306b7077526e,
+    type: 3}
+  m_PrefabInstance: {fileID: 1918000146855084899}
+  m_PrefabAsset: {fileID: 0}
