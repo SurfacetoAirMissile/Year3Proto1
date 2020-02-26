@@ -49,47 +49,33 @@ public class MusicPlayer : MonoBehaviour
     void Update()
     {
         
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+    }
+
+    public void ToggleCombat()
+    {
+        playCombat = !playCombat;
+
+        if (playCombat)
         {
-            playBase = !playBase;
-
-            if (playBase)
-            {
-                baseTrack.DOFade(0.25f, 1.5f);
-            }
-            else
-            {
-                baseTrack.DOFade(0.0f, 1.5f);
-            }
+            combatTrack.DOFade(0.4f, 1.5f);
         }
-
-        if (Input.GetKeyDown(KeyCode.Alpha2))
+        else
         {
-            playCombat = !playCombat;
-
-            if (playCombat)
-            {
-                combatTrack.DOFade(0.4f, 1.5f);
-            }
-            else
-            {
-                combatTrack.DOFade(0.0f, 1.5f);
-            }
+            combatTrack.DOFade(0.0f, 1.5f);
         }
+    }
 
-        if (Input.GetKeyDown(KeyCode.Alpha3))
+    public void ToggleSpeed()
+    {
+        playSpeed = !playSpeed;
+
+        if (playSpeed)
         {
-            playSpeed = !playSpeed;
-
-            if (playSpeed)
-            {
-                speedTrack.DOFade(0.4f, 1.5f);
-            }
-            else
-            {
-                speedTrack.DOFade(0.0f, 1.5f);
-            }
+            speedTrack.DOFade(0.4f, 1.5f);
         }
-
+        else
+        {
+            speedTrack.DOFade(0.0f, 1.5f);
+        }
     }
 }
