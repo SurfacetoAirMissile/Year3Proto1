@@ -65,12 +65,11 @@ public class GameManager : Singleton<GameManager>
                         popup.GetComponentInChildren<Image>().transform.DOKill(true);
                         popup.GetComponentInChildren<Image>().transform.DOPunchScale(new Vector3(0.5f, 0.5f, 0.0f), 0.33f, 1, 1.0f);
                     }
-                    gameHUD.Refresh(gameState, gameWave.GetScrap(), gameWave.GetKills(), gameWave.GetTime(), wave);
+                    gameHUD.Refresh(gameState, playerScrap, playerKills, gameWave.GetTime(), wave);
                 }
                 break;
             case GameState.INGAME:
-                gameWave.Refresh();
-                gameHUD.Refresh(gameState, gameWave.GetScrap(), gameWave.GetKills(), gameWave.GetRemaining(), wave);
+                gameHUD.Refresh(gameState, playerScrap, playerKills, gameWave.GetRemaining(), wave);
                 break;
         }
 
@@ -194,5 +193,11 @@ public class GameManager : Singleton<GameManager>
                 }
             }
         }
+    }
+
+    public void AddKill()
+    {
+        Debug.Log("works");
+        gameWave.AddKill(1);
     }
 }

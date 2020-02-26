@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using DG.Tweening;
 
 public class GameWave : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class GameWave : MonoBehaviour
     public TMP_Text timeText;
 
     //Statistics
+    private int wave;
     private int kills;
     private int scrap;
     private int time;
@@ -18,19 +20,16 @@ public class GameWave : MonoBehaviour
 
     public void AddKill(int kills)
     {
+        killText.transform.DOPunchScale(new Vector3(0.5f, 0.5f, 0.0f), 0.33f, 1, 1.0f);
         this.kills += kills;
+        killText.text = kills.ToString();
     }
 
     public void AddScrap(int scrap)
     {
+        scrapText.transform.DOPunchScale(new Vector3(0.5f, 0.5f, 0.0f), 0.33f, 1, 1.0f);
         this.scrap += scrap;
-    }
-
-    public void Refresh()
-    {
-        killText.text = kills.ToString();
         scrapText.text = scrap.ToString();
-        timeText.text = (time / 60) + ":" + ((time / 60) % 60);
     }
 
     public int GetScrap()
