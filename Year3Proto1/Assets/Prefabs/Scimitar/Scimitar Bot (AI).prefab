@@ -17,12 +17,13 @@ MonoBehaviour:
   rotationForce: 5
   healthComponent:
     health: 0
-  minigunROF: 5
+  controller: 1
+  minigunROF: 18.3
   minigunMaximumDepression: -5
   minigunDamage: 0.02
-  faction: 1
+  faction: 2
   spottingAngle: 45
-  spottingRange: 100
+  spottingRange: 15
   state: 0
 --- !u!1001 &1918000146855084899
 PrefabInstance:

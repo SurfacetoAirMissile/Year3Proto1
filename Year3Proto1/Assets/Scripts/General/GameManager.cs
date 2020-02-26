@@ -15,7 +15,7 @@ public class GameManager : Singleton<GameManager>
     public bool playerControl;
     public bool playerInCombat;
     public bool playerGoingFast;
-    HovercraftShared[] hovercraftList;
+    public List<HovercraftShared> aliveCraft;
     List<GameObject> AIChasingPlayer;
     MusicPlayer musicPlayer;
     private void Start()
@@ -23,7 +23,6 @@ public class GameManager : Singleton<GameManager>
         playerControl = false;
         musicPlayer = FindObjectOfType<MusicPlayer>();
         AIChasingPlayer = new List<GameObject>();
-        //RefreshHovercraftList();
     }
 
     private void Update()
@@ -41,13 +40,14 @@ public class GameManager : Singleton<GameManager>
                 playerControl = false;
             }
         }
-        //if (hovercraftList.Length > 0)
-        //{
-            //foreach (HovercraftShared hovercraft in hovercraftList)
-            //{
-
-            //}
-        //}
+        if (AIChasingPlayer.Count > 0)
+        {
+            SetPlayerInCombat(true);
+        }
+        else
+        {
+            SetPlayerInCombat(false);
+        }
     }
 
     public void SetPlayerGoingFast(bool _playerGoingFast)
@@ -66,11 +66,6 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
-    public void RefreshHovercraftList()
-    {
-        hovercraftList = FindObjectsOfType<HovercraftShared>();
-    }
-
     public void AddAIChasing(GameObject _AI)
     {
         if (!AIChasingPlayer.Contains(_AI))
@@ -84,6 +79,47 @@ public class GameManager : Singleton<GameManager>
         if (AIChasingPlayer.Contains(_AI))
         {
             AIChasingPlayer.Remove(_AI);
+        }
+    }
+
+    public void AddAlive(HovercraftShared _AI)
+    {
+        if (!aliveCraft.Contains(_AI))
+        {
+            aliveCraft.Add(_AI);
+        }
+    }
+
+    public void RemoveAlive(HovercraftShared _AI)
+    {
+        if (aliveCraft.Contains(_AI))
+        {
+            aliveCraft.Remove(_AI);
+        }
+        // go through each AI and if their target is this AI's chassis, set them to wander
+        foreach (HovercraftShared hovercraftShared in aliveCraft)
+        {
+            if (hovercraftShared.controller == HovercraftShared.ControllerType.AIController)
+            {
+                if (hovercraftShared.name.Contains("Scimitar"))
+                {
+                    ScimitarAIController aiScript = hovercraftShared.GetComponent<ScimitarAIController>();
+                    // if the AI's target is the AI that just died, set that AI to wander
+                    if (aiScript.stateO.target == _AI.GetChassis())
+                    {
+                        aiScript.ChangeState(ScimitarAIController.HovercraftAIState.Wander);
+                    }
+                }
+                else if (hovercraftShared.name.Contains("Tortoise"))
+                {
+                    TortoiseAIController aiScript = hovercraftShared.GetComponent<TortoiseAIController>();
+                    // if the AI's target is the AI that just died, set that AI to wander
+                    if (aiScript.stateO.target == _AI.GetChassis())
+                    {
+                        aiScript.ChangeState(TortoiseAIController.HovercraftAIState.Wander);
+                    }
+                }
+            }
         }
     }
 }

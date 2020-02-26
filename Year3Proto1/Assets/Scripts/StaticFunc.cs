@@ -25,11 +25,16 @@ public class StaticFunc
     }
 
     private static Dictionary<string, float> floatData = new Dictionary<string, float>
-    { { "Tortoise Orbit Distance", 20f },
-    { "Skipper Orbit Distance", 15f },
-    { "Scimitar Orbit Distance", 10f } };
+    { 
+        { "Tortoise Orbit Distance", 20f },
+        { "Skipper Orbit Distance", 15f },
+        { "Scimitar Orbit Distance", 10f },
+        { "Tortoise Park Distance", 100f },
+        { "Skipper Park Distance", 150f },
+        { "Scimitar Park Distance", 200f }
+    };
 
-    public static float FloatLookup(string _key)
+public static float FloatLookup(string _key)
     {
         return floatData[_key];
     }
