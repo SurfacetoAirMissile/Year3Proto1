@@ -8,6 +8,7 @@ public class HealthComponent
 {
     [SerializeField] [Tooltip("Entity Health.")]
     private float health;
+    private float maxHealth;
     private string latestAttacker;
     private string killer;
 
@@ -21,14 +22,33 @@ public class HealthComponent
         health -= _amount;
     }
 
-    public void SetHealth(float _health)
+    public void SetHealth(float _health, bool _andMax)
     {
         health = _health;
+        if (_andMax)
+        {
+            SetMaxHealth(_health);
+        }
     }
 
     public float GetHealth()
     {
         return health;
+    }
+
+    public float GetHealthRelative()
+    {
+        return health / maxHealth;
+    }
+
+    public void SetMaxHealth(float _health)
+    {
+        maxHealth = _health;
+    }
+    
+    public float GetMaxHealth()
+    {
+        return maxHealth;
     }
 
     public void SetLatestAttacker(string _name)
@@ -66,5 +86,10 @@ public class HealthComponent
         {
             return "This HealthComp is still kicking.";
         }
+    }
+
+    public void RestoreToFull()
+    {
+        health = maxHealth;
     }
 }

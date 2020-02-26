@@ -59,18 +59,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   overlappingGameObjects: []
---- !u!114 &2534842728655383090
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3946569742741432221}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cbc419fcd35ef004b86512c67c0915f6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1045906239059968175
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -88,11 +76,26 @@ MonoBehaviour:
   rotationForce: 7
   healthComponent:
     health: 3
-  minigunROF: 18.3
+  installedUpgrades: 
+  controller: 0
+  minigunROF: 8
   minigunMaximumDepression: -5
   minigunDamage: 0.02
   windCannonForce: 2
   windCannonROF: 1
+  selectedWeapon: 0
+--- !u!114 &2534842728655383090
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3946569742741432221}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbc419fcd35ef004b86512c67c0915f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8083636086536225691
 GameObject:
   m_ObjectHideFlags: 0
@@ -559,6 +562,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 9
       objectReference: {fileID: 0}
+    - target: {fileID: 3397804207830262835, guid: e6ca1fec60f032c47b23306b7077526e,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 3397804207830262846, guid: e6ca1fec60f032c47b23306b7077526e,
         type: 3}
       propertyPath: m_Layer
@@ -756,7 +764,7 @@ PrefabInstance:
     - target: {fileID: 7590135908505307839, guid: 192e4cdb6aaa4e94f81e17ed73c6c11a,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 7590135908505307839, guid: 192e4cdb6aaa4e94f81e17ed73c6c11a,
         type: 3}

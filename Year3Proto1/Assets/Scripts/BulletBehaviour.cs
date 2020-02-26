@@ -4,6 +4,14 @@ using UnityEngine;
 
 public class BulletBehaviour : ProjectileShared
 {
+    private string ownerName;
+
+    private void Start()
+    {
+        ownerName = owner.name;
+    }
+
+
 
     private void Update()
     {
@@ -22,21 +30,28 @@ public class BulletBehaviour : ProjectileShared
             {
                 // this is a different craft
                 // deal damage to it
-                masterParent.GetComponent<HovercraftShared>().healthComponent.DealDamage(damage, owner.name);
+                script.healthComponent.DealDamage(damage, ownerName);
                 GameObject hitSound = Instantiate(hitSoundEffectPrefab, transform, false);
                 hitSound.transform.SetParent(null);
                 GameObject hitImpact = Instantiate(bulletImpact, transform, false);
                 hitImpact.transform.SetParent(null);
                 timeElapsed = lifetime * .97f;
-                if (script.controller == HovercraftShared.ControllerType.AIController)
+                if (owner)
                 {
-                    if (masterParent.name.Contains("Scimitar"))
+                    if (script.controller == HovercraftShared.ControllerType.AIController)
                     {
-                        // Tells the AI to chase the chassis of the owner of the bullet.
-                        masterParent.GetComponent<ScimitarAIController>().ChangeState(ScimitarAIController.HovercraftAIState.Chase, owner.transform.GetChild(0).gameObject);
+                        if (masterParent.name.Contains("Scimitar"))
+                        {
+                            // Tells the AI to chase the chassis of the owner of the bullet.
+                            masterParent.GetComponent<ScimitarAIController>().ChangeState(ScimitarAIController.HovercraftAIState.Chase, owner.transform.GetChild(0).gameObject);
+                        }
+                        if (masterParent.name.Contains("Tortoise"))
+                        {
+                            // Tells the AI to chase the chassis of the owner of the bullet.
+                            masterParent.GetComponent<TortoiseAIController>().ChangeState(TortoiseAIController.HovercraftAIState.Chase, owner.transform.GetChild(0).gameObject);
+                        }
                     }
                 }
-                
             }
         }
     }

@@ -66,7 +66,7 @@ public class UpgradeCategory : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Return))
         {
-            UpgradeManager.Instance.Execute(upgradeResources[index].upgradeType);
+            UpgradeManager.Instance.Execute(upgradeResources[index].upgradeType, upgradeResources[index].GetEntity().cost);
         }
     }
 

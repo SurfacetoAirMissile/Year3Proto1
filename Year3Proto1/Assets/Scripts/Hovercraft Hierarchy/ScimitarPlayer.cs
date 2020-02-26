@@ -7,7 +7,7 @@ public class ScimitarPlayer : ScimitarShared
     [Header("Scimitar Player")]
     [SerializeField]
     [Tooltip("The amount of force the wind cannon applies, in thousands of units.")]
-    protected float windCannonForce;
+    public float windCannonForce;
     [SerializeField]
     [Tooltip("The Wind Cannon's rate of fire, in winds per second (not winds per minute/rpm)")]
     protected float windCannonROF;
@@ -38,7 +38,7 @@ public class ScimitarPlayer : ScimitarShared
         windCannonAimMode = 0;
         ScimitarChangeFocus(PlayerFocus.ScimitarNone);
         selectedWeapon = Weapons.Minigun;
-        healthComponent.SetHealth(3f);
+        healthComponent.SetHealth(3f, true);
         windCannonFireDelay = 1f / windCannonROF;
         windCannonCooldown = 0f;
         controller = ControllerType.PlayerController;
@@ -48,35 +48,46 @@ public class ScimitarPlayer : ScimitarShared
     // Update is called once per frame
     void Update()
     {
-        ApplyLevitationForces();
-        float rotationAmount = Time.deltaTime * 1000f * rotationForce;
+        HovercraftSharedUpdate();
+        float rotationAmount = Time.deltaTime * 1000f * rotationForce * (installedUpgrades.Contains(UpgradeType.ENGINE_SPEED) ? 1.5f : 1f);
         minigunCooldown += Time.deltaTime;
         windCannonCooldown += Time.deltaTime;
-
-        if (GameManager.Instance.playerControl)
+        float thrustValue = installedUpgrades.Contains(UpgradeType.ENGINE_SPEED) ? 1.5f : 1f;
+        if (GameManager.Instance.GetPlayerControl())
         {
             if (Input.GetMouseButtonDown(1))
             {
                 if (selectedWeapon == Weapons.WindCannon)
                 {
+                    playerAiming = true;
                     ScimitarChangeFocus(PlayerFocus.ScimitarWindCannon);
                 }
                 else
                 {
+                    playerAiming = true;
                     ScimitarChangeFocus(PlayerFocus.ScimitarMinigun);
                 }
             }
             if (Input.GetMouseButtonUp(1))
             {
+                playerAiming = false;
                 ScimitarChangeFocus(PlayerFocus.ScimitarNone);
             }
             if (Input.GetKeyDown("left ctrl"))
             {
                 windCannonAimMode = windCannonAimMode == 0 ? 1 : 0;
             }
+            if (Input.GetKeyDown("h"))
+            {
+                healthComponent.RestoreToFull();
+            }
+            if (Input.GetKeyDown("g"))
+            {
+                GameManager.Instance.playerScrap += 1000;
+            }
             if (Input.GetKey("w"))
             {
-                Thrust(chassis.transform.forward, 1f);
+                Thrust(chassis.transform.forward, thrustValue);
                 ThrustParticleEffect(true);
             }
             else
@@ -85,15 +96,15 @@ public class ScimitarPlayer : ScimitarShared
             }
             if (Input.GetKey("s"))
             {
-                Thrust(-chassis.transform.forward, 1f);
+                Thrust(-chassis.transform.forward, thrustValue);
             }
             if (Input.GetKey("e"))
             {
-                Thrust(-chassis.transform.right, 1f);
+                Thrust(chassis.transform.right, thrustValue);
             }
             if (Input.GetKey("q"))
             {
-                Thrust(chassis.transform.right, 1f);
+                Thrust(-chassis.transform.right, thrustValue);
             }
             if (Input.GetKey("d"))
             {
@@ -111,6 +122,7 @@ public class ScimitarPlayer : ScimitarShared
                         selectedWeapon = Weapons.Minigun;
                         if (Input.GetMouseButton(1))
                         {
+                            playerAiming = true;
                             ScimitarChangeFocus(PlayerFocus.ScimitarMinigun);
                         }
                         break;
@@ -118,6 +130,7 @@ public class ScimitarPlayer : ScimitarShared
                         selectedWeapon = Weapons.WindCannon;
                         if (Input.GetMouseButton(1))
                         {
+                            playerAiming = true;
                             ScimitarChangeFocus(PlayerFocus.ScimitarWindCannon);
                         }
                         break;
@@ -128,6 +141,7 @@ public class ScimitarPlayer : ScimitarShared
                 selectedWeapon = Weapons.Minigun;
                 if (Input.GetMouseButton(1))
                 {
+                    playerAiming = true;
                     ScimitarChangeFocus(PlayerFocus.ScimitarMinigun);
                 }
             }
@@ -136,6 +150,7 @@ public class ScimitarPlayer : ScimitarShared
                 selectedWeapon = Weapons.WindCannon;
                 if (Input.GetMouseButton(1))
                 {
+                    playerAiming = true;
                     ScimitarChangeFocus(PlayerFocus.ScimitarWindCannon);
                 }
             }
