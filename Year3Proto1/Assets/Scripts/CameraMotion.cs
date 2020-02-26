@@ -37,13 +37,13 @@ public class CameraMotion : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetKeyDown("escape"))
         {
             if (Cursor.lockState == CursorLockMode.Locked)
             {
@@ -54,7 +54,6 @@ public class CameraMotion : MonoBehaviour
                 Cursor.lockState = CursorLockMode.Locked;
             }
         }
-
         float mouseX = 0;
         float mouseY = 0;
         float mouseScroll = 0;
@@ -134,8 +133,8 @@ public class CameraMotion : MonoBehaviour
         {
             case HovercraftShared.PlayerFocus.ScimitarNone:
                 orbitRadius = 4f;
-                xRotationMin = -20f;
-                xRotationMax = 60f;
+                xRotationMin = -50f;
+                xRotationMax = 5f;
                 sitHeight = 0f;
                 sideSitHeight = 0f;
                 mortarAimingMode = false;
@@ -158,8 +157,8 @@ public class CameraMotion : MonoBehaviour
                 break;
             case HovercraftShared.PlayerFocus.TortoiseNone:
                 orbitRadius = 7f;
-                xRotationMin = -30f;
-                xRotationMax = 60f;
+                xRotationMin = -50f;
+                xRotationMax = 5f;
                 sitHeight = 0.7f;
                 sideSitHeight = 0f;
                 mortarAimingMode = false;

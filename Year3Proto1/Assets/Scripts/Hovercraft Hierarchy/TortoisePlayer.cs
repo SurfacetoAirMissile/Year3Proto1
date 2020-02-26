@@ -8,6 +8,19 @@ public class TortoisePlayer : TortoiseShared
     [SerializeField]
     [Tooltip("The amount of force the wind cannon applies, in thousands of units.")]
     protected float windCannonForce;
+    [SerializeField]
+    [Tooltip("The Wind Cannon's rate of fire, in winds per second (not winds per minute/rpm)")]
+    protected float windCannonROF;
+    protected float windCannonFireDelay;
+    protected float windCannonCooldown;
+
+    public enum Weapons
+    {
+        Mortar,
+        WindCannon
+    }
+
+    public Weapons selectedWeapon;
 
     PlayerFocus playerFocus;
 
@@ -23,9 +36,14 @@ public class TortoisePlayer : TortoiseShared
             if (child.name.Contains("Wind Cannon")) { windCannon = child.gameObject; }
         }
         windCannonAimMode = 0;
-        playerFocus = PlayerFocus.TortoiseWindCannon;
+        playerFocus = PlayerFocus.TortoiseNone;
         TortoiseChangeFocus(playerFocus);
+        selectedWeapon = Weapons.Mortar;
         healthComponent.SetHealth(5f);
+        windCannonFireDelay = 1f / windCannonROF;
+        windCannonCooldown = 0f;
+        controller = ControllerType.PlayerController;
+        GameManager.Instance.AddAlive(this);
     }
 
     // Update is called once per frame
@@ -34,24 +52,37 @@ public class TortoisePlayer : TortoiseShared
         ApplyLevitationForces();
         float rotationAmount = Time.deltaTime * 1000f * rotationForce;
         mortarCooldown += Time.deltaTime;
+        windCannonCooldown += Time.deltaTime;
 
         if (GameManager.Instance.playerControl)
         {
+            if (Input.GetMouseButtonDown(1))
+            {
+                if (selectedWeapon == Weapons.WindCannon)
+                {
+                    TortoiseChangeFocus(PlayerFocus.TortoiseWindCannon);
+                }
+                else
+                {
+                    TortoiseChangeFocus(PlayerFocus.TortoiseMortar);
+                }
+            }
+            if (Input.GetMouseButtonUp(1))
+            {
+                TortoiseChangeFocus(PlayerFocus.TortoiseNone);
+            }
             if (Input.GetKeyDown("left ctrl"))
             {
                 windCannonAimMode = windCannonAimMode == 0 ? 1 : 0;
             }
-            if (Input.GetKeyDown("w"))
-            {
-                //chassis.transform.GetChild(0).GetComponent<ParticleSystem>().Play(true);
-            }
-            if (Input.GetKeyUp("w"))
-            {
-                //chassis.transform.GetChild(0).GetComponent<ParticleSystem>().Stop(true, ParticleSystemStopBehavior.StopEmitting);
-            }
             if (Input.GetKey("w"))
             {
                 Thrust(chassis.transform.forward, 1f);
+                ThrustParticleEffect(true);
+            }
+            else
+            {
+                ThrustParticleEffect(false);
             }
             if (Input.GetKey("s"))
             {
@@ -75,20 +106,38 @@ public class TortoisePlayer : TortoiseShared
             }
             if (Input.GetKeyDown("tab"))
             {
-                switch (playerFocus)
+                switch (selectedWeapon)
                 {
-                    case PlayerFocus.TortoiseMortar:
-                        TortoiseChangeFocus(PlayerFocus.TortoiseNone);
+                    case Weapons.WindCannon:
+                        selectedWeapon = Weapons.Mortar;
+                        if (Input.GetMouseButton(1))
+                        {
+                            TortoiseChangeFocus(PlayerFocus.TortoiseMortar);
+                        }
                         break;
-                    case PlayerFocus.TortoiseNone:
-                        TortoiseChangeFocus(PlayerFocus.TortoiseWindCannon);
+                    case Weapons.Mortar:
+                        selectedWeapon = Weapons.WindCannon;
+                        if (Input.GetMouseButton(1))
+                        {
+                            TortoiseChangeFocus(PlayerFocus.TortoiseWindCannon);
+                        }
                         break;
-                    case PlayerFocus.TortoiseWindCannon:
-                        TortoiseChangeFocus(PlayerFocus.TortoiseMortar);
-                        break;
-                    default:
-                        Debug.Log("TortoisePlayer playerFocus shouldn't be non-Tortoise");
-                        break;
+                }
+            }
+            if (Input.GetKeyDown("1"))
+            {
+                selectedWeapon = Weapons.Mortar;
+                if (Input.GetMouseButton(1))
+                {
+                    TortoiseChangeFocus(PlayerFocus.TortoiseMortar);
+                }
+            }
+            if (Input.GetKeyDown("2"))
+            {
+                selectedWeapon = Weapons.WindCannon;
+                if (Input.GetMouseButton(1))
+                {
+                    TortoiseChangeFocus(PlayerFocus.TortoiseWindCannon);
                 }
             }
         }
@@ -102,9 +151,13 @@ public class TortoisePlayer : TortoiseShared
                 YawWindCannonToTarget(chassis.transform.forward);
 
                 // If the Player presses the LMB...
-                if (Input.GetMouseButtonDown(0) && GameManager.Instance.playerControl)
+                if (Input.GetMouseButton(0) && GameManager.Instance.playerControl)
                 {
-                    FireWindCannon();
+                    // If the Wind Cannon has cooled down...
+                    if (windCannonCooldown >= windCannonFireDelay)
+                    {
+                        FireWindCannon();
+                    }
                 }
                 break;
             case PlayerFocus.TortoiseMortar:
@@ -113,6 +166,9 @@ public class TortoisePlayer : TortoiseShared
 
                 // Second, aim the Mortar at the Camera.
                 AimMortarAtTarget(Camera.main.GetComponent<CameraMotion>().mortarAimTarget);
+
+                // Update the position of the impact zone
+                UpdateMortarImpactZone();
 
                 // If the Player presses the LMB...
                 if (Input.GetMouseButton(0) && GameManager.Instance.playerControl)
@@ -132,9 +188,13 @@ public class TortoisePlayer : TortoiseShared
                 YawWindCannonToTarget(Camera.main.transform.forward);
 
                 // If the Player presses the LMB...
-                if (Input.GetMouseButtonDown(0) && GameManager.Instance.playerControl)
+                if (Input.GetMouseButton(0) && GameManager.Instance.playerControl)
                 {
-                    FireWindCannon();
+                    // If the Wind Cannon has cooled down...
+                    if (windCannonCooldown >= windCannonFireDelay)
+                    {
+                        FireWindCannon();
+                    }
                 }
                 break;
         }
@@ -159,40 +219,26 @@ public class TortoisePlayer : TortoiseShared
                 cameraScript.LoadPreset(PlayerFocus.TortoiseNone);
                 mortarBarrel.GetComponent<TrajectoryArc>().enabled = false;
                 mortarBarrel.GetComponent<LineRenderer>().enabled = false;
+                mortarImpactZone.GetComponent<MeshRenderer>().enabled = false;
                 break;
             case PlayerFocus.TortoiseMortar:
                 cameraScript.cameraLookTarget = mortarTurret;
                 cameraScript.LoadPreset(PlayerFocus.TortoiseMortar);
                 mortarBarrel.GetComponent<TrajectoryArc>().enabled = true;
                 mortarBarrel.GetComponent<LineRenderer>().enabled = true;
+                mortarImpactZone.GetComponent<MeshRenderer>().enabled = true;
                 break;
             case PlayerFocus.TortoiseWindCannon:
                 cameraScript.cameraLookTarget = windCannon;
                 cameraScript.LoadPreset(PlayerFocus.TortoiseWindCannon);
                 mortarBarrel.GetComponent<TrajectoryArc>().enabled = false;
                 mortarBarrel.GetComponent<LineRenderer>().enabled = false;
+                mortarImpactZone.GetComponent<MeshRenderer>().enabled = false;
                 break;
             default:
                 Debug.Log("Tortoise Player can't focus on a non-Tortoise part.");
                 break;
         }
-    }
-
-    void PitchMortarToTarget(Vector3 _targetDirection)
-    {
-        Vector3 barrelForward = mortarBarrel.transform.forward;
-        _targetDirection.x = 1; _targetDirection.z = 1;
-        barrelForward.x = 1; barrelForward.z = 1;
-        float angle = Vector3.Angle(_targetDirection, barrelForward);
-        if (_targetDirection.y > barrelForward.y) { angle *= -1; }
-        StaticFunc.RotateTo(mortarBarrel.GetComponent<Rigidbody>(), 'x', angle * 0.025f);
-    }
-
-    void YawMortarToTarget(Vector3 _targetDirection)
-    {
-        Vector3 mortarTurretRot = Quaternion.FromToRotation(mortarTurret.transform.forward, _targetDirection).eulerAngles;
-        if (mortarTurretRot.y > 180f) { mortarTurretRot.y -= 360f; }
-        StaticFunc.RotateTo(mortarTurret.GetComponent<Rigidbody>(), 'y', mortarTurretRot.y * 0.5f);
     }
 
     void YawWindCannonToTarget(Vector3 _targetDirection)
@@ -212,9 +258,11 @@ public class TortoisePlayer : TortoiseShared
 
     void FireWindCannon()
     {
+        windCannonCooldown = 0f;
         float trueForce = windCannonForce * 1000f;
         windCannon.GetComponent<Rigidbody>().AddForce(-windCannon.transform.forward * trueForce);
-        windCannon.transform.GetChild(1).GetComponent<EffectSpawner>().SpawnEffect();
+        windCannon.transform.GetChild(1).GetComponent<ParticleSystem>().Play();
+        windCannon.transform.GetChild(2).GetComponent<ParticleSystem>().Play();
         windCannon.GetComponent<AudioSource>().Play();
         List<GameObject> targets = windCannon.GetComponentInChildren<CannonArea>().overlappingGameObjects;
         foreach (GameObject target in targets)
@@ -223,27 +271,56 @@ public class TortoisePlayer : TortoiseShared
         }
     }
 
-    void FireMortar()
+    void UpdateMortarImpactZone()
     {
-        mortarCooldown = 0f;
-        mortarTurret.GetComponent<AudioSource>().Play();
-        Vector3 spawnPos = mortarBarrel.transform.GetChild(0).position;
-        GameObject shellInstance = Instantiate(shellPrefab, spawnPos, Quaternion.identity);
-        Rigidbody shellRB = shellInstance.GetComponent<Rigidbody>();
-        shellRB.velocity = chassisRB.velocity;
-        shellRB.AddForce(mortarBarrel.transform.forward * 1500f);
-        ShellBehaviour shellB = shellInstance.GetComponent<ShellBehaviour>();
-        shellB.SetDamage(mortarDamage);
-        shellB.SetOwner(this.gameObject);
-        shellB.explosionPrefab = explosionPrefab;
-        shellInstance.layer = 12;
+        LineRenderer line = mortarBarrel.GetComponent<LineRenderer>();
+        float shortestDistance = Mathf.Infinity;
+        int segmentClosest = 0;
+        // Find the closest segment
+        for (int i = 0; i < line.positionCount; i++)
+        {
+            Vector3 lineIposition = line.GetPosition(i);
+            if (Physics.Raycast(lineIposition, Vector3.down, out RaycastHit cast))
+            {
+                if (cast.distance < shortestDistance && i > 5)
+                {
+                    segmentClosest = i;
+                    shortestDistance = cast.distance;
+                }
+            }
+        }
+
+        Vector3 groundPosition = line.GetPosition(segmentClosest);
+        groundPosition.y -= shortestDistance;
+        mortarImpactZone.transform.position = groundPosition;
     }
 
-    void AimMortarAtTarget(Vector3 _targetDirection)
+
+    float StepBack(LineRenderer _line, int _segment)
     {
-        // Mortar Turret Rotation
-        YawMortarToTarget(_targetDirection);
-        PitchMortarToTarget(_targetDirection);
+        if (_segment - 1 >= 0)
+        {
+            Vector3 segmentPosition = _line.GetPosition(_segment - 1);
+            if (Physics.Raycast(segmentPosition, Vector3.down, out RaycastHit cast))
+            {
+                return cast.distance;
+            }
+        }
+
+        return Mathf.Infinity;
     }
 
+    float StepForward(LineRenderer _line, int _segment)
+    {
+        if (_line.positionCount >= _segment + 1)
+        {
+            Vector3 segmentPosition = _line.GetPosition(_segment + 1);
+            if (Physics.Raycast(segmentPosition, Vector3.down, out RaycastHit cast))
+            {
+                return cast.distance;
+            }
+        }
+
+        return Mathf.Infinity;
+    }
 }
