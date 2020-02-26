@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e076ca364f0da214d9434bc492c32925, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hoverForce: 0.25
-  pushForce: 1
-  rotationForce: 5
+  hoverForce: 0.45
+  pushForce: 1.4
+  rotationForce: 7
   healthComponent:
     health: 0
   installedUpgrades: 

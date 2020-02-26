@@ -185,7 +185,7 @@ public class ScimitarAIController : ScimitarShared
 
                     if (wanderTurning)
                     {
-                        StaticFunc.RotateTo(chassisRB, 'y', wanderTurnForce);
+                        StaticFunc.RotateTo(chassisRB, 'y', wanderTurnForce * rotationForce);
                     }
                     break;
                 case HovercraftAIState.Chase:
