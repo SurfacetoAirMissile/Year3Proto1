@@ -13,7 +13,10 @@ public class ProjectileShared : MonoBehaviour
     protected float damage;
     protected float timeElapsed;
     protected GameObject owner;
-
+    [SerializeField]
+    protected GameObject hitSoundEffectPrefab;
+    [SerializeField]
+    protected GameObject bulletImpact;
     // Update is called once per frame
     protected void PSUpdate()
     {
@@ -28,24 +31,7 @@ public class ProjectileShared : MonoBehaviour
 
     protected void PSOnCollisionEnter(Collision collision)
     {
-        // if the object we hit belongs to the player
-        Transform masterParent = StaticFunc.GetParentRecursive(collision.transform);
-        if (masterParent.name.Contains("Player"))
-        {
-            if (owner.name.Contains("AI"))
-            {
-                masterParent.GetComponent<HovercraftShared>().healthComponent.DeductHealth(damage);
-                timeElapsed = lifetime * .9f;
-            }
-        }
-        else if (masterParent.name.Contains("AI"))
-        {
-            if (owner.name.Contains("Player"))
-            {
-                masterParent.GetComponent<HovercraftShared>().healthComponent.DeductHealth(damage);
-                timeElapsed = lifetime * .9f;
-            }
-        }
+        
     }
 
     public GameObject GetOwner()

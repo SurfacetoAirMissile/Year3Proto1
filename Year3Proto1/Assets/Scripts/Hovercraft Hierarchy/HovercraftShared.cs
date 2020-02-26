@@ -21,6 +21,18 @@ public class HovercraftShared : MonoBehaviour
     protected GameObject chassis;
     protected List<GameObject> hoverballs;
     protected float totalMass;
+    protected bool thrustParticlePlay = false;
+
+    public List<UpgradeType> installedUpgrades;
+
+    public enum ControllerType
+    {
+        PlayerController,
+        AIController
+    }
+
+
+    public ControllerType controller;
 
     public enum PlayerFocus
     {
@@ -57,6 +69,7 @@ public class HovercraftShared : MonoBehaviour
             //if (child.name.Contains("Mortar")) { weapons.Add(child.gameObject); }
         }
         chassisRB = chassis.GetComponent<Rigidbody>();
+        installedUpgrades = new List<UpgradeType>();
     }
 
     protected void ApplyLevitationForces()
@@ -121,6 +134,26 @@ public class HovercraftShared : MonoBehaviour
     public bool Alive()
     {
         return (healthComponent.GetHealth() > 0f);
+    }
+
+    protected void ThrustParticleEffect(bool _thrustParticleOn)
+    {
+        if (_thrustParticleOn)
+        {
+            if (!thrustParticlePlay)
+            {
+                chassis.transform.GetChild(0).GetComponent<ParticleSystem>().Play(true);
+                thrustParticlePlay = true;
+            }
+        }
+        else
+        {
+            if (thrustParticlePlay)
+            {
+                thrustParticlePlay = false;
+                chassis.transform.GetChild(0).GetComponent<ParticleSystem>().Stop(true, ParticleSystemStopBehavior.StopEmitting);
+            }
+        }
     }
 
 }

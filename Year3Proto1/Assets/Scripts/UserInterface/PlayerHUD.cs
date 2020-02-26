@@ -14,20 +14,44 @@ public class PlayerHUD : MonoBehaviour
 
     public Image[] healthBars;
 
-    int totalHealth = 5;
+    float totalHealth = 5f;
+
+    GameObject playerChassis;
+
+    private void Start()
+    {
+        playerChassis = GameObject.FindGameObjectWithTag("Player");
+    }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.X)) totalHealth -= 1;
+        totalHealth = playerChassis.GetComponentInParent<HovercraftShared>().healthComponent.GetHealth();
+        UpdateHealthUI(totalHealth);
+        UpdateScrapCounter();
+    }
+
+    private void UpdateHealthUI(float _health)
+    {
+
+        // for each healthbar
         for (int i = 0; i < healthBars.Length; i++)
         {
-            if (totalHealth > (i))
+            if (totalHealth > (i + 1))
             {
-                healthBars[i].fillAmount = 1.0f;
+                Vector3 scale = healthBars[i].rectTransform.localScale;
+                scale.x = 1f;
+                healthBars[i].rectTransform.localScale = scale;
             }
             else
             {
-                healthBars[i].fillAmount = 0.0f;
+                Vector3 scale = healthBars[i].rectTransform.localScale;
+                scale.x = Mathf.Clamp(_health - i, 0f, 1f);
+                healthBars[i].rectTransform.localScale = scale;
             }
         }
+    }
+
+    private void UpdateScrapCounter()
+    {
+        scrap.text = GameManager.Instance.playerScrap.ToString();
     }
 }
