@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using UnityEngine.Rendering;
 
 public class TitleScreen : MonoBehaviour
 {
@@ -15,6 +16,14 @@ public class TitleScreen : MonoBehaviour
     private CanvasGroup canwas;
     private GameObject anykeyPrompt;
     private CanvasGroup canvasAnyKey;
+
+    public GameObject blurVolume;
+    private Volume ppvolume;
+
+    private void Awake()
+    {
+        ppvolume = Instantiate(blurVolume).GetComponent<Volume>();
+    }
 
     void Start()
     {
@@ -57,6 +66,16 @@ public class TitleScreen : MonoBehaviour
             Hide();
             screenVisible = false;
         }
+
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            DOTween.To(() => ppvolume.weight, x => ppvolume.weight = x, 1.0f, 0.2f).SetEase(Ease.InOutSine);
+        }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            DOTween.To(() => ppvolume.weight, x => ppvolume.weight = x, 0.0f, 0.2f).SetEase(Ease.InOutSine);
+        }
     }
 
     private void Show()
@@ -71,6 +90,8 @@ public class TitleScreen : MonoBehaviour
     {
         canwas.DOKill(true);
         canwas.DOFade(0.0f, 0.5f);
+
+        DOTween.To(() => ppvolume.weight, x => ppvolume.weight = x, 0.0f, 0.2f).SetEase(Ease.InOutSine);
 
         Debug.Log("Hiding Title Screen");
     }

@@ -36,7 +36,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0.01586914, y: -8.410828}
-  m_SizeDelta: {x: 1600, y: 480}
+  m_SizeDelta: {x: 1024, y: 1024}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1022352250
 CanvasRenderer:
@@ -160,6 +160,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   showScreen: 0
   startDelay: 4
+  blurVolume: {fileID: 1714627832863244506, guid: 92fd6632e8bc9d64a9f91c09431c844a,
+    type: 3}
 --- !u!1 &5248105496002480290
 GameObject:
   m_ObjectHideFlags: 0
