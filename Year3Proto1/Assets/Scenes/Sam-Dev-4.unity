@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 262.30267, g: 325.09595, b: 430.38654, a: 1}
+  m_IndirectSpecularColor: {r: 262.3371, g: 325.05005, b: 430.21954, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -8463,9 +8463,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf9e3b047d0976f42b8d67130308cf3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  title1: {fileID: 2048519711}
-  title2: {fileID: 357651347}
-  title3: {fileID: 570009960}
+  title: {fileID: 0}
   dotCanvas: {fileID: 657577031}
   categoryContainer: {fileID: 848855918}
   dot: {fileID: 6277947998501433756, guid: c25eb21765c8b1c488c49884cae5acbc, type: 3}
@@ -12413,12 +12411,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3f55ad12c2fd0544b13c5aac201ea72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameHUD: {fileID: 0}
+  gameWave: {fileID: 0}
+  popup: {fileID: 0}
+  waveStats: {fileID: 0}
+  hud: {fileID: 0}
   trading: {fileID: 813338427}
+  gameSpawner: {fileID: 0}
+  remaining: 5
+  wave: 1
+  aliveCraft: []
   playerScrap: 0
+  playerKills: 0
   playerControl: 0
   playerInCombat: 0
   playerGoingFast: 0
-  aliveCraft: []
 --- !u!4 &1309331662
 Transform:
   m_ObjectHideFlags: 0
