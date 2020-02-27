@@ -258,7 +258,7 @@ public class ScimitarPlayer : ScimitarShared
             rotation = Quaternion.FromToRotation(windCannonTurretRing.transform.forward, -_targetDirection).eulerAngles;
         }
         if (rotation.y > 180f) { rotation.y -= 360f; }
-        StaticFunc.RotateTo(windCannonTurretRing.GetComponent<Rigidbody>(), 'y', rotation.y);
+        StaticFunc.RotateTo(windCannonTurretRing.GetComponent<Rigidbody>(), 'y', rotation.y * .25f);
     }
 
     protected void PitchWindCannonToTarget(Vector3 _targetDirection)

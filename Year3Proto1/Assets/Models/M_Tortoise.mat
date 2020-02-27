@@ -95,12 +95,24 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_2D6902A0_Texture_1:
+        m_Texture: {fileID: 2800000, guid: 5f0c159ea1d2bda4385317a43dc35686, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _SampleTexture2D_55D1CA2_Texture_1:
         m_Texture: {fileID: 2800000, guid: 71c21f1620a08b944b75aa7ca4459e1c, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SampleTexture2D_702B2B7F_Texture_1:
         m_Texture: {fileID: 2800000, guid: c6b96c72d25b2ba44b8db5a81ca4ef0d, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_859D513B_Texture_1:
+        m_Texture: {fileID: 2800000, guid: 78a14ec643ac3b047897deda09ba69c4, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_8DFB4460_Texture_1:
+        m_Texture: {fileID: 2800000, guid: 4c3a0fc9dfe772444a3c5f2e6865c71f, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SampleTexture2D_B47578B_Texture_1:
@@ -256,6 +268,7 @@ Material:
     - _ZTestTransparent: 4
     - _ZWrite: 1
     m_Colors:
+    - Color_487FF70D: {r: 0.35849056, g: 0.09268602, b: 0.042274803, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _BaseColorMap_MipInfo: {r: 0, g: 0, b: 0, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}

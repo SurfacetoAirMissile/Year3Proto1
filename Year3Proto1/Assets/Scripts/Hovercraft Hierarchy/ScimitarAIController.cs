@@ -47,6 +47,7 @@ public class ScimitarAIController : ScimitarShared
     }
 
     protected GameObject explosionPrefab;
+    protected GameObject beacon;
 
     public int scrapOnKill = 300;
 
@@ -108,6 +109,10 @@ public class ScimitarAIController : ScimitarShared
         wanderForce = .5f;
         wanderUpdateStopwatch = 0f;
         playerChassis = GameObject.FindGameObjectWithTag("Player");
+        foreach (Transform child in transform)
+        {
+            if (child.name.Contains("Beacon")) { beacon = child.gameObject; }
+        }
         // Determines orbit distance based on player craft
         /*
         if (playerChassis.transform.parent.name.Contains("Tortoise"))
@@ -285,8 +290,9 @@ public class ScimitarAIController : ScimitarShared
                     }
 
                     break;
-
             }
+            beacon.GetComponent<LineRenderer>().SetPosition(0, chassis.transform.position + Vector3.down * 40f);
+            beacon.GetComponent<LineRenderer>().SetPosition(1, chassis.transform.position + Vector3.up * 500f);
         }
         else
         {
