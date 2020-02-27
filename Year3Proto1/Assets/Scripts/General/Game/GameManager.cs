@@ -108,6 +108,11 @@ public class GameManager : Singleton<GameManager>
         Popup();
         Debug.Log("GameManager switched to state: " + gameState);
     }
+    
+    public bool GetPlayerControl()
+    {
+        return playerControl;
+    }
 
     public void SetPlayerGoingFast(bool _playerGoingFast)
     {

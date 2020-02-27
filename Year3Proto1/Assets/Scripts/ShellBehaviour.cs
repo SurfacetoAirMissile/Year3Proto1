@@ -5,6 +5,7 @@ using UnityEngine;
 public class ShellBehaviour : ProjectileShared
 {
     public GameObject explosionPrefab;
+    public float explosionRadius;
 
     private void Update()
     {
@@ -14,8 +15,11 @@ public class ShellBehaviour : ProjectileShared
     private void OnCollisionEnter(Collision collision)
     {
         GameObject explosionInstance = Instantiate(explosionPrefab, transform);
-        explosionInstance.GetComponent<Explosion>().owner = owner;
         explosionInstance.transform.SetParent(null);
+        Explosion explosionScript = explosionInstance.GetComponent<Explosion>();
+        explosionScript.owner = owner;
+        explosionScript.explosionDamage = damage;
+        explosionScript.explosionRadius = explosionRadius;
         Destroy(this.gameObject);
     }
 }

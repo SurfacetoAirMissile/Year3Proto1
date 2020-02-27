@@ -19,7 +19,7 @@ MonoBehaviour:
     health: 0
   installedUpgrades: 
   controller: 1
-  minigunROF: 18.3
+  minigunROF: 8
   minigunMaximumDepression: -5
   minigunDamage: 0.02
   faction: 2
