@@ -10,45 +10,19 @@ public class GameWave : MonoBehaviour
     public TMP_Text killText;
     public TMP_Text scrapText;
     public TMP_Text timeText;
+    public TMP_Text waveText;
 
     //Statistics
-    private int wave;
-    private int kills;
-    private int scrap;
-    private int time;
-    private int remaining;
+    public int wave;
+    public int kills;
+    public int scrap;
+    public int time;
 
-    public void AddKill(int kills)
+    public void Refresh()
     {
-        killText.transform.DOPunchScale(new Vector3(0.5f, 0.5f, 0.0f), 0.33f, 1, 1.0f);
-        this.kills += kills;
         killText.text = kills.ToString();
-    }
-
-    public void AddScrap(int scrap)
-    {
-        scrapText.transform.DOPunchScale(new Vector3(0.5f, 0.5f, 0.0f), 0.33f, 1, 1.0f);
-        this.scrap += scrap;
         scrapText.text = scrap.ToString();
-    }
-
-    public int GetScrap()
-    {
-        return scrap;
-    }
-    
-    public int GetKills()
-    {
-        return kills;
-    }
-
-    public int GetTime()
-    {
-        return time;
-    }
-
-    public int GetRemaining()
-    {
-        return remaining;
+        timeText.text = time.ToString();
+        waveText.text = "Wave " + wave.ToString() + " Stats";
     }
 }

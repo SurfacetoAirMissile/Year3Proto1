@@ -7,7 +7,7 @@ using System.Collections.Generic;
 public enum GameState
 {
     INGAME,
-    GRACE_PERIOD
+    INTERVAL
 };
 
 public class GameManager : Singleton<GameManager>
@@ -17,12 +17,14 @@ public class GameManager : Singleton<GameManager>
     public GameWave gameWave;
 
     public GameObject popup;
+    public GameObject waveStats;
+
     public GameObject hud;
     public GameObject trading;
 
     [Header("Enemies")]
     public GameSpawner gameSpawner;
-    public int remaining = 10;
+    public int remaining = 0;
     public int wave = 1;
 
     public List<HovercraftShared> aliveCraft;
@@ -38,7 +40,7 @@ public class GameManager : Singleton<GameManager>
     MusicPlayer musicPlayer;
 
     private GameState gameState = GameState.INGAME;
-    private float time = 5.0f;
+    private float time = 0.0f;
     private bool popupActive = true;
 
     private void Start()
@@ -46,31 +48,32 @@ public class GameManager : Singleton<GameManager>
         playerControl = false;
         musicPlayer = FindObjectOfType<MusicPlayer>();
         AIChasingPlayer = new List<GameObject>();
-    }
+        Switch(gameState);
 
+        gameWave.wave = wave;
+    }
 
     private void Update()
     {
-        if (remaining <= 0 && time <= 0) Switch(gameState);
+        if (time <= 0 || remaining <= 0) Switch(gameState);
 
-        switch(gameState)
+        if(gameState == GameState.INTERVAL)
         {
-            case GameState.GRACE_PERIOD:
-                {
-                    time -= Time.deltaTime;
+            time -= Time.deltaTime;
+            gameHUD.Refresh(gameState, playerScrap, playerKills, (int) time, wave);
 
-                    if (Input.GetKeyDown(KeyCode.F))
-                    {
-                        trading.SetActive(trading.activeSelf ? false : true);
-                        popup.GetComponentInChildren<Image>().transform.DOKill(true);
-                        popup.GetComponentInChildren<Image>().transform.DOPunchScale(new Vector3(0.5f, 0.5f, 0.0f), 0.33f, 1, 1.0f);
-                    }
-                    gameHUD.Refresh(gameState, playerScrap, playerKills, gameWave.GetTime(), wave);
-                }
-                break;
-            case GameState.INGAME:
-                gameHUD.Refresh(gameState, playerScrap, playerKills, gameWave.GetRemaining(), wave);
-                break;
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+                trading.SetActive(trading.activeSelf ? false : true);
+                waveStats.SetActive(trading.activeSelf ? false : true);
+                popup.GetComponentInChildren<Image>().transform.DOKill(true);
+                popup.GetComponentInChildren<Image>().transform.DOPunchScale(new Vector3(0.5f, 0.5f, 0.0f), 0.33f, 1, 1.0f);
+            }
+        } 
+
+        else if(gameState == GameState.INGAME)
+        {
+            gameHUD.Refresh(gameState, playerScrap, playerKills, remaining, wave);
         }
 
         if (AIChasingPlayer.Count > 0)
@@ -87,18 +90,23 @@ public class GameManager : Singleton<GameManager>
     {
         switch (gameState)
         {
-            case GameState.GRACE_PERIOD:
+            case GameState.INTERVAL:
                 this.gameState = GameState.INGAME;
-                remaining = wave * 10;
-                gameSpawner.Spawn(remaining);
-                time = 120.0f;
-                break;
-            case GameState.INGAME:
-                this.gameState = GameState.GRACE_PERIOD;
                 wave += 1;
+                remaining = (wave * 10 / 2);
+                gameSpawner.Spawn(remaining);
                 time = 1.0f;
                 break;
+            case GameState.INGAME:
+                this.gameState = GameState.INTERVAL;
+                gameWave.Refresh();
+                remaining = 1;
+                time = 10.0f;
+                break;
         }
+
+        Popup();
+        Debug.Log("GameManager switched to state: " + gameState);
     }
 
     public void SetPlayerGoingFast(bool _playerGoingFast)
@@ -119,21 +127,27 @@ public class GameManager : Singleton<GameManager>
 
     public void Popup()
     {
-        float position = popup.transform.localPosition.x;
+        float popupPosition = popup.transform.localPosition.x;
+        float wavePosition = waveStats.transform.localPosition.x;
 
         if (popupActive)
         {
-            position -= popup.GetComponent<RectTransform>().rect.width;
+            wavePosition += (waveStats.GetComponent<RectTransform>().rect.width + 64);
+            popupPosition -= popup.GetComponent<RectTransform>().rect.width;
             popupActive = false;
         }
         else
         {
-            position += popup.GetComponent<RectTransform>().rect.width;
+            wavePosition -= (waveStats.GetComponent<RectTransform>().rect.width + 64);
+            popupPosition += popup.GetComponent<RectTransform>().rect.width;
             popupActive = true;
         }
 
         popup.transform.DOKill(true);
-        popup.transform.DOLocalMoveX(position, 1.5f).SetEase(Ease.OutQuint);
+        popup.transform.DOLocalMoveX(popupPosition, 1.5f).SetEase(Ease.OutQuint);
+
+        waveStats.transform.DOKill(true);
+        waveStats.transform.DOLocalMoveX(wavePosition, 1.5f).SetEase(Ease.OutQuint);
 
         trading.SetActive(false);
     }
@@ -193,11 +207,5 @@ public class GameManager : Singleton<GameManager>
                 }
             }
         }
-    }
-
-    public void AddKill()
-    {
-        Debug.Log("works");
-        gameWave.AddKill(1);
     }
 }

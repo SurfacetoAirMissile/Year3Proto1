@@ -9,6 +9,7 @@ public class GameSpawner : MonoBehaviour
 
     public void Spawn(int amount)
     {
+        if (positions.Length == 0 || enemies.Length == 0) return;
         for (int i = 0; i < amount; i++)
         {
             GameObject gameObject = Instantiate(enemies[Random.Range(0, enemies.Length)], transform);

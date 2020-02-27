@@ -50,8 +50,8 @@ public class GameHUD : MonoBehaviour
     {
         switch (gameState)
         {
-            case GameState.GRACE_PERIOD:
-                header.text = "GRACE PERIOD";
+            case GameState.INTERVAL:
+                header.text = "INTERVAL";
                 this.footer.text = remaining.ToString() + " Seconds Remain";
                 break;
             case GameState.INGAME:
