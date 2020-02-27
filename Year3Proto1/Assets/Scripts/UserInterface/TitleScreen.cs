@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 using DG.Tweening;
 using UnityEngine.Rendering;
 
@@ -11,25 +12,47 @@ public class TitleScreen : MonoBehaviour
     private bool screenVisible;
     private bool hideScreen;
     private float timer;
-    public float startDelay = 1.0f;
+    public float startDelay = 2.0f;
+
+    private bool gameStarted;
 
     private CanvasGroup canwas;
     private GameObject anykeyPrompt;
     private CanvasGroup canvasAnyKey;
 
+    public TMP_Text shipText;
+
     public GameObject blurVolume;
     private Volume ppvolume;
+
+    public GameObject fadePanel;
+    private SceneSwitcher scene;
 
     private void Awake()
     {
         ppvolume = Instantiate(blurVolume).GetComponent<Volume>();
+        fadePanel = Instantiate(fadePanel, transform.parent);
+        scene = FindObjectOfType<SceneSwitcher>();
     }
+
+
 
     void Start()
     {
         canwas = GetComponent<CanvasGroup>();
         anykeyPrompt = transform.Find("PressAnyKey").gameObject;
         canvasAnyKey = anykeyPrompt.GetComponent<CanvasGroup>();
+
+        shipText = transform.Find("CurrentShip/ShipText").gameObject.GetComponent<TMP_Text>();
+
+        if (GameObject.Find("Tortoise Player") != null)
+        {
+            shipText.text = "Tortoise (slow, high damage)";
+        }
+        else if (GameObject.Find("Scimitar Player") != null)
+        {
+            shipText.text = "Scimitar (fast, low damage)";
+        }
     }
 
 
@@ -44,13 +67,16 @@ public class TitleScreen : MonoBehaviour
 
         if (timer >= startDelay)
         {
-            if (Input.anyKeyDown && showScreen)
+            if (Input.GetKeyDown(KeyCode.W) && showScreen)
             {
                 showScreen = false;
                 hideScreen = true;
-                GameManager.Instance.playerControl = true;
-                GameManager.Instance.Switch(GameState.TITLE);
                 anykeyPrompt.transform.DOPunchScale(new Vector3(0.5f, 0.5f, 0.0f), 0.33f, 1, 1.0f);
+            }
+
+            if (Input.GetKeyDown(KeyCode.Escape) && hideScreen)
+            {
+                showScreen = !showScreen;
             }
 
             canvasAnyKey.alpha = 1.0f;
@@ -68,14 +94,21 @@ public class TitleScreen : MonoBehaviour
             screenVisible = false;
         }
 
-        if (Input.GetKeyDown(KeyCode.T))
+        if (Input.GetKeyDown(KeyCode.Y))
         {
-            DOTween.To(() => ppvolume.weight, x => ppvolume.weight = x, 1.0f, 0.2f).SetEase(Ease.InOutSine);
-        }
+            if (GlobalData.curScene == "Final Scene")
+            {
+                //SceneSwitch("Final Scene 1");
+            }
+            else
+            {
+                //SceneSwitch("Final Scene");
+            }
 
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            DOTween.To(() => ppvolume.weight, x => ppvolume.weight = x, 0.0f, 0.2f).SetEase(Ease.InOutSine);
+            Transform yPrompt = transform.Find("SwitchShip/Image");
+
+            yPrompt.DOKill(true);
+            yPrompt.DOPunchScale(new Vector3(0.5f, 0.5f, 0.0f), 0.25f, 1, 1.0f);
         }
     }
 
@@ -84,6 +117,14 @@ public class TitleScreen : MonoBehaviour
         canwas.DOKill(true);
         canwas.DOFade(1.0f, 0.5f);
         DOTween.To(() => ppvolume.weight, x => ppvolume.weight = x, 1.0f, 0.2f).SetEase(Ease.InOutSine);
+
+        GameManager.Instance.playerControl = false;
+        GameManager.Instance.hud.GetComponent<CanvasGroup>().DOKill(true);
+        GameManager.Instance.hud.GetComponent<CanvasGroup>().DOFade(0.0f, 0.2f).SetEase(Ease.InOutSine);
+        GameManager.Instance.waveStats.GetComponent<CanvasGroup>().DOKill(true);
+        GameManager.Instance.waveStats.GetComponent<CanvasGroup>().DOFade(0.0f, 0.2f).SetEase(Ease.InOutSine);
+
+
         Debug.Log("Showing Title Screen");
     }
 
@@ -93,6 +134,22 @@ public class TitleScreen : MonoBehaviour
         canwas.DOFade(0.0f, 0.5f);
 
         DOTween.To(() => ppvolume.weight, x => ppvolume.weight = x, 0.0f, 0.2f).SetEase(Ease.InOutSine);
+
+        GameManager.Instance.playerControl = true;
+
+        if (!gameStarted)
+        {
+            GameManager.Instance.Switch(GameState.TITLE);
+        }
+        else
+        {
+            GameManager.Instance.hud.GetComponent<CanvasGroup>().DOKill(true);
+            GameManager.Instance.hud.GetComponent<CanvasGroup>().DOFade(1.0f, 0.5f).SetEase(Ease.InOutSine);
+            GameManager.Instance.waveStats.GetComponent<CanvasGroup>().DOKill(true);
+            GameManager.Instance.waveStats.GetComponent<CanvasGroup>().DOFade(1.0f, 0.5f).SetEase(Ease.InOutSine);
+        }
+
+        gameStarted = true;
 
         Debug.Log("Hiding Title Screen");
     }

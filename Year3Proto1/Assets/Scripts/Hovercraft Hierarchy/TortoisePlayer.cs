@@ -25,6 +25,7 @@ public class TortoisePlayer : TortoiseShared
     PlayerFocus playerFocus;
 
     protected GameObject windCannon;
+    protected GameObject windCannonTurretRing;
     protected int windCannonAimMode;
 
     // Start is called before the first frame update
@@ -34,9 +35,10 @@ public class TortoisePlayer : TortoiseShared
         foreach (Transform child in transform)
         {
             if (child.name.Contains("Wind Cannon")) { windCannon = child.gameObject; }
+            if (child.name.Contains("Wind Cannon Turret Ring")) { windCannonTurretRing = child.gameObject; }
         }
         windCannonAimMode = 0;
-        playerFocus = PlayerFocus.TortoiseNone;
+        playerFocus = PlayerFocus.Tortoise;
         TortoiseChangeFocus(playerFocus);
         selectedWeapon = Weapons.Mortar;
         healthComponent.SetHealth(5f, true);
@@ -73,7 +75,7 @@ public class TortoisePlayer : TortoiseShared
             if (Input.GetMouseButtonUp(1))
             {
                 playerAiming = false;
-                TortoiseChangeFocus(PlayerFocus.TortoiseNone);
+                TortoiseChangeFocus(PlayerFocus.Tortoise);
             }
             if (Input.GetKeyDown("left ctrl"))
             {
@@ -159,12 +161,12 @@ public class TortoisePlayer : TortoiseShared
         }
         switch (playerFocus)
         {
-            case PlayerFocus.TortoiseNone:
+            case PlayerFocus.Tortoise:
                 // First, rotate the Mortar back to the "default position".
                 AimMortarAtTarget(chassis.transform.forward);
 
                 // point the wind cannon forward
-                YawWindCannonToTarget(chassis.transform.forward);
+                AimWindCannonAtTarget(chassis.transform.forward);
 
                 // If the Player presses the LMB...
                 if (Input.GetMouseButton(0) && GameManager.Instance.playerControl)
@@ -178,7 +180,7 @@ public class TortoisePlayer : TortoiseShared
                 break;
             case PlayerFocus.TortoiseMortar:
                 // First, rotate the Wind Cannon back to the "default position".
-                YawWindCannonToTarget(chassis.transform.forward);
+                AimWindCannonAtTarget(chassis.transform.forward);
 
                 // Second, aim the Mortar at the Camera.
                 AimMortarAtTarget(Camera.main.GetComponent<CameraMotion>().mortarAimTarget);
@@ -201,7 +203,7 @@ public class TortoisePlayer : TortoiseShared
                 AimMortarAtTarget(chassis.transform.forward);
 
                 // Second, aim the Wind Cannon at the Camera.
-                YawWindCannonToTarget(Camera.main.transform.forward);
+                AimWindCannonAtTarget(Camera.main.transform.forward);
 
                 // If the Player presses the LMB...
                 if (Input.GetMouseButton(0) && GameManager.Instance.playerControl)
@@ -230,9 +232,9 @@ public class TortoisePlayer : TortoiseShared
         playerFocus = _playerFocus;
         switch (_playerFocus)
         {
-            case PlayerFocus.TortoiseNone:
+            case PlayerFocus.Tortoise:
                 cameraScript.cameraLookTarget = chassis;
-                cameraScript.LoadPreset(PlayerFocus.TortoiseNone);
+                cameraScript.LoadPreset(PlayerFocus.Tortoise);
                 mortarBarrel.GetComponent<TrajectoryArc>().enabled = false;
                 mortarBarrel.GetComponent<LineRenderer>().enabled = false;
                 mortarImpactZone.GetComponent<MeshRenderer>().enabled = false;
@@ -262,14 +264,32 @@ public class TortoisePlayer : TortoiseShared
         Vector3 rotation;
         if (windCannonAimMode == 0)
         {
-            rotation = Quaternion.FromToRotation(windCannon.transform.forward, _targetDirection).eulerAngles;
+            rotation = Quaternion.FromToRotation(windCannonTurretRing.transform.forward, _targetDirection).eulerAngles;
         }
         else
         {
-            rotation = Quaternion.FromToRotation(windCannon.transform.forward, -_targetDirection).eulerAngles;
+            rotation = Quaternion.FromToRotation(windCannonTurretRing.transform.forward, -_targetDirection).eulerAngles;
         }
         if (rotation.y > 180f) { rotation.y -= 360f; }
-        StaticFunc.RotateTo(windCannon.GetComponent<Rigidbody>(), 'y', rotation.y);
+        StaticFunc.RotateTo(windCannonTurretRing.GetComponent<Rigidbody>(), 'y', rotation.y);
+    }
+
+    protected void PitchWindCannonToTarget(Vector3 _targetDirection)
+    {
+        Vector3 barrelForward = windCannon.transform.forward;
+        if (windCannonAimMode == 1) { _targetDirection *= -1; }
+        _targetDirection.x = 1; _targetDirection.z = 1;
+        barrelForward.x = 1; barrelForward.z = 1;
+        float angle = Vector3.Angle(_targetDirection, barrelForward);
+        if (_targetDirection.y > barrelForward.y) { angle *= -1; }
+        StaticFunc.RotateTo(windCannon.GetComponent<Rigidbody>(), 'x', angle);
+    }
+
+    protected void AimWindCannonAtTarget(Vector3 _targetDirection)
+    {
+        // Mortar Turret Rotation
+        YawWindCannonToTarget(_targetDirection);
+        PitchWindCannonToTarget(_targetDirection);
     }
 
     void FireWindCannon()
@@ -292,6 +312,7 @@ public class TortoisePlayer : TortoiseShared
         LineRenderer line = mortarBarrel.GetComponent<LineRenderer>();
         float shortestDistance = Mathf.Infinity;
         int segmentClosest = 0;
+        mortarImpactZone.GetComponent<MeshRenderer>().enabled = false;
         // Find the closest segment
         for (int i = 0; i < line.positionCount; i++)
         {
@@ -302,10 +323,10 @@ public class TortoisePlayer : TortoiseShared
                 {
                     segmentClosest = i;
                     shortestDistance = cast.distance;
+                    mortarImpactZone.GetComponent<MeshRenderer>().enabled = true;
                 }
             }
         }
-
         Vector3 groundPosition = line.GetPosition(segmentClosest);
         groundPosition.y -= shortestDistance;
         mortarImpactZone.transform.position = groundPosition;

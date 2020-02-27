@@ -38,10 +38,10 @@ public class HovercraftShared : MonoBehaviour
 
     public enum PlayerFocus
     {
-        ScimitarNone,
+        Scimitar,
         ScimitarMinigun,
         ScimitarWindCannon,
-        TortoiseNone,
+        Tortoise,
         TortoiseMortar,
         TortoiseWindCannon
     }
@@ -76,7 +76,6 @@ public class HovercraftShared : MonoBehaviour
 
     protected void ApplyLevitationForces()
     {
-
         isTouchingGround = false;
         foreach (GameObject ball in hoverballs)
         {
