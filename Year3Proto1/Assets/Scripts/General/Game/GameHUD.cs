@@ -26,11 +26,12 @@ public class GameHUD : MonoBehaviour
     }
     private void Update()
     {
+        float health = playerChassis.GetComponentInParent<HovercraftShared>().healthComponent.GetHealth();
         if (playerChassis != null)
         {
             for (int i = 0; i < healthBars.Length; i++)
             {
-                if (totalHealth > (i + 1))
+                if (health > (i + 1))
                 {
                     Vector3 scale = healthBars[i].rectTransform.localScale;
                     scale.x = 1f;
@@ -39,7 +40,7 @@ public class GameHUD : MonoBehaviour
                 else
                 {
                     Vector3 scale = healthBars[i].rectTransform.localScale;
-                    scale.x = Mathf.Clamp(playerChassis.GetComponentInParent<HovercraftShared>().healthComponent.GetHealth() - i, 0f, 1f);
+                    scale.x = Mathf.Clamp(health - i, 0f, 1f);
                     healthBars[i].rectTransform.localScale = scale;
                 }
             }
