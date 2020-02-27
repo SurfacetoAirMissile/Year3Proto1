@@ -3,6 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using UnityEngine.Rendering;
 
 public enum GameState
 {
@@ -14,15 +15,21 @@ public enum GameState
 
 public class GameManager : Singleton<GameManager>
 {
+    //This is one ugly game manager, but it works... for now!
+
     [Header("User Interface")]
     public GameHUD gameHUD;
     public GameWave gameWave;
 
     public GameObject popup;
+    public GameObject skip;
     public GameObject waveStats;
 
     public GameObject hud;
     public GameObject trading;
+
+    public GameObject blurVolume;
+    private Volume ppvolume;
 
     [Header("Enemies")]
     public GameSpawner gameSpawner;
@@ -47,8 +54,12 @@ public class GameManager : Singleton<GameManager>
 
     private void Start()
     {
+        ppvolume = Instantiate(blurVolume).GetComponent<Volume>();
+        ppvolume.weight = 0.0f;
+
         hud.GetComponent<CanvasGroup>().alpha = 0.0f;
         waveStats.GetComponent<CanvasGroup>().alpha = 0.0f;
+        skip.GetComponent<CanvasGroup>().alpha = 0.0f;
 
         playerControl = false;
         musicPlayer = FindObjectOfType<MusicPlayer>();
@@ -79,9 +90,11 @@ public class GameManager : Singleton<GameManager>
             {
                 trading.SetActive(trading.activeSelf ? false : true);
                 waveStats.SetActive(trading.activeSelf ? false : true);
-                popup.GetComponentInChildren<Image>().transform.DOKill(true);
-                popup.GetComponentInChildren<Image>().transform.DOPunchScale(new Vector3(0.5f, 0.5f, 0.0f), 0.33f, 1, 1.0f);
+                playerControl = (trading.activeSelf ? false : true);
+
+                DOTween.To(() => ppvolume.weight, x => ppvolume.weight = x, trading.activeSelf ? 1.0f : 0.0f, 0.1f).SetEase(Ease.InOutSine);
             }
+            if(Input.GetKeyDown(KeyCode.E)) time = 0.0f;
         } 
 
         if (AIChasingPlayer.Count > 0)
@@ -123,6 +136,9 @@ public class GameManager : Singleton<GameManager>
 
                 waveStats.GetComponent<CanvasGroup>().DOKill(true);
                 waveStats.GetComponent<CanvasGroup>().DOFade(1.0f, 0.5f).SetEase(Ease.InOutSine);
+
+                skip.GetComponent<CanvasGroup>().DOKill(true);
+                skip.GetComponent<CanvasGroup>().DOFade(1.0f, 0.5f).SetEase(Ease.InOutSine);
                 break;
         }
         Debug.Log("GameManager switched to state: " + gameState);
@@ -153,22 +169,28 @@ public class GameManager : Singleton<GameManager>
     {
         float popupPosition = popup.transform.localPosition.x;
         float wavePosition = waveStats.transform.localPosition.x;
+        float skipPosition = skip.transform.localPosition.x;
 
         if (popupActive)
         {
-            wavePosition += (waveStats.GetComponent<RectTransform>().rect.width + 64);
-            popupPosition -= popup.GetComponent<RectTransform>().rect.width;
+            wavePosition -= (waveStats.GetComponent<RectTransform>().rect.width + 64);
+            popupPosition += popup.GetComponent<RectTransform>().rect.width;
+            skipPosition += popup.GetComponent<RectTransform>().rect.width;
             popupActive = false;
         }
         else
         {
-            wavePosition -= (waveStats.GetComponent<RectTransform>().rect.width + 64);
-            popupPosition += popup.GetComponent<RectTransform>().rect.width;
+            wavePosition += (waveStats.GetComponent<RectTransform>().rect.width + 64);
+            popupPosition -= popup.GetComponent<RectTransform>().rect.width;
+            skipPosition -= popup.GetComponent<RectTransform>().rect.width;
             popupActive = true;
         }
 
         popup.transform.DOKill(true);
-        popup.transform.DOLocalMoveX(popupPosition, 1.5f).SetEase(Ease.OutQuint);
+        popup.transform.DOLocalMoveX(popupPosition, 2.0f).SetEase(Ease.OutQuint);
+
+        skip.transform.DOKill(true);
+        skip.transform.DOLocalMoveX(skipPosition, 1.7f).SetEase(Ease.OutQuint);
 
         waveStats.transform.DOKill(true);
         waveStats.transform.DOLocalMoveX(wavePosition, 1.5f).SetEase(Ease.OutQuint);
