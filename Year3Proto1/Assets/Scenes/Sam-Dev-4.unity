@@ -4600,14 +4600,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5effe9b8729668c46bd80834724d2fe9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scrap: {fileID: 1488276356}
-  death: {fileID: 479619608}
-  healthBars:
-  - {fileID: 538472732}
-  - {fileID: 1908051970}
-  - {fileID: 696654954}
-  - {fileID: 549984388}
-  - {fileID: 1635633958}
 --- !u!1001 &465888623
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12351,7 +12343,7 @@ MonoBehaviour:
   gameWave: {fileID: 0}
   popup: {fileID: 0}
   waveStats: {fileID: 0}
-  hud: {fileID: 0}
+  hud: {fileID: 448154427}
   trading: {fileID: 813338427}
   gameSpawner: {fileID: 0}
   remaining: 5
@@ -20992,7 +20984,7 @@ PrefabInstance:
     - target: {fileID: 8631740374817722274, guid: b391d68116e509e4caff997c8e7392b7,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b391d68116e509e4caff997c8e7392b7, type: 3}
@@ -21350,7 +21342,7 @@ PrefabInstance:
     - target: {fileID: 220454592671539088, guid: 024bf08396c67bd4d80e194d391eea72,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1318010207245774140, guid: 024bf08396c67bd4d80e194d391eea72,
         type: 3}
