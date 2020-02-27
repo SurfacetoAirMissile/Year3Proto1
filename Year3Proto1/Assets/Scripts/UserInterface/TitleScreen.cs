@@ -98,11 +98,11 @@ public class TitleScreen : MonoBehaviour
         {
             if (GlobalData.curScene == "Final Scene")
             {
-                //SceneSwitch("Final Scene 1");
+                scene.SceneSwitch("Final Scene Scimitar");
             }
             else
             {
-                //SceneSwitch("Final Scene");
+                scene.SceneSwitch("Final Scene");
             }
 
             Transform yPrompt = transform.Find("SwitchShip/Image");

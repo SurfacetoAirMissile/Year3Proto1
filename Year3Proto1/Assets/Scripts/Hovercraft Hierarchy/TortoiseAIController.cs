@@ -48,6 +48,7 @@ public class TortoiseAIController : TortoiseShared
     }
 
     protected GameObject explosionPrefab;
+    protected GameObject beacon;
 
     #region Wander Variable Definitions
 
@@ -113,6 +114,10 @@ public class TortoiseAIController : TortoiseShared
         explosionPrefab = Resources.Load("ShipExplosion") as GameObject;
         controller = ControllerType.AIController;
         GameManager.Instance.AddAlive(this);
+        foreach (Transform child in transform)
+        {
+            if (child.name.Contains("Beacon")) { beacon = child.gameObject; }
+        }
     }
 
 
@@ -234,6 +239,9 @@ public class TortoiseAIController : TortoiseShared
             // destroy self
             Destroy(gameObject);
         }
+
+        beacon.GetComponent<LineRenderer>().SetPosition(0, chassis.transform.position + Vector3.down * 40f);
+        beacon.GetComponent<LineRenderer>().SetPosition(1, chassis.transform.position + Vector3.up * 500f);
     }
 
     bool Chance(float _outOfOne)
