@@ -36,7 +36,7 @@ public class TortoisePlayer : TortoiseShared
             if (child.name.Contains("Wind Cannon")) { windCannon = child.gameObject; }
         }
         windCannonAimMode = 0;
-        playerFocus = PlayerFocus.TortoiseNone;
+        playerFocus = PlayerFocus.Tortoise;
         TortoiseChangeFocus(playerFocus);
         selectedWeapon = Weapons.Mortar;
         healthComponent.SetHealth(5f, true);
@@ -73,7 +73,7 @@ public class TortoisePlayer : TortoiseShared
             if (Input.GetMouseButtonUp(1))
             {
                 playerAiming = false;
-                TortoiseChangeFocus(PlayerFocus.TortoiseNone);
+                TortoiseChangeFocus(PlayerFocus.Tortoise);
             }
             if (Input.GetKeyDown("left ctrl"))
             {
@@ -159,7 +159,7 @@ public class TortoisePlayer : TortoiseShared
         }
         switch (playerFocus)
         {
-            case PlayerFocus.TortoiseNone:
+            case PlayerFocus.Tortoise:
                 // First, rotate the Mortar back to the "default position".
                 AimMortarAtTarget(chassis.transform.forward);
 
@@ -230,9 +230,9 @@ public class TortoisePlayer : TortoiseShared
         playerFocus = _playerFocus;
         switch (_playerFocus)
         {
-            case PlayerFocus.TortoiseNone:
+            case PlayerFocus.Tortoise:
                 cameraScript.cameraLookTarget = chassis;
-                cameraScript.LoadPreset(PlayerFocus.TortoiseNone);
+                cameraScript.LoadPreset(PlayerFocus.Tortoise);
                 mortarBarrel.GetComponent<TrajectoryArc>().enabled = false;
                 mortarBarrel.GetComponent<LineRenderer>().enabled = false;
                 mortarImpactZone.GetComponent<MeshRenderer>().enabled = false;

@@ -36,7 +36,7 @@ public class ScimitarPlayer : ScimitarShared
             if (child.name.Contains("Wind Cannon")) { windCannon = child.gameObject; }
         }
         windCannonAimMode = 0;
-        ScimitarChangeFocus(PlayerFocus.ScimitarNone);
+        ScimitarChangeFocus(PlayerFocus.Scimitar);
         selectedWeapon = Weapons.Minigun;
         healthComponent.SetHealth(3f, true);
         windCannonFireDelay = 1f / windCannonROF;
@@ -71,7 +71,7 @@ public class ScimitarPlayer : ScimitarShared
             if (Input.GetMouseButtonUp(1))
             {
                 playerAiming = false;
-                ScimitarChangeFocus(PlayerFocus.ScimitarNone);
+                ScimitarChangeFocus(PlayerFocus.Scimitar);
             }
             if (Input.GetKeyDown("left ctrl"))
             {
@@ -158,7 +158,7 @@ public class ScimitarPlayer : ScimitarShared
 
         switch (playerFocus)
         {
-            case PlayerFocus.ScimitarNone:
+            case PlayerFocus.Scimitar:
                 // First, rotate the Minigun back to the "default position".
                 AimMinigunAtTarget(chassis.transform.forward);
 
@@ -226,9 +226,9 @@ public class ScimitarPlayer : ScimitarShared
         playerFocus = _playerFocus;
         switch (_playerFocus)
         {
-            case PlayerFocus.ScimitarNone:
+            case PlayerFocus.Scimitar:
                 cameraScript.cameraLookTarget = chassis;
-                cameraScript.LoadPreset(PlayerFocus.ScimitarNone);
+                cameraScript.LoadPreset(PlayerFocus.Scimitar);
                 break;
             case PlayerFocus.ScimitarMinigun:
                 cameraScript.cameraLookTarget = minigunTurret;
