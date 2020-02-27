@@ -69825,7 +69825,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2074129536
 RectTransform:
   m_ObjectHideFlags: 0
@@ -69865,6 +69865,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f8a544d208946a448d40d2f2c13ddfa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waves: {fileID: 0}
+  deaths: {fileID: 0}
+  scrap: {fileID: 0}
+  finalScore: {fileID: 0}
 --- !u!1001 &2075677953
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -74950,6 +74954,7 @@ MonoBehaviour:
   popup: {fileID: 7894279011353583574}
   skip: {fileID: 1110833077}
   waveStats: {fileID: 4398761219090431865}
+  gameOver: {fileID: 0}
   hud: {fileID: 7894279011536975029}
   trading: {fileID: 1814863784245939248}
   blurVolume: {fileID: 1714627832863244506, guid: 92fd6632e8bc9d64a9f91c09431c844a,
