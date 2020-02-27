@@ -12,8 +12,17 @@ public enum GameState
     DEATH_SCREEN
 };
 
-public class GameManager : Singleton<GameManager>
+public class GameManager : MonoBehaviour
 {
+    private static GameManager instance;
+
+    public static GameManager Instance { get { return instance; } }
+    private void Awake()
+    {
+        if (instance != null && instance != this) { Destroy(this.gameObject); }
+        else { instance = this; }
+    }
+
     [Header("User Interface")]
     public GameHUD gameHUD;
     public GameWave gameWave;
@@ -47,12 +56,14 @@ public class GameManager : Singleton<GameManager>
 
     private void Start()
     {
+
         hud.GetComponent<CanvasGroup>().alpha = 0.0f;
         waveStats.GetComponent<CanvasGroup>().alpha = 0.0f;
 
         playerControl = false;
         musicPlayer = FindObjectOfType<MusicPlayer>();
         AIChasingPlayer = new List<GameObject>();
+        //DontDestroyOnLoad(gameObject);
 
         gameWave.wave = wave;
     }
