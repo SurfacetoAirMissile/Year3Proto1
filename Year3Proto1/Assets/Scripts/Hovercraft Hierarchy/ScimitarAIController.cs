@@ -48,6 +48,8 @@ public class ScimitarAIController : ScimitarShared
 
     protected GameObject explosionPrefab;
 
+    public int scrapOnKill = 300;
+
     #region Wander Variable Definitions
 
     private bool wanderTurning;
@@ -355,6 +357,15 @@ public class ScimitarAIController : ScimitarShared
         //explosionScript.explosionRadius = 0f;
         deathFunctionCalled = true;
         GameManager.Instance.RemoveAlive(this);
+
+        if (healthComponent.GetKiller().Contains("Player"))
+        {
+            GameManager.Instance.playerScrap += scrapOnKill;
+            GameManager.Instance.gameWave.scrap += scrapOnKill;
+
+            GameManager.Instance.playerKills += 1;
+            GameManager.Instance.gameWave.kills += 1;
+        }
     }
 
     void MessageChasing()

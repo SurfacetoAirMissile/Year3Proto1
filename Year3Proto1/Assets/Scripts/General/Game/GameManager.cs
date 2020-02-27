@@ -6,8 +6,10 @@ using System.Collections.Generic;
 
 public enum GameState
 {
+    TITLE,
     INGAME,
-    INTERVAL
+    INTERVAL,
+    DEATH_SCREEN
 };
 
 public class GameManager : Singleton<GameManager>
@@ -24,7 +26,7 @@ public class GameManager : Singleton<GameManager>
 
     [Header("Enemies")]
     public GameSpawner gameSpawner;
-    public int remaining = 0;
+    public int remaining = 2;
     public int wave = 1;
 
     public List<HovercraftShared> aliveCraft;
@@ -39,26 +41,37 @@ public class GameManager : Singleton<GameManager>
     public bool playerGoingFast;
     MusicPlayer musicPlayer;
 
-    private GameState gameState = GameState.INGAME;
-    private float time = 0.0f;
-    private bool popupActive = true;
+    private GameState gameState = GameState.TITLE;
+    private float time = 1.0f;
+    private bool popupActive = false;
 
     private void Start()
     {
+        hud.GetComponent<CanvasGroup>().alpha = 0.0f;
+        waveStats.GetComponent<CanvasGroup>().alpha = 0.0f;
+
         playerControl = false;
         musicPlayer = FindObjectOfType<MusicPlayer>();
         AIChasingPlayer = new List<GameObject>();
-        Switch(gameState);
 
         gameWave.wave = wave;
     }
 
+    private void LateUpdate()
+    {
+        if (gameState == GameState.INGAME)
+        {
+            if ((aliveCraft.Count - 1) <= 0) Switch(gameState);
+            gameHUD.Refresh(gameState, playerScrap, playerKills, aliveCraft.Count - 1, wave);
+        }
+    }
+
     private void Update()
     {
-        if (time <= 0 || remaining <= 0) Switch(gameState);
 
         if(gameState == GameState.INTERVAL)
         {
+            if (time <= 0) Switch(gameState);
             time -= Time.deltaTime;
             gameHUD.Refresh(gameState, playerScrap, playerKills, (int) time, wave);
 
@@ -70,11 +83,6 @@ public class GameManager : Singleton<GameManager>
                 popup.GetComponentInChildren<Image>().transform.DOPunchScale(new Vector3(0.5f, 0.5f, 0.0f), 0.33f, 1, 1.0f);
             }
         } 
-
-        else if(gameState == GameState.INGAME)
-        {
-            gameHUD.Refresh(gameState, playerScrap, playerKills, remaining, wave);
-        }
 
         if (AIChasingPlayer.Count > 0)
         {
@@ -96,16 +104,27 @@ public class GameManager : Singleton<GameManager>
                 remaining = (wave * 10 / 2);
                 gameSpawner.Spawn(remaining);
                 time = 1.0f;
+                Popup();
                 break;
             case GameState.INGAME:
                 this.gameState = GameState.INTERVAL;
                 gameWave.Refresh();
                 remaining = 1;
-                time = 10.0f;
+                time = 60.0f;
+                Popup();
+                break;
+            case GameState.TITLE:
+                this.gameState = GameState.INGAME;
+                gameSpawner.Spawn(remaining);
+                time = 1.0f;
+
+                hud.GetComponent<CanvasGroup>().DOKill(true);
+                hud.GetComponent<CanvasGroup>().DOFade(1.0f, 0.5f).SetEase(Ease.InOutSine);
+
+                waveStats.GetComponent<CanvasGroup>().DOKill(true);
+                waveStats.GetComponent<CanvasGroup>().DOFade(1.0f, 0.5f).SetEase(Ease.InOutSine);
                 break;
         }
-
-        Popup();
         Debug.Log("GameManager switched to state: " + gameState);
     }
     
