@@ -13,9 +13,16 @@ public enum GameState
     DEATH_SCREEN
 };
 
-public class GameManager : Singleton<GameManager>
+public class GameManager : MonoBehaviour
 {
-    //This is one ugly game manager, but it works... for now!
+    private static GameManager instance;
+
+    public static GameManager Instance { get { return instance; } }
+    private void Awake()
+    {
+        if (instance != null && instance != this) { Destroy(this.gameObject); }
+        else { instance = this; }
+    }
 
     [Header("User Interface")]
     public GameHUD gameHUD;
@@ -62,6 +69,7 @@ public class GameManager : Singleton<GameManager>
         playerControl = false;
         musicPlayer = FindObjectOfType<MusicPlayer>();
         AIChasingPlayer = new List<GameObject>();
+        //DontDestroyOnLoad(gameObject);
 
         gameWave.wave = wave;
     }
