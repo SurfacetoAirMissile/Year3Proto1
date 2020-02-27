@@ -23,12 +23,12 @@ MonoBehaviour:
   minigunMaximumDepression: -5
   minigunDamage: 0.02
   faction: 2
+  scrapOnKill: 100
   spottingAngle: 45
   spottingRange: 15
   stateO:
     stateName: 0
     target: {fileID: 0}
-  scrapOnKill: 100
 --- !u!1001 &5200119885870509788
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -189,17 +189,17 @@ PrefabInstance:
     - target: {fileID: 9042919004168848223, guid: f3cfded26766c654b9d5bf438200da47,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 80.85394
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9042919004168848223, guid: f3cfded26766c654b9d5bf438200da47,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -5.33
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9042919004168848223, guid: f3cfded26766c654b9d5bf438200da47,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 178.47977
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9042919004168848223, guid: f3cfded26766c654b9d5bf438200da47,
         type: 3}
