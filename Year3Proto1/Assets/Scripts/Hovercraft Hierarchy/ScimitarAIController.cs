@@ -48,6 +48,8 @@ public class ScimitarAIController : ScimitarShared
 
     protected GameObject explosionPrefab;
 
+    public int scrapOnKill = 300;
+
     #region Wander Variable Definitions
 
     private bool wanderTurning;
@@ -96,8 +98,6 @@ public class ScimitarAIController : ScimitarShared
 
     public StateObject stateO;
 
-    public int scrapOnKill = 100;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -139,11 +139,6 @@ public class ScimitarAIController : ScimitarShared
             {
                 AIToTarget = stateO.target.transform.position - chassis.transform.position;
                 AIMinigunToTarget = stateO.target.transform.position - minigunTurret.transform.position;
-                if (stateO.target.transform.parent.name.Contains("Tortoise"))
-                {
-                    // silly offset thanks to model center being off a little
-                    AIMinigunToTarget = stateO.target.transform.position + stateO.target.transform.forward + (stateO.target.transform.up * .7f) - minigunTurret.transform.position;
-                }
             }
 
             switch (stateO.stateName)
@@ -357,15 +352,20 @@ public class ScimitarAIController : ScimitarShared
         //explosionScript.explosionRadius = 0f;
         deathFunctionCalled = true;
         GameManager.Instance.RemoveAlive(this);
+
         if (healthComponent.GetKiller().Contains("Player"))
         {
             GameManager.Instance.playerScrap += scrapOnKill;
+            GameManager.Instance.gameWave.scrap += scrapOnKill;
+
+            GameManager.Instance.playerKills += 1;
+            GameManager.Instance.gameWave.kills += 1;
         }
     }
 
     void MessageChasing()
     {
-        GameManager.Instance.AddAIChasing(gameObject);
+        //GameManager.Instance.AddAIChasing(gameObject);
     }
 
     void MessageNotChasing()

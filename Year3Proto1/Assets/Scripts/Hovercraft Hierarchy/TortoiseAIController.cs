@@ -130,11 +130,6 @@ public class TortoiseAIController : TortoiseShared
             {
                 AIToTarget = stateO.target.transform.position - chassis.transform.position;
                 AIMortarToTarget = stateO.target.transform.position - mortarTurret.transform.position;
-                if (stateO.target.transform.parent.name.Contains("Tortoise"))
-                {
-                    // silly offset thanks to model center being off a little
-                    AIMortarToTarget = stateO.target.transform.position + stateO.target.transform.forward + (stateO.target.transform.up * .7f) - mortarTurret.transform.position;
-                }
             }
 
             switch (stateO.stateName)
@@ -293,9 +288,14 @@ public class TortoiseAIController : TortoiseShared
         //explosionScript.explosionRadius = 0f;
         deathFunctionCalled = true;
         GameManager.Instance.RemoveAlive(this);
+
         if (healthComponent.GetKiller().Contains("Player"))
         {
             GameManager.Instance.playerScrap += scrapOnKill;
+            GameManager.Instance.gameWave.scrap += scrapOnKill;
+
+            GameManager.Instance.playerKills += 1;
+            GameManager.Instance.gameWave.kills += 1;
         }
     }
 

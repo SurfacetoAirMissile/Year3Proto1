@@ -9,7 +9,7 @@ public class TrajectoryArc : MonoBehaviour
     public GameObject projectile;
     public float velocity = 5.0f;
     public int resolution = 50;
-    public float maxDistance = 100f;
+    public float maxDistance = 200f;
 
     private float gravity;
     private float angle;
