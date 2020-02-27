@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 262.30267, g: 325.09595, b: 430.38654, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -47558,6 +47558,7 @@ Transform:
   - {fileID: 1762690658}
   - {fileID: 1904679305}
   - {fileID: 1246910531}
+  - {fileID: 1803675501}
   - {fileID: 1761927347}
   - {fileID: 1716069535}
   - {fileID: 544656389}
@@ -47567,7 +47568,6 @@ Transform:
   - {fileID: 250860386}
   - {fileID: 1028246702}
   - {fileID: 628110491}
-  - {fileID: 1803675501}
   - {fileID: 1644204854}
   - {fileID: 2052070811}
   - {fileID: 1827604367}
@@ -55042,6 +55042,36 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2804908993331737072, guid: bf462d5c48a0c104a8aaf1bc4152834f,
+        type: 3}
+      propertyPath: m_ConnectedAnchor.y
+      value: 0.07928578
+      objectReference: {fileID: 0}
+    - target: {fileID: 2804908993331737072, guid: bf462d5c48a0c104a8aaf1bc4152834f,
+        type: 3}
+      propertyPath: m_ConnectedAnchor.z
+      value: 0.00000008514949
+      objectReference: {fileID: 0}
+    - target: {fileID: 4333517050078831283, guid: bf462d5c48a0c104a8aaf1bc4152834f,
+        type: 3}
+      propertyPath: m_ConnectedAnchor.y
+      value: 0.5200001
+      objectReference: {fileID: 0}
+    - target: {fileID: 4333517050078831283, guid: bf462d5c48a0c104a8aaf1bc4152834f,
+        type: 3}
+      propertyPath: m_ConnectedAnchor.z
+      value: -0.49999982
+      objectReference: {fileID: 0}
+    - target: {fileID: 4862829640841416428, guid: bf462d5c48a0c104a8aaf1bc4152834f,
+        type: 3}
+      propertyPath: m_ConnectedAnchor.y
+      value: 0.4839999
+      objectReference: {fileID: 0}
+    - target: {fileID: 4862829640841416428, guid: bf462d5c48a0c104a8aaf1bc4152834f,
+        type: 3}
+      propertyPath: m_ConnectedAnchor.z
+      value: 1.0500001
+      objectReference: {fileID: 0}
     - target: {fileID: 6170558567440117478, guid: bf462d5c48a0c104a8aaf1bc4152834f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -55101,6 +55131,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Tortoise Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 8055838264416932620, guid: bf462d5c48a0c104a8aaf1bc4152834f,
+        type: 3}
+      propertyPath: m_ConnectedAnchor.y
+      value: 0.32700002
+      objectReference: {fileID: 0}
+    - target: {fileID: 8055838264416932620, guid: bf462d5c48a0c104a8aaf1bc4152834f,
+        type: 3}
+      propertyPath: m_ConnectedAnchor.z
+      value: 0.00000017881393
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bf462d5c48a0c104a8aaf1bc4152834f, type: 3}
@@ -71350,7 +71390,7 @@ Transform:
   - {fileID: 852316990}
   - {fileID: 1511611493}
   m_Father: {fileID: 1250885131}
-  m_RootOrder: 91
+  m_RootOrder: 82
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1804038304 stripped
 Transform:
@@ -83598,34 +83638,44 @@ MonoBehaviour:
   upgradeCategoryEntities:
   - name: Weapon Category
     upgradeResourceEntities:
-    - displayName: 'Minigun '
-      description: An automatic weapon that fires at a high rate. However it does
-        minor damage.
-      cost: 1400
+    - displayName: Wind Cannon Force
+      description: Increases the force that the Wind Cannon applies (to you and to
+        enemies) by a factor of 2
+      cost: 300
+      upgradeType: 7
+      icon: {fileID: 21300000, guid: 1e9cc2a97463d5940bb6c4f63cfb3cf1, type: 3}
+    - displayName: Minigun Damage
+      description: (Scimitar Only) Increases the damage that miniguns deal by a factor
+        of 2
+      cost: 300
       upgradeType: 2
       icon: {fileID: 21300000, guid: a243985162aaef64786944c6f1bfc764, type: 3}
-    - displayName: Mortar
-      description: 
-      cost: 42342
+    - displayName: Minigun Fire Rate
+      description: (Scimitar Only) Increases the rate of fire of the minigun from
+        480r/m (rounds per minute) to 1100r/m
+      cost: 300
       upgradeType: 3
-      icon: {fileID: 21300000, guid: fd988c71c5948db4b9e30b7813377c15, type: 3}
-    - displayName: Wind Cannon
-      description: 
-      cost: 21312
+      icon: {fileID: 21300000, guid: a243985162aaef64786944c6f1bfc764, type: 3}
+    - displayName: Mortar Damage
+      description: (Tortoise Only) Increases the damage that the mortar deals by
+        a factor of 2
+      cost: 300
       upgradeType: 4
-      icon: {fileID: 21300000, guid: 1e9cc2a97463d5940bb6c4f63cfb3cf1, type: 3}
+      icon: {fileID: 21300000, guid: fd988c71c5948db4b9e30b7813377c15, type: 3}
+    - displayName: Mortar Fire Rate
+      description: (Tortoise Only) Increase the rate of fire of the mortar from 15
+        r/m (rounds per minute) to 30r/m
+      cost: 300
+      upgradeType: 5
+      icon: {fileID: 21300000, guid: fd988c71c5948db4b9e30b7813377c15, type: 3}
   - name: Vehicle Categorgy
     upgradeResourceEntities:
-    - displayName: 
-      description: 
-      cost: 0
+    - displayName: Thruster Power
+      description: Increases the power of the ship's movement system by a factor
+        of 1.5
+      cost: 300
       upgradeType: 0
-      icon: {fileID: 0}
-    - displayName: 
-      description: 
-      cost: 0
-      upgradeType: 0
-      icon: {fileID: 0}
+      icon: {fileID: 21300000, guid: 3235cce9d96c0b24d9f54c6d6ff299bb, type: 3}
 --- !u!224 &1814863784245939251
 RectTransform:
   m_ObjectHideFlags: 0
