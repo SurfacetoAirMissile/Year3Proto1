@@ -114,6 +114,7 @@ GameObject:
   - component: {fileID: 2812217736709349994}
   - component: {fileID: 6919643188601343143}
   - component: {fileID: 261826808}
+  - component: {fileID: 7875826734526433142}
   m_Layer: 5
   m_Name: TitleScreen
   m_TagString: Untagged
@@ -180,6 +181,23 @@ MonoBehaviour:
   startDelay: 4
   blurVolume: {fileID: 1714627832863244506, guid: 92fd6632e8bc9d64a9f91c09431c844a,
     type: 3}
+  fadePanel: {fileID: 8584089190895448122, guid: 2766c63231511234eaea9b2407b19d59,
+    type: 3}
+--- !u!114 &7875826734526433142
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 164048773118320922}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 588889a8931d3ef4a841e54bfe9d4efe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fadePanel: {fileID: 0}
+  fadeTime: 0.5
+  clickSound: {fileID: 8300000, guid: 855586ffef5a54c48b0a5ca2de1a6898, type: 3}
 --- !u!1 &975290528062219764
 GameObject:
   m_ObjectHideFlags: 0

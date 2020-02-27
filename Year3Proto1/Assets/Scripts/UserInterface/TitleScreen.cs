@@ -22,9 +22,12 @@ public class TitleScreen : MonoBehaviour
     public GameObject blurVolume;
     private Volume ppvolume;
 
+    public GameObject fadePanel;
+
     private void Awake()
     {
         ppvolume = Instantiate(blurVolume).GetComponent<Volume>();
+        fadePanel = Instantiate(fadePanel, transform.parent);
     }
 
     void Start()
@@ -39,7 +42,7 @@ public class TitleScreen : MonoBehaviour
     {
         timer += Time.unscaledDeltaTime;
 
-        if (timer >= 3.5f && !hideScreen)
+        if (timer >= 2.5f && !hideScreen)
         {
             showScreen = true;
         }
