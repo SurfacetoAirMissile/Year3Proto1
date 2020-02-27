@@ -69,7 +69,12 @@ public class TitleScreen : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.T))
         {
-            ppvolume.DOKill(true);
+            DOTween.To(() => ppvolume.weight, x => ppvolume.weight = x, 1.0f, 0.2f).SetEase(Ease.InOutSine);
+        }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            DOTween.To(() => ppvolume.weight, x => ppvolume.weight = x, 0.0f, 0.2f).SetEase(Ease.InOutSine);
         }
     }
 
@@ -86,8 +91,7 @@ public class TitleScreen : MonoBehaviour
         canwas.DOKill(true);
         canwas.DOFade(0.0f, 0.5f);
 
-        //ppvolume.weight = 0.0f;
-        DOTween.To(() => ppvolume.weight, x => ppvolume.weight = x, 0.0f, 0.3f);
+        DOTween.To(() => ppvolume.weight, x => ppvolume.weight = x, 0.0f, 0.2f).SetEase(Ease.InOutSine);
 
         Debug.Log("Hiding Title Screen");
     }
