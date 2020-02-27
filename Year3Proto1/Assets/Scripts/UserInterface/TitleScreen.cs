@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 using DG.Tweening;
 using UnityEngine.Rendering;
 
@@ -19,22 +20,39 @@ public class TitleScreen : MonoBehaviour
     private GameObject anykeyPrompt;
     private CanvasGroup canvasAnyKey;
 
+    public TMP_Text shipText;
+
     public GameObject blurVolume;
     private Volume ppvolume;
 
     public GameObject fadePanel;
+    private SceneSwitcher scene;
 
     private void Awake()
     {
         ppvolume = Instantiate(blurVolume).GetComponent<Volume>();
         fadePanel = Instantiate(fadePanel, transform.parent);
+        scene = FindObjectOfType<SceneSwitcher>();
     }
+
+
 
     void Start()
     {
         canwas = GetComponent<CanvasGroup>();
         anykeyPrompt = transform.Find("PressAnyKey").gameObject;
         canvasAnyKey = anykeyPrompt.GetComponent<CanvasGroup>();
+
+        shipText = transform.Find("CurrentShip/ShipText").gameObject.GetComponent<TMP_Text>();
+
+        if (GameObject.Find("Tortoise Player") != null)
+        {
+            shipText.text = "Tortoise (slow, high damage)";
+        }
+        else if (GameObject.Find("Scimitar Player") != null)
+        {
+            shipText.text = "Scimitar (fast, low damage)";
+        }
     }
 
 
@@ -56,12 +74,12 @@ public class TitleScreen : MonoBehaviour
                 anykeyPrompt.transform.DOPunchScale(new Vector3(0.5f, 0.5f, 0.0f), 0.33f, 1, 1.0f);
             }
 
-            canvasAnyKey.alpha = 1.0f;
-        }
+            if (Input.GetKeyDown(KeyCode.Escape) && hideScreen)
+            {
+                showScreen = !showScreen;
+            }
 
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            showScreen = !showScreen;
+            canvasAnyKey.alpha = 1.0f;
         }
 
         if (showScreen && !screenVisible)
@@ -76,14 +94,21 @@ public class TitleScreen : MonoBehaviour
             screenVisible = false;
         }
 
-        if (Input.GetKeyDown(KeyCode.T))
+        if (Input.GetKeyDown(KeyCode.Y))
         {
-            DOTween.To(() => ppvolume.weight, x => ppvolume.weight = x, 1.0f, 0.2f).SetEase(Ease.InOutSine);
-        }
+            if (GlobalData.curScene == "Final Scene")
+            {
+                //SceneSwitch("Final Scene 1");
+            }
+            else
+            {
+                //SceneSwitch("Final Scene");
+            }
 
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            DOTween.To(() => ppvolume.weight, x => ppvolume.weight = x, 0.0f, 0.2f).SetEase(Ease.InOutSine);
+            Transform yPrompt = transform.Find("SwitchShip/Image");
+
+            yPrompt.DOKill(true);
+            yPrompt.DOPunchScale(new Vector3(0.5f, 0.5f, 0.0f), 0.25f, 1, 1.0f);
         }
     }
 
