@@ -12703,16 +12703,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: TitleScreen
       objectReference: {fileID: 0}
-    - target: {fileID: 2690232374943197678, guid: aee37a06e2fb51c468726a4b8fd5326c,
-        type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5341512153700961245, guid: aee37a06e2fb51c468726a4b8fd5326c,
-        type: 3}
-      propertyPath: m_Alpha
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5467502052558960394, guid: aee37a06e2fb51c468726a4b8fd5326c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -12821,11 +12811,6 @@ PrefabInstance:
     - target: {fileID: 6919643188601343143, guid: aee37a06e2fb51c468726a4b8fd5326c,
         type: 3}
       propertyPath: m_Alpha
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7000447292447807332, guid: aee37a06e2fb51c468726a4b8fd5326c,
-        type: 3}
-      propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []

@@ -79,18 +79,6 @@ public class SceneSwitcher : MonoBehaviour
             isSwitching = false;
         }
 
-        if (Input.GetKeyDown(KeyCode.Y))
-        {
-            if (curScene == "Final Scene")
-            {
-                SceneSwitch("Final Scene 1");
-            }
-            else
-            {
-                SceneSwitch("Final Scene");
-            }
-        }
-
     }
 
     public void SceneSwitch(string scene)
