@@ -139,11 +139,6 @@ public class ScimitarAIController : ScimitarShared
             {
                 AIToTarget = stateO.target.transform.position - chassis.transform.position;
                 AIMinigunToTarget = stateO.target.transform.position - minigunTurret.transform.position;
-                if (stateO.target.transform.parent.name.Contains("Tortoise"))
-                {
-                    // silly offset thanks to model center being off a little
-                    AIMinigunToTarget = stateO.target.transform.position + stateO.target.transform.forward + (stateO.target.transform.up * .7f) - minigunTurret.transform.position;
-                }
             }
 
             switch (stateO.stateName)

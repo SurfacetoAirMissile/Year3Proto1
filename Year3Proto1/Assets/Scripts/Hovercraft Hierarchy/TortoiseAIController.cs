@@ -130,11 +130,6 @@ public class TortoiseAIController : TortoiseShared
             {
                 AIToTarget = stateO.target.transform.position - chassis.transform.position;
                 AIMortarToTarget = stateO.target.transform.position - mortarTurret.transform.position;
-                if (stateO.target.transform.parent.name.Contains("Tortoise"))
-                {
-                    // silly offset thanks to model center being off a little
-                    AIMortarToTarget = stateO.target.transform.position + stateO.target.transform.forward + (stateO.target.transform.up * .7f) - mortarTurret.transform.position;
-                }
             }
 
             switch (stateO.stateName)
