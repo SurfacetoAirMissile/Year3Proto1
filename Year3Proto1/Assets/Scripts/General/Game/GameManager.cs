@@ -256,4 +256,14 @@ public class GameManager : MonoBehaviour
             }
         }
     }
+
+    public void Reset()
+    {
+        trading.SetActive(false);
+        playerScrap = 0;
+        playerKills = 0;
+        remaining = 0;
+        wave = 1;
+        playerControl = false;
+    }
 }

@@ -77,6 +77,7 @@ public class TitleScreen : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Escape) && hideScreen)
             {
                 showScreen = !showScreen;
+                GameManager.Instance.Reset();
             }
 
             canvasAnyKey.alpha = 1.0f;
@@ -137,7 +138,7 @@ public class TitleScreen : MonoBehaviour
 
         GameManager.Instance.playerControl = true;
 
-        if (!gameStarted) GameManager.Instance.Switch(GameState.INGAME);
+        if (!gameStarted) GameManager.Instance.Switch(GameState.TITLE);
 
         GameManager.Instance.hud.GetComponent<CanvasGroup>().DOKill(true);
         GameManager.Instance.hud.GetComponent<CanvasGroup>().DOFade(1.0f, 0.5f).SetEase(Ease.InOutSine);

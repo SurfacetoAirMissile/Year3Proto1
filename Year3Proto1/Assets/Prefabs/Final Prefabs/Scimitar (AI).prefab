@@ -152,8 +152,8 @@ MonoBehaviour:
   minigunDamage: 0.02
   faction: 2
   scrapOnKill: 100
-  spottingAngle: 45
-  spottingRange: 15
+  spottingAngle: 60
+  spottingRange: 60
   stateO:
     stateName: 0
     target: {fileID: 0}

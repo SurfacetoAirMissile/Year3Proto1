@@ -153,8 +153,8 @@ MonoBehaviour:
   mortarDamage: 1
   mortarExpRadius: 3
   faction: 2
-  spottingAngle: 75
-  spottingRange: 50
+  spottingAngle: 45
+  spottingRange: 100
   stateO:
     stateName: 0
     target: {fileID: 0}
