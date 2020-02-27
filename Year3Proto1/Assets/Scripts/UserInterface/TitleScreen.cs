@@ -49,6 +49,7 @@ public class TitleScreen : MonoBehaviour
                 showScreen = false;
                 hideScreen = true;
                 GameManager.Instance.playerControl = true;
+                GameManager.Instance.Switch(GameState.TITLE);
                 anykeyPrompt.transform.DOPunchScale(new Vector3(0.5f, 0.5f, 0.0f), 0.33f, 1, 1.0f);
             }
 
@@ -82,7 +83,7 @@ public class TitleScreen : MonoBehaviour
     {
         canwas.DOKill(true);
         canwas.DOFade(1.0f, 0.5f);
-
+        DOTween.To(() => ppvolume.weight, x => ppvolume.weight = x, 1.0f, 0.2f).SetEase(Ease.InOutSine);
         Debug.Log("Showing Title Screen");
     }
 
