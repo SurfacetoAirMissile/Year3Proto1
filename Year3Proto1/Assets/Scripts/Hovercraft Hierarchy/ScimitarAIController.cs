@@ -119,7 +119,7 @@ public class ScimitarAIController : ScimitarShared
             orbitDistance = StaticFunc.FloatLookup("Scimitar Orbit Distance");
         }
         */
-        healthComponent.SetHealth(1f);
+        healthComponent.SetHealth(1f, true);
         explosionPrefab = Resources.Load("ShipExplosion") as GameObject;
         controller = ControllerType.AIController;
         GameManager.Instance.AddAlive(this);
@@ -128,7 +128,7 @@ public class ScimitarAIController : ScimitarShared
     // Update is called once per frame
     void Update()
     {
-        ApplyLevitationForces();
+        HovercraftSharedUpdate();
         minigunCooldown += Time.deltaTime;
         // Get direction from AI to target
         if (Alive())
@@ -139,6 +139,11 @@ public class ScimitarAIController : ScimitarShared
             {
                 AIToTarget = stateO.target.transform.position - chassis.transform.position;
                 AIMinigunToTarget = stateO.target.transform.position - minigunTurret.transform.position;
+                if (stateO.target.transform.parent.name.Contains("Tortoise"))
+                {
+                    // silly offset thanks to model center being off a little
+                    AIMinigunToTarget = stateO.target.transform.position + stateO.target.transform.forward + (stateO.target.transform.up * .7f) - minigunTurret.transform.position;
+                }
             }
 
             switch (stateO.stateName)

@@ -35,7 +35,7 @@ public class TitleScreen : MonoBehaviour
 
         if (timer >= startDelay)
         {
-            if (Input.anyKeyDown)
+            if (Input.anyKeyDown && showScreen)
             {
                 showScreen = false;
                 hideScreen = true;

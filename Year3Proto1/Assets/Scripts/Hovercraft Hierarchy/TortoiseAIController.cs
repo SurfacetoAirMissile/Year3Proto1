@@ -109,7 +109,7 @@ public class TortoiseAIController : TortoiseShared
         wanderForce = .5f;
         wanderUpdateStopwatch = 0f;
         playerChassis = GameObject.FindGameObjectWithTag("Player");
-        healthComponent.SetHealth(3f);
+        healthComponent.SetHealth(3f, true);
         explosionPrefab = Resources.Load("ShipExplosion") as GameObject;
         controller = ControllerType.AIController;
         GameManager.Instance.AddAlive(this);
@@ -119,7 +119,7 @@ public class TortoiseAIController : TortoiseShared
     // Update is called once per frame
     void Update()
     {
-        ApplyLevitationForces();
+        HovercraftSharedUpdate();
         mortarCooldown += Time.deltaTime;
         // Get direction from AI to target
         if (Alive())
@@ -130,6 +130,11 @@ public class TortoiseAIController : TortoiseShared
             {
                 AIToTarget = stateO.target.transform.position - chassis.transform.position;
                 AIMortarToTarget = stateO.target.transform.position - mortarTurret.transform.position;
+                if (stateO.target.transform.parent.name.Contains("Tortoise"))
+                {
+                    // silly offset thanks to model center being off a little
+                    AIMortarToTarget = stateO.target.transform.position + stateO.target.transform.forward + (stateO.target.transform.up * .7f) - mortarTurret.transform.position;
+                }
             }
 
             switch (stateO.stateName)
@@ -333,7 +338,7 @@ public class TortoiseAIController : TortoiseShared
             //float angleRad = Mathf.Deg2Rad * (distanceToTarget / ParkDistance) * 30;
             float angleRad = Mathf.Deg2Rad * 20f * (Mathf.Log(distAmount + 1f) + 0.2f);
             Vector3 mortarAim = Vector3.RotateTowards(AIMortarToTarget.normalized, mortarTurret.transform.up, angleRad, 30f);
-            Debug.Log(mortarAim);
+            //Debug.Log(mortarAim);
             AimMortarAtTarget(mortarAim);
         }
         else

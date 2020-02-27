@@ -20,7 +20,7 @@ public class TortoiseShared : HovercraftShared
 
     [SerializeField]
     [Tooltip("The Mortar's damage")]
-    protected float mortarDamage;
+    public float mortarDamage;
 
     [SerializeField]
     [Tooltip("The Mortar's explosion radius")]
@@ -37,7 +37,7 @@ public class TortoiseShared : HovercraftShared
     public void TortoiseStartup()
     {
         HovercraftStartup();
-        mortarFireDelay = 1f / mortarROF;
+        CalculateMortarFireDelay();
         mortarCooldown = 0f;
         shellPrefab = Resources.Load("Shell") as GameObject;
         explosionPrefab = Resources.Load("Explosion") as GameObject;
@@ -78,6 +78,7 @@ public class TortoiseShared : HovercraftShared
         shellRB.AddForce(mortarBarrel.transform.forward * 1500f);
         ShellBehaviour shellB = shellInstance.GetComponent<ShellBehaviour>();
         shellB.SetDamage(mortarDamage);
+        shellB.explosionRadius = mortarExpRadius;
         shellB.SetOwner(this.gameObject);
         shellB.explosionPrefab = explosionPrefab;
         if (controller == ControllerType.PlayerController)
@@ -96,5 +97,15 @@ public class TortoiseShared : HovercraftShared
         // Mortar Turret Rotation
         YawMortarToTarget(_targetDirection);
         PitchMortarToTarget(_targetDirection);
+    }
+    public void CalculateMortarFireDelay()
+    {
+        mortarFireDelay = 1f / mortarROF;
+    }
+
+    public void SetMortarFireRate(float _newROF)
+    {
+        mortarROF = _newROF;
+        CalculateMortarFireDelay();
     }
 }
