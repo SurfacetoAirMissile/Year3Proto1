@@ -7,7 +7,7 @@ public class TortoisePlayer : TortoiseShared
     [Header("Tortoise Player")]
     [SerializeField]
     [Tooltip("The amount of force the wind cannon applies, in thousands of units.")]
-    protected float windCannonForce;
+    public float windCannonForce;
     [SerializeField]
     [Tooltip("The Wind Cannon's rate of fire, in winds per second (not winds per minute/rpm)")]
     protected float windCannonROF;
@@ -39,7 +39,7 @@ public class TortoisePlayer : TortoiseShared
         playerFocus = PlayerFocus.TortoiseNone;
         TortoiseChangeFocus(playerFocus);
         selectedWeapon = Weapons.Mortar;
-        healthComponent.SetHealth(5f);
+        healthComponent.SetHealth(5f, true);
         windCannonFireDelay = 1f / windCannonROF;
         windCannonCooldown = 0f;
         controller = ControllerType.PlayerController;
@@ -49,35 +49,47 @@ public class TortoisePlayer : TortoiseShared
     // Update is called once per frame
     void Update()
     {
-        ApplyLevitationForces();
-        float rotationAmount = Time.deltaTime * 1000f * rotationForce;
+        HovercraftSharedUpdate();
+        float rotationAmount = Time.deltaTime * 1000f * rotationForce * (installedUpgrades.Contains(UpgradeType.ENGINE_SPEED) ? 1.5f : 1f);
         mortarCooldown += Time.deltaTime;
         windCannonCooldown += Time.deltaTime;
+        float thrustValue = installedUpgrades.Contains(UpgradeType.ENGINE_SPEED) ? 1.5f : 1f;
 
-        if (GameManager.Instance.playerControl)
+        if (GameManager.Instance.GetPlayerControl())
         {
             if (Input.GetMouseButtonDown(1))
             {
                 if (selectedWeapon == Weapons.WindCannon)
                 {
+                    playerAiming = true;
                     TortoiseChangeFocus(PlayerFocus.TortoiseWindCannon);
                 }
                 else
                 {
+                    playerAiming = true;
                     TortoiseChangeFocus(PlayerFocus.TortoiseMortar);
                 }
             }
             if (Input.GetMouseButtonUp(1))
             {
+                playerAiming = false;
                 TortoiseChangeFocus(PlayerFocus.TortoiseNone);
             }
             if (Input.GetKeyDown("left ctrl"))
             {
                 windCannonAimMode = windCannonAimMode == 0 ? 1 : 0;
             }
+            if (Input.GetKeyDown("h"))
+            {
+                healthComponent.RestoreToFull();
+            }
+            if (Input.GetKeyDown("g"))
+            {
+                GameManager.Instance.playerScrap += 1000;
+            }
             if (Input.GetKey("w"))
             {
-                Thrust(chassis.transform.forward, 1f);
+                Thrust(chassis.transform.forward, thrustValue);
                 ThrustParticleEffect(true);
             }
             else
@@ -86,15 +98,15 @@ public class TortoisePlayer : TortoiseShared
             }
             if (Input.GetKey("s"))
             {
-                Thrust(-chassis.transform.forward, 1f);
+                Thrust(-chassis.transform.forward, thrustValue);
             }
             if (Input.GetKey("e"))
             {
-                Thrust(-chassis.transform.right, 1f);
+                Thrust(chassis.transform.right, thrustValue);
             }
             if (Input.GetKey("q"))
             {
-                Thrust(chassis.transform.right, 1f);
+                Thrust(-chassis.transform.right, thrustValue);
             }
             if (Input.GetKey("d"))
             {
@@ -112,6 +124,7 @@ public class TortoisePlayer : TortoiseShared
                         selectedWeapon = Weapons.Mortar;
                         if (Input.GetMouseButton(1))
                         {
+                            playerAiming = true;
                             TortoiseChangeFocus(PlayerFocus.TortoiseMortar);
                         }
                         break;
@@ -119,6 +132,7 @@ public class TortoisePlayer : TortoiseShared
                         selectedWeapon = Weapons.WindCannon;
                         if (Input.GetMouseButton(1))
                         {
+                            playerAiming = true;
                             TortoiseChangeFocus(PlayerFocus.TortoiseWindCannon);
                         }
                         break;
@@ -129,6 +143,7 @@ public class TortoisePlayer : TortoiseShared
                 selectedWeapon = Weapons.Mortar;
                 if (Input.GetMouseButton(1))
                 {
+                    playerAiming = true;
                     TortoiseChangeFocus(PlayerFocus.TortoiseMortar);
                 }
             }
@@ -137,6 +152,7 @@ public class TortoisePlayer : TortoiseShared
                 selectedWeapon = Weapons.WindCannon;
                 if (Input.GetMouseButton(1))
                 {
+                    playerAiming = true;
                     TortoiseChangeFocus(PlayerFocus.TortoiseWindCannon);
                 }
             }

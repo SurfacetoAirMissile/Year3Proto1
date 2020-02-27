@@ -22,6 +22,8 @@ public class HovercraftShared : MonoBehaviour
     protected List<GameObject> hoverballs;
     protected float totalMass;
     protected bool thrustParticlePlay = false;
+    protected bool blackSmokeParticlePlay = false;
+    protected bool playerAiming = false;
 
     public List<UpgradeType> installedUpgrades;
 
@@ -111,6 +113,44 @@ public class HovercraftShared : MonoBehaviour
         }
     }
 
+    protected void SmokeEmission()
+    {
+        if (!playerAiming)
+        {
+            if (healthComponent.GetHealthRelative() <= .5f)
+            {
+                if (!blackSmokeParticlePlay)
+                {
+                    blackSmokeParticlePlay = true;
+                    chassis.transform.GetChild(1).GetComponent<ParticleSystem>().Play(true);
+                }
+            }
+            else
+            {
+                if (blackSmokeParticlePlay)
+                {
+                    blackSmokeParticlePlay = false;
+                    chassis.transform.GetChild(1).GetComponent<ParticleSystem>().Stop(true, ParticleSystemStopBehavior.StopEmitting);
+                }
+            }
+        }
+        else
+        {
+            // player is aiming
+            if (blackSmokeParticlePlay)
+            {
+                blackSmokeParticlePlay = false;
+                chassis.transform.GetChild(1).GetComponent<ParticleSystem>().Stop(true, ParticleSystemStopBehavior.StopEmitting);
+            }
+        }
+    }
+
+    protected void HovercraftSharedUpdate()
+    {
+        ApplyLevitationForces();
+        SmokeEmission();
+    }
+
     float GetTotalMass()
     {
         float massTotal = 0;
@@ -133,7 +173,7 @@ public class HovercraftShared : MonoBehaviour
 
     public bool Alive()
     {
-        return (healthComponent.GetHealth() > 0f);
+        return healthComponent.GetHealth() > 0f;
     }
 
     protected void ThrustParticleEffect(bool _thrustParticleOn)
@@ -156,4 +196,50 @@ public class HovercraftShared : MonoBehaviour
         }
     }
 
+    public void InstallUpgrade(UpgradeType _type)
+    {
+        if (!installedUpgrades.Contains(_type))
+        {
+            installedUpgrades.Add(_type);
+            if (_type == UpgradeType.WEAPON_WIND_CANNON)
+            {
+                if (name.Contains("Tortoise"))
+                {
+                    GetComponent<TortoisePlayer>().windCannonForce *= 2f;
+                }
+                if (name.Contains("Scimitar"))
+                {
+                    GetComponent<ScimitarPlayer>().windCannonForce *= 2f;
+                }
+            }
+            if (_type == UpgradeType.WEAPON_MORTAR)
+            {
+                if (name.Contains("Tortoise"))
+                {
+                    GetComponent<TortoisePlayer>().mortarDamage *= 2f;
+                }
+            }
+            if (_type == UpgradeType.WEAPON_MINIGUN)
+            {
+                if (name.Contains("Scimitar"))
+                {
+                    GetComponent<ScimitarPlayer>().minigunDamage *= 2f;
+                }
+            }
+            if (_type == UpgradeType.WEAPON_MORTAR_ROF)
+            {
+                if (name.Contains("Tortoise"))
+                {
+                    GetComponent<TortoisePlayer>().SetMortarFireRate(0.5f);
+                }
+            }
+            if (_type == UpgradeType.WEAPON_MINIGUN_ROF)
+            {
+                if (name.Contains("Scimitar"))
+                {
+                    GetComponent<ScimitarPlayer>().SetMinigunFireRate(18.3f);
+                }
+            }
+        }
+    }
 }

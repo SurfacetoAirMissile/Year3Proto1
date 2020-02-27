@@ -17,8 +17,9 @@ MonoBehaviour:
   rotationForce: 20
   healthComponent:
     health: 0
+  installedUpgrades: 
   controller: 1
-  mortarROF: 0.5
+  mortarROF: 0.25
   mortarMaximumDepression: -5
   mortarMaximumElevation: 70
   mortarDamage: 1
@@ -29,6 +30,7 @@ MonoBehaviour:
   stateO:
     stateName: 0
     target: {fileID: 0}
+  scrapOnKill: 200
 --- !u!1001 &657907061575606496
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -45,6 +47,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_ConnectedAnchor.z
       value: 0.0000017029897
+      objectReference: {fileID: 0}
+    - target: {fileID: 2088168371170739974, guid: 30fa38ad4812d0d47b57a26ae683f39e,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2088168371170739974, guid: 30fa38ad4812d0d47b57a26ae683f39e,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2088168371170739974, guid: 30fa38ad4812d0d47b57a26ae683f39e,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 5894347803738820608, guid: 30fa38ad4812d0d47b57a26ae683f39e,
         type: 3}

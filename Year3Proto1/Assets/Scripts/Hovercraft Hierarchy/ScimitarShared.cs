@@ -7,13 +7,13 @@ public class ScimitarShared : HovercraftShared
     [Header("Scimitar Shared")]
 
     [SerializeField] [Tooltip("The Minigun's rate of fire, in rounds per second (not rounds per minute/rpm)")]
-    protected float minigunROF;
+    public float minigunROF;
 
     [SerializeField] [Tooltip("The Minigun's maximum angle of depression")]
     protected float minigunMaximumDepression;
 
     [SerializeField] [Tooltip("The Minigun's damage")]
-    protected float minigunDamage;
+    public float minigunDamage;
 
     protected GameObject minigunTurret;
     protected GameObject minigunElevationRing;
@@ -26,7 +26,6 @@ public class ScimitarShared : HovercraftShared
     public void ScimitarStartup()
     {
         HovercraftStartup();
-        minigunFireDelay = 1f / minigunROF;
         bulletPrefab = Resources.Load("Bullet") as GameObject;
         //bulletEffect = Resources.Load("BulletImpact") as GameObject;
         foreach (Transform child in transform)
@@ -35,6 +34,7 @@ public class ScimitarShared : HovercraftShared
             if (child.name.Contains("Minigun Elevation Ring")) { minigunElevationRing = child.gameObject; }
             if (child.name.Contains("Minigun Barrel")) { minigunBarrel = child.gameObject; }
         }
+        CalculateMinigunFireDelay();
     }
 
     protected void PitchMinigunToTarget(Vector3 _targetDirection)
@@ -69,7 +69,14 @@ public class ScimitarShared : HovercraftShared
         BulletBehaviour bulletB = bulletInstance.GetComponent<BulletBehaviour>();
         bulletB.SetDamage(minigunDamage);
         bulletB.SetOwner(this.gameObject);
-        bulletInstance.layer = 12;
+        if (controller == ControllerType.PlayerController)
+        {
+            bulletInstance.layer = 12;
+        }
+        else if (controller == ControllerType.AIController)
+        {
+            bulletInstance.layer = 13;
+        }
     }
 
     protected void AimMinigunAtTarget(Vector3 _targetDirection)
@@ -77,5 +84,16 @@ public class ScimitarShared : HovercraftShared
         // Mortar Turret Rotation
         YawMinigunToTarget(_targetDirection);
         PitchMinigunToTarget(_targetDirection);
+    }
+
+    public void CalculateMinigunFireDelay()
+    {
+        minigunFireDelay = 1f / minigunROF;
+    }
+
+    public void SetMinigunFireRate(float _newROF)
+    {
+        minigunROF = _newROF;
+        CalculateMinigunFireDelay();
     }
 }
