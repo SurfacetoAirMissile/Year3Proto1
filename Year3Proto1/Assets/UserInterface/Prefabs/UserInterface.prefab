@@ -231,6 +231,41 @@ PrefabInstance:
       propertyPath: m_Color.a
       value: 0.7490196
       objectReference: {fileID: 0}
+    - target: {fileID: 6346074623841341807, guid: aee37a06e2fb51c468726a4b8fd5326c,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6346074623841341807, guid: aee37a06e2fb51c468726a4b8fd5326c,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6346074623841341807, guid: aee37a06e2fb51c468726a4b8fd5326c,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6346074623841341807, guid: aee37a06e2fb51c468726a4b8fd5326c,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6346074623841341807, guid: aee37a06e2fb51c468726a4b8fd5326c,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6346074623841341807, guid: aee37a06e2fb51c468726a4b8fd5326c,
+        type: 3}
+      propertyPath: m_Pivot.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6919643188601343143, guid: aee37a06e2fb51c468726a4b8fd5326c,
+        type: 3}
+      propertyPath: m_Alpha
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aee37a06e2fb51c468726a4b8fd5326c, type: 3}
 --- !u!224 &3449687839456216983 stripped
