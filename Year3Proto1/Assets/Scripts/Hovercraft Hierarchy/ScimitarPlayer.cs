@@ -25,6 +25,7 @@ public class ScimitarPlayer : ScimitarShared
     PlayerFocus playerFocus;
 
     protected GameObject windCannon;
+    protected GameObject windCannonTurretRing;
     protected int windCannonAimMode;
 
     // Start is called before the first frame update
@@ -34,6 +35,7 @@ public class ScimitarPlayer : ScimitarShared
         foreach (Transform child in transform)
         {
             if (child.name.Contains("Wind Cannon")) { windCannon = child.gameObject; }
+            if (child.name.Contains("Wind Cannon Turret Ring")) { windCannonTurretRing = child.gameObject; }
         }
         windCannonAimMode = 0;
         ScimitarChangeFocus(PlayerFocus.Scimitar);
@@ -163,7 +165,7 @@ public class ScimitarPlayer : ScimitarShared
                 AimMinigunAtTarget(chassis.transform.forward);
 
                 // point the wind cannon forward
-                YawWindCannonToTarget(chassis.transform.forward);
+                AimWindCannonAtTarget(chassis.transform.forward);
 
                 // If the Player presses the LMB...
                 if (Input.GetMouseButton(0) && GameManager.Instance.playerControl)
@@ -177,7 +179,7 @@ public class ScimitarPlayer : ScimitarShared
                 break;
             case PlayerFocus.ScimitarMinigun:
                 // First, rotate the Wind Cannon back to the "default position".
-                YawWindCannonToTarget(chassis.transform.forward);
+                AimWindCannonAtTarget(chassis.transform.forward);
 
                 // Second, aim the Mortar at the Camera.
                 AimMinigunAtTarget(Camera.main.transform.forward);
@@ -197,7 +199,7 @@ public class ScimitarPlayer : ScimitarShared
                 AimMinigunAtTarget(chassis.transform.forward);
 
                 // Second, aim the Wind Cannon at the Camera.
-                YawWindCannonToTarget(Camera.main.transform.forward);
+                AimWindCannonAtTarget(Camera.main.transform.forward);
 
                 // If the Player presses the LMB...
                 if (Input.GetMouseButton(0) && GameManager.Instance.playerControl)
@@ -249,14 +251,32 @@ public class ScimitarPlayer : ScimitarShared
         Vector3 rotation;
         if (windCannonAimMode == 0)
         {
-            rotation = Quaternion.FromToRotation(windCannon.transform.forward, _targetDirection).eulerAngles;
+            rotation = Quaternion.FromToRotation(windCannonTurretRing.transform.forward, _targetDirection).eulerAngles;
         }
         else
         {
-            rotation = Quaternion.FromToRotation(windCannon.transform.forward, -_targetDirection).eulerAngles;
+            rotation = Quaternion.FromToRotation(windCannonTurretRing.transform.forward, -_targetDirection).eulerAngles;
         }
         if (rotation.y > 180f) { rotation.y -= 360f; }
-        StaticFunc.RotateTo(windCannon.GetComponent<Rigidbody>(), 'y', rotation.y);
+        StaticFunc.RotateTo(windCannonTurretRing.GetComponent<Rigidbody>(), 'y', rotation.y);
+    }
+
+    protected void PitchWindCannonToTarget(Vector3 _targetDirection)
+    {
+        Vector3 barrelForward = windCannon.transform.forward;
+        if (windCannonAimMode == 1) { _targetDirection *= -1; }
+        _targetDirection.x = 1; _targetDirection.z = 1;
+        barrelForward.x = 1; barrelForward.z = 1;
+        float angle = Vector3.Angle(_targetDirection, barrelForward);
+        if (_targetDirection.y > barrelForward.y) { angle *= -1; }
+        StaticFunc.RotateTo(windCannon.GetComponent<Rigidbody>(), 'x', angle);
+    }
+
+    protected void AimWindCannonAtTarget(Vector3 _targetDirection)
+    {
+        // Mortar Turret Rotation
+        YawWindCannonToTarget(_targetDirection);
+        PitchWindCannonToTarget(_targetDirection);
     }
 
     void FireWindCannon()

@@ -39,19 +39,17 @@ public class ScimitarShared : HovercraftShared
 
     protected void PitchMinigunToTarget(Vector3 _targetDirection)
     {
-        Vector3 barrelForward = -minigunElevationRing.transform.forward;
-        Debug.DrawRay(minigunTurret.transform.position, barrelForward);
-        Debug.DrawRay(minigunTurret.transform.position, _targetDirection);
+        Vector3 barrelForward = minigunElevationRing.transform.forward;
         _targetDirection.x = 1; _targetDirection.z = 1;
         barrelForward.x = 1; barrelForward.z = 1;
         float angle = Vector3.Angle(_targetDirection, barrelForward);
-        if (_targetDirection.y < barrelForward.y) { angle *= -1; }
+        if (_targetDirection.y > barrelForward.y) { angle *= -1; }
         StaticFunc.RotateTo(minigunElevationRing.GetComponent<Rigidbody>(), 'x', angle);
     }
 
     protected void YawMinigunToTarget(Vector3 _targetDirection)
     {
-        Vector3 minigunTurretRot = Quaternion.FromToRotation(-minigunTurret.transform.forward, _targetDirection).eulerAngles;
+        Vector3 minigunTurretRot = Quaternion.FromToRotation(minigunTurret.transform.forward, _targetDirection).eulerAngles;
         if (minigunTurretRot.y > 180f) { minigunTurretRot.y -= 360f; }
         StaticFunc.RotateTo(minigunTurret.GetComponent<Rigidbody>(), 'y', minigunTurretRot.y);
     }
@@ -65,7 +63,7 @@ public class ScimitarShared : HovercraftShared
         GameObject bulletInstance = Instantiate(bulletPrefab, spawnPos, Quaternion.identity);
         Rigidbody bulletRB = bulletInstance.GetComponent<Rigidbody>();
         bulletRB.velocity = chassisRB.velocity;
-        bulletRB.AddForce(-minigunBarrel.transform.forward * 5f);
+        bulletRB.AddForce(minigunBarrel.transform.forward * 5f);
         BulletBehaviour bulletB = bulletInstance.GetComponent<BulletBehaviour>();
         bulletB.SetDamage(minigunDamage);
         bulletB.SetOwner(this.gameObject);
