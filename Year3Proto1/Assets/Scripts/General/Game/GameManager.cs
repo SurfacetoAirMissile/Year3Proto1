@@ -25,6 +25,8 @@ public class GameManager : Singleton<GameManager>
     public GameObject skip;
     public GameObject waveStats;
 
+    public GameOver gameOver;
+
     public GameObject hud;
     public GameObject trading;
 
@@ -49,17 +51,13 @@ public class GameManager : Singleton<GameManager>
     MusicPlayer musicPlayer;
 
     private GameState gameState = GameState.TITLE;
-    private float time = 1.0f;
+    private float time = 10.0f;
     private bool popupActive = false;
 
     private void Start()
     {
         ppvolume = Instantiate(blurVolume).GetComponent<Volume>();
         ppvolume.weight = 0.0f;
-
-        hud.GetComponent<CanvasGroup>().alpha = 0.0f;
-        waveStats.GetComponent<CanvasGroup>().alpha = 0.0f;
-        skip.GetComponent<CanvasGroup>().alpha = 0.0f;
 
         playerControl = false;
         musicPlayer = FindObjectOfType<MusicPlayer>();
@@ -80,11 +78,12 @@ public class GameManager : Singleton<GameManager>
     private void Update()
     {
 
-        if(gameState == GameState.INTERVAL)
+        if (gameState == GameState.INTERVAL)
         {
             if (time <= 0) Switch(gameState);
+
             time -= Time.deltaTime;
-            gameHUD.Refresh(gameState, playerScrap, playerKills, (int) time, wave);
+            gameHUD.Refresh(gameState, playerScrap, playerKills, (int)time, wave);
 
             if (Input.GetKeyDown(KeyCode.F))
             {
@@ -94,16 +93,19 @@ public class GameManager : Singleton<GameManager>
 
                 DOTween.To(() => ppvolume.weight, x => ppvolume.weight = x, trading.activeSelf ? 1.0f : 0.0f, 0.1f).SetEase(Ease.InOutSine);
             }
-            if(Input.GetKeyDown(KeyCode.E)) time = 0.0f;
-        } 
-
-        if (AIChasingPlayer.Count > 0)
-        {
-            SetPlayerInCombat(true);
+            if (Input.GetKeyDown(KeyCode.E)) time = 0.0f;
         }
-        else
+
+        if (AIChasingPlayer != null)
         {
-            SetPlayerInCombat(false);
+            if (AIChasingPlayer.Count > 0)
+            {
+                SetPlayerInCombat(true);
+            }
+            else
+            {
+                SetPlayerInCombat(false);
+            }
         }
     }
 
@@ -128,17 +130,9 @@ public class GameManager : Singleton<GameManager>
                 break;
             case GameState.TITLE:
                 this.gameState = GameState.INGAME;
+                remaining = (wave * 10 / 2);
                 gameSpawner.Spawn(remaining);
                 time = 1.0f;
-
-                hud.GetComponent<CanvasGroup>().DOKill(true);
-                hud.GetComponent<CanvasGroup>().DOFade(1.0f, 0.5f).SetEase(Ease.InOutSine);
-
-                waveStats.GetComponent<CanvasGroup>().DOKill(true);
-                waveStats.GetComponent<CanvasGroup>().DOFade(1.0f, 0.5f).SetEase(Ease.InOutSine);
-
-                skip.GetComponent<CanvasGroup>().DOKill(true);
-                skip.GetComponent<CanvasGroup>().DOFade(1.0f, 0.5f).SetEase(Ease.InOutSine);
                 break;
         }
         Debug.Log("GameManager switched to state: " + gameState);

@@ -120,9 +120,9 @@ public class TitleScreen : MonoBehaviour
 
         GameManager.Instance.playerControl = false;
         GameManager.Instance.hud.GetComponent<CanvasGroup>().DOKill(true);
-        GameManager.Instance.hud.GetComponent<CanvasGroup>().DOFade(0.0f, 0.2f).SetEase(Ease.InOutSine);
+        GameManager.Instance.hud.GetComponent<CanvasGroup>().DOFade(0.0f, 0.5f).SetEase(Ease.InOutSine);
         GameManager.Instance.waveStats.GetComponent<CanvasGroup>().DOKill(true);
-        GameManager.Instance.waveStats.GetComponent<CanvasGroup>().DOFade(0.0f, 0.2f).SetEase(Ease.InOutSine);
+        GameManager.Instance.waveStats.GetComponent<CanvasGroup>().DOFade(0.0f, 0.5f).SetEase(Ease.InOutSine);
 
 
         Debug.Log("Showing Title Screen");
@@ -137,17 +137,12 @@ public class TitleScreen : MonoBehaviour
 
         GameManager.Instance.playerControl = true;
 
-        if (!gameStarted)
-        {
-            GameManager.Instance.Switch(GameState.TITLE);
-        }
-        else
-        {
-            GameManager.Instance.hud.GetComponent<CanvasGroup>().DOKill(true);
-            GameManager.Instance.hud.GetComponent<CanvasGroup>().DOFade(1.0f, 0.5f).SetEase(Ease.InOutSine);
-            GameManager.Instance.waveStats.GetComponent<CanvasGroup>().DOKill(true);
-            GameManager.Instance.waveStats.GetComponent<CanvasGroup>().DOFade(1.0f, 0.5f).SetEase(Ease.InOutSine);
-        }
+        if (!gameStarted) GameManager.Instance.Switch(GameState.INGAME);
+
+        GameManager.Instance.hud.GetComponent<CanvasGroup>().DOKill(true);
+        GameManager.Instance.hud.GetComponent<CanvasGroup>().DOFade(1.0f, 0.5f).SetEase(Ease.InOutSine);
+        GameManager.Instance.waveStats.GetComponent<CanvasGroup>().DOKill(true);
+        GameManager.Instance.waveStats.GetComponent<CanvasGroup>().DOFade(1.0f, 0.5f).SetEase(Ease.InOutSine);
 
         gameStarted = true;
 
