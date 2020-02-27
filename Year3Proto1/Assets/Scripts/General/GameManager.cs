@@ -51,6 +51,11 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
+    public bool GetPlayerControl()
+    {
+        return playerControl;
+    }
+
     public void SetPlayerGoingFast(bool _playerGoingFast)
     {
         if (playerGoingFast != _playerGoingFast)

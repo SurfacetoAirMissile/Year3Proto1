@@ -59,45 +59,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   overlappingGameObjects: []
---- !u!114 &2199029100917794929
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7579030972819021264}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a4c4f03e38122e74b917a0c2328d9d78, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hoverForce: 1
-  pushForce: 5
-  rotationForce: 20
-  healthComponent:
-    health: 0
-  installedUpgrades: 
-  controller: 0
-  mortarROF: 0.5
-  mortarMaximumDepression: -5
-  mortarMaximumElevation: 70
-  mortarDamage: 1
-  mortarExpRadius: 3
-  windCannonForce: 4
-  windCannonROF: 1
-  selectedWeapon: 0
---- !u!114 &5186263677527265760
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8418727862376176174}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cbc419fcd35ef004b86512c67c0915f6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &5750560672687880143
 GameObject:
   m_ObjectHideFlags: 0
@@ -453,6 +414,45 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &2199029100917794929
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7579030972819021264}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4c4f03e38122e74b917a0c2328d9d78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverForce: 1
+  pushForce: 5
+  rotationForce: 20
+  healthComponent:
+    health: 0
+  installedUpgrades: 
+  controller: 0
+  mortarROF: 0.25
+  mortarMaximumDepression: -5
+  mortarMaximumElevation: 70
+  mortarDamage: 1
+  mortarExpRadius: 6
+  windCannonForce: 6
+  windCannonROF: 1
+  selectedWeapon: 0
+--- !u!114 &5186263677527265760
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8418727862376176174}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbc419fcd35ef004b86512c67c0915f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1211287973628028993
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -613,7 +613,7 @@ PrefabInstance:
     - target: {fileID: 3786064278659071869, guid: 7cd3276d887cff341973ec44c7270080,
         type: 3}
       propertyPath: m_RootOrder
-      value: 11
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 3786064278659071869, guid: 7cd3276d887cff341973ec44c7270080,
         type: 3}
@@ -687,6 +687,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_ConnectedAnchor.z
       value: -0.00000034059795
+      objectReference: {fileID: 0}
+    - target: {fileID: 1974993973531830773, guid: 30fa38ad4812d0d47b57a26ae683f39e,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4700356933338135080, guid: 30fa38ad4812d0d47b57a26ae683f39e,
         type: 3}
@@ -945,7 +950,7 @@ PrefabInstance:
     - target: {fileID: 7590135908505307839, guid: 192e4cdb6aaa4e94f81e17ed73c6c11a,
         type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 7590135908505307839, guid: 192e4cdb6aaa4e94f81e17ed73c6c11a,
         type: 3}
