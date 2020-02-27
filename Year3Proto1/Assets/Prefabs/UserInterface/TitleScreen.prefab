@@ -160,6 +160,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   showScreen: 0
   startDelay: 4
+  blurVolume: {fileID: 1714627832863244506, guid: 92fd6632e8bc9d64a9f91c09431c844a,
+    type: 3}
 --- !u!1 &5248105496002480290
 GameObject:
   m_ObjectHideFlags: 0
