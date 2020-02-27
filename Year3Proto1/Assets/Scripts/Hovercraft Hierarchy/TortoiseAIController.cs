@@ -288,9 +288,14 @@ public class TortoiseAIController : TortoiseShared
         //explosionScript.explosionRadius = 0f;
         deathFunctionCalled = true;
         GameManager.Instance.RemoveAlive(this);
+
         if (healthComponent.GetKiller().Contains("Player"))
         {
             GameManager.Instance.playerScrap += scrapOnKill;
+            GameManager.Instance.gameWave.scrap += scrapOnKill;
+
+            GameManager.Instance.playerKills += 1;
+            GameManager.Instance.gameWave.kills += 1;
         }
     }
 

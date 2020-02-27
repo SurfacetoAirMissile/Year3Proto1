@@ -10,9 +10,7 @@ using UnityEngine.Rendering.HighDefinition;
 public class UpgradeSystem : MonoBehaviour
 {
     [Header("Header")]
-    public TMP_Text title1;
-    public TMP_Text title2;
-    public TMP_Text title3;
+    public TMP_Text title;
 
     public Transform dotCanvas;
     public Transform categoryContainer;
@@ -38,7 +36,7 @@ public class UpgradeSystem : MonoBehaviour
         for(int i = 0; i < upgradeCategoryEntities.Length; i++)
         {
             dots.Add(Instantiate(dot, dotCanvas, false));
-            dots[i].color = new Color(255, 255, 255, 0.5f);
+            dots[i].color = new Color(255, 255, 255, 0.15f);
 
 
             GameObject @object = Instantiate(categoryPrefab, categoryContainer, false);
@@ -54,6 +52,7 @@ public class UpgradeSystem : MonoBehaviour
         if (upgradeCategories.Count > index)
         {
             upgradeCategories[index].gameObject.SetActive(true);
+            title.text = upgradeCategories[index].GetName();
             dots[index].color = new Color(255, 255, 255, 1.0f);
         }
     }
@@ -100,10 +99,12 @@ public class UpgradeSystem : MonoBehaviour
     {
 
         switchable = false;
-        float moveTime = 0.3f;
+        title.text = nextUpgradeCategory.GetName();
 
+        float moveTime = 0.3f;
         float initialMove = 0.0f;
         float finalMove = 0.0f;
+
 
         if (keyCode == KeyCode.D)
         {
