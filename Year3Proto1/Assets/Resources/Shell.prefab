@@ -14,7 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lifetime: 8
   damage: 1
+  hitSoundEffectPrefab: {fileID: 0}
+  bulletImpact: {fileID: 0}
   explosionPrefab: {fileID: 0}
+  explosionRadius: 0
 --- !u!1001 &4256859806953102483
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -31,6 +34,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Shell
+      objectReference: {fileID: 0}
+    - target: {fileID: 5848682847598294074, guid: e4b924e172f349b40b9d5d17433ed837,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6714560693505561292, guid: e4b924e172f349b40b9d5d17433ed837,
         type: 3}

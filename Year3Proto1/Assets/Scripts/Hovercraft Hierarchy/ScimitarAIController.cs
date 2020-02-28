@@ -219,28 +219,8 @@ public class ScimitarAIController : ScimitarShared
                 case HovercraftAIState.OrbitEngage:
                     // Aim the cannon at the target
                     AimMinigunAtTarget(AIMinigunToTarget.normalized);
-                    /*
-                    Vector3 minigunTurretRot = Quaternion.FromToRotation(-minigunTurret.transform.forward, AIMinigunToTarget.normalized).eulerAngles;
-                    if (minigunTurretRot.y > 180f) { minigunTurretRot.y -= 360f; }
-                    StaticFunc.RotateTo(minigunTurret.GetComponent<Rigidbody>(), 'y', minigunTurretRot.y * 4f);
-                    if (Mathf.Abs(minigunTurretRot.y) < 15f)
-                    {
-                        Vector3 toPlayer = AIMinigunToTarget.normalized;
-                        Vector3 barrelForward = -minigunElevationRing.transform.forward;
-                        Debug.DrawLine(minigunBarrel.transform.position, minigunBarrel.transform.position + toPlayer, Color.red);
-                        Debug.DrawLine(minigunBarrel.transform.position, minigunBarrel.transform.position + barrelForward, Color.green);
-                        float angle = Vector3.Angle(toPlayer, barrelForward);
-                        toPlayer.x = 0; toPlayer.z = 0;
-                        barrelForward.x = 0; barrelForward.z = 0;
-                        if (toPlayer.y < barrelForward.y)
-                        {
-                            angle *= -1;
-                        }
-                        StaticFunc.RotateTo(minigunElevationRing.GetComponent<Rigidbody>(), 'x', angle);
-                    }
-                    */
 
-                    Vector3 minigunTurretRot = Quaternion.FromToRotation(-minigunTurret.transform.forward, AIMinigunToTarget.normalized).eulerAngles;
+                    Vector3 minigunTurretRot = Quaternion.FromToRotation(minigunTurret.transform.forward, AIMinigunToTarget.normalized).eulerAngles;
                     if (minigunTurretRot.y > 180f) { minigunTurretRot.y -= 360f; }
 
                     if (Mathf.Abs(minigunTurretRot.y) < 15f)
@@ -248,18 +228,6 @@ public class ScimitarAIController : ScimitarShared
                         if (minigunCooldown >= minigunFireDelay)
                         {
                             FireMinigun();
-                            /*
-                            minigunCooldown = 0f;
-                            minigunBarrel.GetComponent<AudioSource>().Play();
-                            Vector3 spawnPos = minigunBarrel.transform.GetChild(0).position;
-                            GameObject bulletInstance = Instantiate(bulletPrefab, spawnPos, Quaternion.identity);
-                            Rigidbody bulletRB = bulletInstance.GetComponent<Rigidbody>();
-                            bulletRB.velocity = chassisRB.velocity;
-                            bulletRB.AddForce(-minigunBarrel.transform.forward * 5f);
-                            BulletBehaviour bulletB = bulletInstance.GetComponent<BulletBehaviour>();
-                            bulletB.SetDamage(minigunDamage);
-                            bulletB.SetOwner(this.gameObject);
-                            */
                         }
                     }
 

@@ -8,6 +8,7 @@ public class Explosion : MonoBehaviour
     public float explosionDamage = 1f;
     float timeElapsed = 0f;
     public GameObject owner;
+    public string ownerName;
 
     // Start is called before the first frame update
     void Start()
@@ -30,25 +31,28 @@ public class Explosion : MonoBehaviour
                     amount = 1f - ((distance - explosionRadius * .5f) / explosionRadius * .5f);
                 }
                 
-                script.healthComponent.DealDamage(explosionDamage * amount, owner.name);
+                script.healthComponent.DealDamage(explosionDamage * amount, ownerName);
 
-                if (script.gameObject != owner.gameObject)
+                if (owner)
                 {
-                    if (script.controller == HovercraftShared.ControllerType.AIController)
+                    if (script.gameObject != owner.gameObject)
                     {
-                        if (masterParent.name.Contains("Scimitar"))
+                        if (script.controller == HovercraftShared.ControllerType.AIController)
                         {
-                            // Tells the AI to chase the chassis of the owner of the bullet.
-                            script.GetComponent<ScimitarAIController>().ChangeState(ScimitarAIController.HovercraftAIState.Chase, owner.transform.GetChild(0).gameObject);
-                        }
-                        if (masterParent.name.Contains("Tortoise"))
-                        {
-                            // Tells the AI to chase the chassis of the owner of the bullet.
-                            script.GetComponent<TortoiseAIController>().ChangeState(TortoiseAIController.HovercraftAIState.Chase, owner.transform.GetChild(0).gameObject);
+                            if (masterParent.name.Contains("Scimitar"))
+                            {
+                                // Tells the AI to chase the chassis of the owner of the bullet.
+                                script.GetComponent<ScimitarAIController>().ChangeState(ScimitarAIController.HovercraftAIState.Chase, owner.transform.GetChild(0).gameObject);
+                            }
+                            if (masterParent.name.Contains("Tortoise"))
+                            {
+                                // Tells the AI to chase the chassis of the owner of the bullet.
+                                script.GetComponent<TortoiseAIController>().ChangeState(TortoiseAIController.HovercraftAIState.Chase, owner.transform.GetChild(0).gameObject);
+                            }
                         }
                     }
+                    script.GetRB().AddForce(toSkimmer.normalized * explosionDamage * 1000f * amount);
                 }
-                script.GetRB().AddForce(toSkimmer.normalized * explosionDamage * 1000f * amount);
             }
 
         }
