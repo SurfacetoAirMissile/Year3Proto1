@@ -14,6 +14,7 @@ public class GameSpawner : MonoBehaviour
         {
             GameObject gameObject = Instantiate(enemies[Random.Range(0, enemies.Length)], transform);
             gameObject.transform.position = positions[Random.Range(0, positions.Length)].position;
+            gameObject.transform.SetParent(null);
         }
     }
 }
