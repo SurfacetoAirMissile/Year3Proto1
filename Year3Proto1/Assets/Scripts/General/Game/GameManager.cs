@@ -95,13 +95,16 @@ public class GameManager : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.F))
             {
-                trading.SetActive(trading.activeSelf ? false : true);
-                waveStats.SetActive(trading.activeSelf ? false : true);
-                playerControl = (trading.activeSelf ? false : true);
-
-                DOTween.To(() => ppvolume.weight, x => ppvolume.weight = x, trading.activeSelf ? 1.0f : 0.0f, 0.1f).SetEase(Ease.InOutSine);
+                ToggleStore();
             }
-            if (Input.GetKeyDown(KeyCode.E)) time = 0.0f;
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                time = 0.0f;
+                if (trading.activeSelf)
+                {
+                    ToggleStore();
+                }
+            }
         }
 
         if (AIChasingPlayer != null)
@@ -265,5 +268,14 @@ public class GameManager : MonoBehaviour
         remaining = 0;
         wave = 1;
         playerControl = false;
+    }
+
+    private void ToggleStore()
+    {
+        trading.SetActive(trading.activeSelf ? false : true);
+        waveStats.SetActive(trading.activeSelf ? false : true);
+        playerControl = (trading.activeSelf ? false : true);
+
+        DOTween.To(() => ppvolume.weight, x => ppvolume.weight = x, trading.activeSelf ? 1.0f : 0.0f, 0.1f).SetEase(Ease.InOutSine);
     }
 }
